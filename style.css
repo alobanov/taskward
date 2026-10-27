@@ -98,7 +98,7 @@ a { color: inherit; }
    store's pictures fanned out like cards laid on it. */
 .hero-in {
   display: grid; grid-template-columns: 1fr 1.05fr; align-items: center; gap: 40px;
-  min-height: min(88vh, 860px); padding: 20px 0 60px;
+  padding: 28px 0 40px;
 }
 .hero-words h1 {
   font-size: clamp(40px, 6vw, 82px); line-height: 1.02; font-weight: 400;
@@ -106,7 +106,7 @@ a { color: inherit; }
 }
 .hero-words .lede { font-size: 23px; color: var(--on-desk-soft); max-width: 30ch; margin: 0 0 32px; }
 .hero-words .small { font-size: 17px; color: var(--on-desk-soft); margin: 16px 0 0; }
-.fan { position: relative; height: min(76vh, 700px); }
+.fan { position: relative; height: min(72vh, 640px); }
 .fan img {
   position: absolute; top: 50%; left: 50%; height: 92%; width: auto;
   border-radius: 26px; box-shadow: var(--lift);
@@ -149,7 +149,7 @@ a { color: inherit; }
 .row.done .title::after { transform: scaleX(1); }
 
 /* The pages under the first screen. */
-section.part { padding: 84px 0; }
+section.part { padding: 56px 0; }
 section.part h2 { text-wrap: balance; font-size: clamp(38px, 4.6vw, 58px); line-height: 1.08; font-weight: 400; margin: 0 0 18px; }
 section.part .say { font-size: 22px; color: var(--on-desk-soft); max-width: 40ch; margin: 0; }
 .split { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; }
@@ -160,8 +160,6 @@ section.part .say { font-size: 22px; color: var(--on-desk-soft); max-width: 40ch
 .spread .head { display: flex; align-items: center; gap: 12px; font-size: 28px; margin-bottom: 10px; }
 .spread .head .icon { width: 26px; height: 26px; }
 .spread p { margin: 0; font-size: 19px; color: var(--ink); }
-.spread .lines { margin-top: 14px; border-top: 1px solid var(--rule); }
-.spread .lines i { display: block; height: 30px; border-bottom: 1px solid var(--rule); }
 
 /* A task's ticket: its stub torn off along a dashed line, a notch cut into each edge. */
 .ticket-wrap { justify-self: end; filter: drop-shadow(0 16px 18px rgba(20, 28, 30, 0.22)) drop-shadow(0 2px 3px rgba(20, 28, 30, 0.08)); rotate: 1.2deg; }
@@ -187,7 +185,12 @@ section.part .say { font-size: 22px; color: var(--on-desk-soft); max-width: 40ch
 .stub .when .star { color: var(--seal); }
 .stub .when .marks { margin-left: auto; display: flex; gap: 16px; color: var(--pencil); }
 
-/* The signals: what a circle can say. */
+/* The signals: what a circle can say, on the note the app shows for them. */
+.signals-note { padding: 26px 30px 30px; max-width: 460px; justify-self: end; rotate: 1deg; width: 100%; }
+.signals-note .note-title { text-align: center; font-size: 24px; margin: 0 0 18px; }
+.signals-note .signals { display: grid; grid-template-columns: 1fr 1fr; gap: 16px 20px; margin: 0; }
+.signals-note .signals svg { color: var(--ink); }
+.signals-note .signals li { color: var(--ink); }
 .signals { display: flex; flex-wrap: wrap; gap: 16px 34px; margin-top: 40px; list-style: none; padding: 0; }
 .signals li { display: flex; align-items: center; gap: 12px; font-size: 21px; }
 .signals svg { width: 30px; height: 30px; color: var(--on-desk); }
@@ -211,19 +214,12 @@ section.part .say { font-size: 22px; color: var(--on-desk-soft); max-width: 40ch
 .newcard .foot .muted { color: var(--pencil); }
 .newcard .foot .marks { margin-left: auto; display: flex; gap: 16px; color: var(--pencil); }
 
-/* Zen: a phone, its whole screen one card. */
-.zen-phone {
-  width: 250px; height: 500px; border-radius: 44px; padding: 10px; margin-inline: auto;
-  background: #1d1e22; box-shadow: var(--lift); rotate: 2deg;
-}
-.zen-phone .paper { height: 100%; border-radius: 34px; padding: 46px 18px 0; box-shadow: none; overflow: hidden; }
-.zen-phone .head { display: flex; align-items: center; gap: 8px; font-size: 22px; }
-.zen-phone .head .icon { color: var(--seal); width: 20px; height: 20px; }
-.zen-phone .rows { margin-top: 8px; }
-.zen-phone .row { padding: 7px 0; gap: 10px; }
-.zen-phone .row .title { font-size: 15px; }
-.zen-phone .signal, .zen-phone .signal svg { width: 18px; height: 18px; }
-.zen-phone .blank { height: 34px; border-bottom: 1px solid var(--rule); }
+/* A little more: three cards side by side. */
+.trio { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; margin-top: 34px; }
+.trio .paper { padding: 22px 24px 24px; rotate: var(--r, 0deg); }
+.trio .head { display: flex; align-items: center; gap: 12px; font-size: 26px; margin-bottom: 8px; }
+.trio .head .icon { width: 24px; height: 24px; }
+.trio p { margin: 0; font-size: 19px; }
 
 /* The real app, from the store's own pictures. */
 .shelf {
@@ -265,7 +261,7 @@ section.part .say { font-size: 22px; color: var(--on-desk-soft); max-width: 40ch
 .knight { display: grid; grid-template-columns: auto 1fr; gap: 36px; align-items: center; }
 .knight .icon.big { width: 130px; height: 130px; color: var(--on-desk); }
 
-footer { padding: 60px 0 80px; color: var(--on-desk-soft); font-size: 18px; }
+footer { padding: 28px 0 44px; border-top: 1px solid rgba(0, 0, 0, 0.08); margin-top: 24px; color: var(--on-desk-soft); font-size: 18px; }
 footer .wrap { display: flex; flex-wrap: wrap; gap: 14px 28px; align-items: center; }
 footer a { text-decoration: none; }
 footer a:hover { color: var(--on-desk); }
@@ -283,10 +279,12 @@ footer .by { margin-left: auto; }
   .hero-in { grid-template-columns: 1fr; min-height: 0; padding: 16px 0 40px; gap: 36px; }
   .fan { height: 540px; }
   .split, .macs { grid-template-columns: 1fr; }
-  .split > .newcard, .split > .zen-phone { order: 2; }
+  .split > .newcard { order: 2; }
+  .signals-note { justify-self: start; }
+  .trio { grid-template-columns: 1fr; gap: 16px; }
   .spread { grid-template-columns: 1fr 1fr; }
   .ticket-wrap { justify-self: start; }
-  section.part { padding: 70px 0; }
+  section.part { padding: 40px 0; }
 }
 @media (max-width: 560px) {
   body { font-size: 19px; }
@@ -295,7 +293,6 @@ footer .by { margin-left: auto; }
   .spread .head { font-size: 18px; gap: 7px; margin-bottom: 6px; white-space: nowrap; }
   .spread .head .icon { width: 20px; height: 20px; }
   .spread p { font-size: 15px; line-height: 1.35; }
-  .spread .lines { display: none; }
   .shelf img { width: 220px; border-radius: 14px; }
   section.part .say { font-size: 19px; }
   .kept, .knight { grid-template-columns: 1fr; padding: 28px 24px; }
@@ -305,6 +302,14 @@ footer .by { margin-left: auto; }
   footer .by { margin-left: 0; margin-top: 8px; }
   .doc { padding: 30px 22px; }
   .button { font-size: 17px; padding: 13px 20px; white-space: nowrap; }
+  .signals-note { padding: 22px 20px 24px; }
+  .signals-note .signals { gap: 14px 12px; }
+  .signals-note .signals li { font-size: 18px; white-space: nowrap; gap: 9px; }
+  .signals-note .signals svg { width: 26px; height: 26px; }
+  .picks { gap: 28px; }
+  .swatches { gap: 10px; }
+  .swatch { width: 48px; height: 48px; border-radius: 13px; }
+  .swatch::after { left: 13px; top: 10px; width: 22px; height: 28px; }
   .fan { height: 440px; }
   .fan img { border-radius: 18px; }
   .fan .left { transform: translateX(-56%) rotate(-6deg); }

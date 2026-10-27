@@ -21,12 +21,12 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Pangolin&amp;subset=cyrillic&amp;display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../style.css?v=f0dcd40d">
+<link rel="stylesheet" href="../style.css?v=6c407306">
 <style>:root { --grain: url(../img/grain.webp); }</style>
 <script>try { const d = localStorage.getItem('taskward-desk'), i = localStorage.getItem('taskward-ink');
 if (d && d !== 'default') document.documentElement.dataset.desk = d;
 if (i && i !== 'default') document.documentElement.dataset.ink = i; } catch (_) {}</script>
-<script src="../app.js?v=f0dcd40d" defer></script>
+<script src="../app.js?v=6c407306" defer></script>
 </head>
 <body>
 <header class="wrap top">
@@ -50,8 +50,8 @@ if (i && i !== 'default') document.documentElement.dataset.ink = i; } catch (_) 
 
 <section class="part" id="lists"><div class="wrap">
 <h2>У каждого списка своя карточка</h2>
-<p class="say">Списки хорошего планировщика, каждый на своей бумаге, написанный от руки.</p>
-<div class="spread"><div class="paper white" style="--r:-1.2deg"><div class="head"><svg class="icon" aria-hidden="true"><use href="../img/icons.svg#export"/></svg>Входящие</div><p>Всё, что пришло в голову, пока не решил, что это.</p><div class="lines"><i></i><i></i></div></div><div class="paper white" style="--r:0.8deg"><div class="head"><svg class="icon" style="color:var(--seal)" aria-hidden="true"><use href="../img/icons.svg#favoriteFilled"/></svg>Сегодня</div><p>То, что берёшь на сегодня, и вечер под ним.</p><div class="lines"><i></i><i></i></div></div><div class="paper cream" style="--r:-0.4deg"><div class="head"><svg class="icon" aria-hidden="true"><use href="../img/icons.svg#today"/></svg>Планы</div><p>Ближайшие дни, и календарь рядом с ними.</p><div class="lines"><i></i><i></i></div></div><div class="paper cream" style="--r:1.1deg"><div class="head"><svg class="icon" aria-hidden="true"><use href="../img/icons.svg#list"/></svg>В любое время</div><p>Запас дел, который ждёт, когда будешь готов.</p><div class="lines"><i></i><i></i></div></div><div class="paper kraft" style="--r:-0.9deg"><div class="head"><svg class="icon" aria-hidden="true"><use href="../img/icons.svg#archive"/></svg>Когда-нибудь</div><p>Отложено, а не забыто. Иногда стоит пересмотреть.</p><div class="lines"><i></i><i></i></div></div><div class="paper grey" style="--r:0.5deg"><div class="head"><svg class="icon" aria-hidden="true"><use href="../img/icons.svg#check"/></svg>Журнал</div><p>Всё сделанное, в том порядке, как делал.</p><div class="lines"><i></i><i></i></div></div></div>
+<p class="say">Дела приходят во входящие, получают свой день или ждут его — и уходят в журнал. У каждого списка своя бумага, так что сразу видно, где ты.</p>
+<div class="spread"><div class="paper white" style="--r:-1.2deg"><div class="head"><svg class="icon" aria-hidden="true"><use href="../img/icons.svg#export"/></svg>Входящие</div><p>Всё, что пришло в голову, пока не решил, что это.</p></div><div class="paper white" style="--r:0.8deg"><div class="head"><svg class="icon" style="color:var(--seal)" aria-hidden="true"><use href="../img/icons.svg#favoriteFilled"/></svg>Сегодня</div><p>То, что берёшь на сегодня, и вечер под ним.</p></div><div class="paper cream" style="--r:-0.4deg"><div class="head"><svg class="icon" aria-hidden="true"><use href="../img/icons.svg#today"/></svg>Планы</div><p>Ближайшие дни, и календарь рядом с ними.</p></div><div class="paper cream" style="--r:1.1deg"><div class="head"><svg class="icon" aria-hidden="true"><use href="../img/icons.svg#list"/></svg>В любое время</div><p>Запас дел, который ждёт, когда будешь готов.</p></div><div class="paper kraft" style="--r:-0.9deg"><div class="head"><svg class="icon" aria-hidden="true"><use href="../img/icons.svg#archive"/></svg>Когда-нибудь</div><p>Отложено, а не забыто. Иногда стоит пересмотреть.</p></div><div class="paper grey" style="--r:0.5deg"><div class="head"><svg class="icon" aria-hidden="true"><use href="../img/icons.svg#check"/></svg>Журнал</div><p>Всё сделанное, в том порядке, как делал.</p></div></div>
 </div></section>
 
 <section class="part" id="ticket"><div class="wrap split">
@@ -67,10 +67,9 @@ if (i && i !== 'default') document.documentElement.dataset.ink = i; } catch (_) 
 </div></div>
 </div></section>
 
-<section class="part" id="signals"><div class="wrap">
-<h2>Больше, чем сделано или нет</h2>
-<p class="say">Зажми кружок задачи и отметь, как она: в работе, поручено, жду ответа. Поручённое и ожидание уходят в карандаш, чтобы не мешать.</p>
-<ul class="signals"><li class=""><svg viewBox="0 0 30 30" aria-hidden="true"><circle class="ring solid" cx="15" cy="15" r="11"/></svg>Выполнено</li><li class=""><svg viewBox="0 0 30 30" aria-hidden="true"><circle class="ring" cx="15" cy="15" r="11"/><path class="solid" d="M15 4a11 11 0 0 0 0 22z"/></svg>В работе</li><li class=""><svg viewBox="0 0 30 30" aria-hidden="true"><circle class="ring" cx="15" cy="15" r="11"/><path class="mark" d="M4 15h22M15 4v22"/></svg>Поручено</li><li class=""><svg viewBox="0 0 30 30" aria-hidden="true"><circle class="ring" cx="15" cy="15" r="11"/><path class="mark" d="M15 8v7l5 3"/></svg>Встреча</li><li class=""><svg viewBox="0 0 30 30" aria-hidden="true"><path class="mark" d="M15 5v20M6.3 10l17.4 10M6.3 20l17.4-10"/></svg>Важно</li><li class="faint"><svg viewBox="0 0 30 30" aria-hidden="true"><circle class="ring" cx="15" cy="15" r="11"/><path class="mark" d="M9 15h.01M15 15h.01M21 15h.01" stroke-width="3"/></svg>Жду ответа</li></ul>
+<section class="part" id="signals"><div class="wrap split">
+<div><h2>Больше, чем сделано или нет</h2><p class="say">Зажми кружок задачи и отметь, как она: в работе, поручено, жду ответа. Поручённое и ожидание уходят в карандаш, чтобы не мешать.</p></div>
+<div class="paper signals-note"><p class="note-title">Отметить</p><ul class="signals"><li class=""><svg viewBox="0 0 30 30" aria-hidden="true"><circle class="ring solid" cx="15" cy="15" r="11"/></svg>Выполнено</li><li class=""><svg viewBox="0 0 30 30" aria-hidden="true"><circle class="ring" cx="15" cy="15" r="11"/><path class="solid" d="M15 4a11 11 0 0 0 0 22z"/></svg>В работе</li><li class=""><svg viewBox="0 0 30 30" aria-hidden="true"><circle class="ring" cx="15" cy="15" r="11"/><path class="mark" d="M4 15h22M15 4v22"/></svg>Поручено</li><li class=""><svg viewBox="0 0 30 30" aria-hidden="true"><circle class="ring" cx="15" cy="15" r="11"/><path class="mark" d="M15 8v7l5 3"/></svg>Встреча</li><li class=""><svg viewBox="0 0 30 30" aria-hidden="true"><path class="mark" d="M15 5v20M6.3 10l17.4 10M6.3 20l17.4-10"/></svg>Важно</li><li class="faint"><svg viewBox="0 0 30 30" aria-hidden="true"><circle class="ring" cx="15" cy="15" r="11"/><path class="mark" d="M9 15h.01M15 15h.01M21 15h.01" stroke-width="3"/></svg>Жду ответа</li></ul></div>
 </div></section>
 
 <section class="part" id="smart"><div class="wrap split">
@@ -79,15 +78,12 @@ if (i && i !== 'default') document.documentElement.dataset.ink = i; } catch (_) 
 <p class="hint">Заметки</p>
 <div class="foot"><span class="chip"><span class="muted"><svg class="icon" aria-hidden="true"><use href="../img/icons.svg#today"/></svg></span><span class="muted">Когда</span></span><span class="marks"><svg class="icon" aria-hidden="true"><use href="../img/icons.svg#tag"/></svg><svg class="icon" aria-hidden="true"><use href="../img/icons.svg#paperLines"/></svg><svg class="icon" aria-hidden="true"><use href="../img/icons.svg#flagFilled"/></svg></span></div>
 </div>
-<div><h2>Пиши так, как сказал бы</h2><p class="say">Напиши «Тренировка завтра в 9 утра» — день и напоминание поставятся сами, а слова уйдут из названия. Тап по подсветке — если имел в виду просто слова.</p></div>
+<div><h2>Пиши, как говоришь</h2><p class="say">Напиши «Тренировка завтра в 9 утра» — день и напоминание поставятся сами, а слова уйдут из названия. Тап по подсветке — если имел в виду просто слова.</p></div>
 </div></section>
 
-<section class="part" id="zen"><div class="wrap split">
-<div><h2>Одна карточка на весь экран</h2><p class="say">Когда день требует всего внимания, разверни его карточку от края до края: без панели, без стола, без лишнего. Потяни вниз — и она снова на столе.</p></div>
-<div class="zen-phone" aria-hidden="true"><div class="paper">
-<div class="head"><svg class="icon" aria-hidden="true"><use href="../img/icons.svg#favoriteFilled"/></svg>Сегодня</div>
-<ul class="rows"><li class="row done"><button class="signal" aria-pressed="true" aria-label="Отметить: Наточить меч"><svg viewBox="0 0 24 24"><circle class="ring" cx="12" cy="12" r="9.2"/><circle class="fill" cx="12" cy="12" r="9.2"/></svg></button><div><div class="title">Наточить меч</div></div></li><li class="row"><button class="signal" aria-pressed="false" aria-label="Отметить: Позвонить кузнецу насчёт щита"><svg viewBox="0 0 24 24"><circle class="ring" cx="12" cy="12" r="9.2"/><circle class="fill" cx="12" cy="12" r="9.2"/></svg></button><div><div class="title">Позвонить кузнецу насчёт щита</div></div></li><li class="row"><button class="signal" aria-pressed="false" aria-label="Отметить: Заплатить за жильё"><svg viewBox="0 0 24 24"><circle class="ring" cx="12" cy="12" r="9.2"/><circle class="fill" cx="12" cy="12" r="9.2"/></svg></button><div><div class="title">Заплатить за жильё</div></div></li><li class="row"><button class="signal" aria-pressed="false" aria-label="Отметить: Спланировать поездку к морю"><svg viewBox="0 0 24 24"><circle class="ring" cx="12" cy="12" r="9.2"/><circle class="fill" cx="12" cy="12" r="9.2"/></svg></button><div><div class="title">Спланировать поездку к морю</div></div></li></ul><div class="blank"></div><div class="blank"></div><div class="blank"></div><div class="blank"></div><div class="blank"></div><div class="blank"></div>
-</div></div>
+<section class="part" id="more"><div class="wrap">
+<h2>И ещё немного</h2>
+<div class="trio"><div class="paper white" style="--r:-0.8deg"><div class="head"><svg class="icon" aria-hidden="true"><use href="../img/icons.svg#paperLines"/></svg>Дзен</div><p>Разверни карточку на весь экран, когда день требует всего внимания. Потяни вниз — и она снова на столе.</p></div><div class="paper cream" style="--r:0.6deg"><div class="head"><svg class="icon" aria-hidden="true"><use href="../img/icons.svg#search"/></svg>Быстрый поиск</div><p>Потяни «Сегодня» вниз на главном или нажми ⌘F на Маке: списки, проекты, теги и задачи прямо по мере ввода.</p></div><div class="paper kraft" style="--r:-0.4deg"><div class="head"><svg class="icon" aria-hidden="true"><use href="../img/icons.svg#notebook"/></svg>Заметки</div><p>Отдельная карточка для того, что не задача. Заметку можно сделать задачей, а задачу — заметкой.</p></div></div>
 </div></section>
 
 <section class="part" id="real"><div class="wrap">

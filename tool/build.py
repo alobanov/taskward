@@ -39,7 +39,7 @@ T = {
         'evening_tasks': ['Read twenty pages'],
         'check': 'Check off',
         'lists_h': 'Every list is a card of its own',
-        'lists_say': 'The lists of a good to-do app, each on its own paper, written by hand.',
+        'lists_say': 'Things come in, get a day or wait for one, and end up done. Each list has its own paper, so you always know where you are.',
         'lists': [
             ('export', 'Inbox', 'white', 'Whatever comes to mind, before you decide what it is.'),
             ('favoriteFilled', 'Today', 'white', 'What you take on today, and this evening under it.'),
@@ -61,8 +61,9 @@ T = {
         'signals_h': 'More than done or not done',
         'signals_say': 'Hold a task’s circle and mark how it stands. Delegated and waiting fade '
                        'into pencil, out of your way.',
+        'signals_note': 'Mark',
         'signals': ['Done', 'In progress', 'Delegated', 'Meeting', 'Important', 'Waiting'],
-        'smart_h': 'Write it the way you’d say it',
+        'smart_h': 'Write it as you’d say it',
         'smart_say': 'Type “Gym tomorrow at 9am” and the day and the reminder set themselves; the '
                      'words leave the title. Tap the highlight if you meant the words.',
         'smart_hint': 'Notes',
@@ -71,6 +72,12 @@ T = {
             ('Gym ', 'tomorrow at 9am', 'today', 'Tomorrow', '09:00'),
             ('Movie night ', 'on friday evening', 'darkThemeFilled', 'Friday', ''),
             ('Dentist ', 'Nov 12 at 14:30', 'today', 'Nov 12', '14:30'),
+        ],
+        'more_h': 'And a little more',
+        'more': [
+            ('paperLines', 'Zen', 'Open a card edge to edge when a day needs all of you. Draw it down and it is back on the desk.'),
+            ('search', 'Quick Find', 'Draw Today down on home, or press ⌘F on a Mac: lists, projects, tags and tasks, as you type.'),
+            ('notebook', 'Notes', 'A card of its own for what isn’t a task. Move a note into your tasks, or a task back into notes.'),
         ],
         'zen_h': 'One card, the whole screen',
         'zen_say': 'When a day needs all of you, open its card edge to edge: no bar, no desk, '
@@ -123,7 +130,7 @@ T = {
         'evening_tasks': ['Прочитать двадцать страниц'],
         'check': 'Отметить',
         'lists_h': 'У каждого списка своя карточка',
-        'lists_say': 'Списки хорошего планировщика, каждый на своей бумаге, написанный от руки.',
+        'lists_say': 'Дела приходят во входящие, получают свой день или ждут его — и уходят в журнал. У каждого списка своя бумага, так что сразу видно, где ты.',
         'lists': [
             ('export', 'Входящие', 'white', 'Всё, что пришло в голову, пока не решил, что это.'),
             ('favoriteFilled', 'Сегодня', 'white', 'То, что берёшь на сегодня, и вечер под ним.'),
@@ -145,8 +152,9 @@ T = {
         'signals_h': 'Больше, чем сделано или нет',
         'signals_say': 'Зажми кружок задачи и отметь, как она: в работе, поручено, жду ответа. '
                        'Поручённое и ожидание уходят в карандаш, чтобы не мешать.',
+        'signals_note': 'Отметить',
         'signals': ['Выполнено', 'В работе', 'Поручено', 'Встреча', 'Важно', 'Жду ответа'],
-        'smart_h': 'Пиши так, как сказал бы',
+        'smart_h': 'Пиши, как говоришь',
         'smart_say': 'Напиши «Тренировка завтра в 9 утра» — день и напоминание поставятся сами, '
                      'а слова уйдут из названия. Тап по подсветке — если имел в виду просто слова.',
         'smart_hint': 'Заметки',
@@ -155,6 +163,12 @@ T = {
             ('Тренировка ', 'завтра в 9 утра', 'today', 'Завтра', '09:00'),
             ('Кино ', 'в пятницу вечером', 'darkThemeFilled', 'Пятница', ''),
             ('Визит к врачу ', '12 ноября в 14:30', 'today', '12 нояб.', '14:30'),
+        ],
+        'more_h': 'И ещё немного',
+        'more': [
+            ('paperLines', 'Дзен', 'Разверни карточку на весь экран, когда день требует всего внимания. Потяни вниз — и она снова на столе.'),
+            ('search', 'Быстрый поиск', 'Потяни «Сегодня» вниз на главном или нажми ⌘F на Маке: списки, проекты, теги и задачи прямо по мере ввода.'),
+            ('notebook', 'Заметки', 'Отдельная карточка для того, что не задача. Заметку можно сделать задачей, а задачу — заметкой.'),
         ],
         'zen_h': 'Одна карточка на весь экран',
         'zen_say': 'Когда день требует всего внимания, разверни его карточку от края до края: '
@@ -296,7 +310,7 @@ def landing(lang):
     evening = ''.join(row(t, title, '', False) for title in t['evening_tasks'])
     lists = ''.join(
         f'<div class="paper {paper}" style="--r:{r}deg"><div class="head">'
-        f'{icon(mark)}{name}</div><p>{say}</p><div class="lines"><i></i><i></i></div></div>'
+        f'{icon(mark)}{name}</div><p>{say}</p></div>'
         for (mark, name, paper, say), r in zip(t['lists'], [-1.2, 0.8, -0.4, 1.1, -0.9, 0.5])
     ).replace('<svg class="icon" aria-hidden="true"><use href="{base}img/icons.svg#favoriteFilled"/></svg>',
               '<svg class="icon" style="color:var(--seal)" aria-hidden="true"><use href="{base}img/icons.svg#favoriteFilled"/></svg>')
@@ -328,8 +342,11 @@ def landing(lang):
         for k, n, c in t['inks']
     )
     kept = ''.join(f'<li>{line}</li>' for line in t['kept'])
+    more = ''.join(
+        f'<div class="paper {paper}" style="--r:{r}deg"><div class="head">{icon(mark)}{name}</div><p>{say}</p></div>'
+        for (mark, name, say), paper, r in zip(t['more'], ['white', 'cream', 'kraft'], [-0.8, 0.6, -0.4])
+    )
     sample_rows = ''.join(row(t, title, '', done) for title, _, done in t['tasks'][:3])
-    zen_rows = ''.join(row(t, title, '', done) for title, _, done in t['tasks'])
     pre = 'ru/' if lang == 'ru' else ''
     page = head(lang, t['title'], t['desc'], '', base) + f'''<body>
 {bar(t, base, lang, home)}
@@ -367,10 +384,9 @@ def landing(lang):
 </div></div>
 </div></section>
 
-<section class="part" id="signals"><div class="wrap">
-<h2>{t['signals_h']}</h2>
-<p class="say">{t['signals_say']}</p>
-<ul class="signals">{signals}</ul>
+<section class="part" id="signals"><div class="wrap split">
+<div><h2>{t['signals_h']}</h2><p class="say">{t['signals_say']}</p></div>
+<div class="paper signals-note"><p class="note-title">{t['signals_note']}</p><ul class="signals">{signals}</ul></div>
 </div></section>
 
 <section class="part" id="smart"><div class="wrap split">
@@ -382,12 +398,9 @@ def landing(lang):
 <div><h2>{t['smart_h']}</h2><p class="say">{t['smart_say']}</p></div>
 </div></section>
 
-<section class="part" id="zen"><div class="wrap split">
-<div><h2>{t['zen_h']}</h2><p class="say">{t['zen_say']}</p></div>
-<div class="zen-phone" aria-hidden="true"><div class="paper">
-<div class="head"><svg class="icon" aria-hidden="true"><use href="{base}img/icons.svg#favoriteFilled"/></svg>{t['today']}</div>
-<ul class="rows">{zen_rows}</ul>{''.join('<div class="blank"></div>' for _ in range(6))}
-</div></div>
+<section class="part" id="more"><div class="wrap">
+<h2>{t['more_h']}</h2>
+<div class="trio">{more}</div>
 </div></section>
 
 <section class="part" id="real"><div class="wrap">
