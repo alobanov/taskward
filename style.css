@@ -342,6 +342,7 @@ footer .by { margin-left: auto; }
   .kept, .knight { grid-template-columns: 1fr; padding: 28px 24px; }
   .doc { padding: 30px 22px; }
   .scene { height: 540px; }
+  .button { font-size: 17px; padding: 13px 20px; white-space: nowrap; }
   .card { padding: 14px 16px; }
   .card .head { font-size: 23px; gap: 9px; }
   .card .head .icon { width: 21px; height: 21px; }
