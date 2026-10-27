@@ -231,7 +231,7 @@ def head(lang, title, desc, path, base):
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Pangolin&amp;subset=cyrillic&amp;display=swap" rel="stylesheet">
 <link rel="stylesheet" href="{base}style.css?v={VERSION}">
-<style>:root {{ --grain: url({base}img/grain.webp); }} .oak {{ background-image: url({base}img/oak.webp); }}</style>
+<style>:root {{ --grain: url({base}img/grain.webp); }}</style>
 <script>try {{ const d = localStorage.getItem('taskward-desk'), i = localStorage.getItem('taskward-ink');
 if (d && d !== 'default') document.documentElement.dataset.desk = d;
 if (i && i !== 'default') document.documentElement.dataset.ink = i; }} catch (_) {{}}</script>
@@ -334,28 +334,19 @@ def landing(lang):
     page = head(lang, t['title'], t['desc'], '', base) + f'''<body>
 {bar(t, base, lang, home)}
 <main>
-<div class="stage"><div class="wrap stage-in">
+<section class="hero"><div class="wrap hero-in">
 <div class="hero-words">
 <h1>{t['h1']}</h1>
 <p class="lede">{t['lede']}</p>
 <a class="button" href="{BETA}">{icon('add')}{t['cta']}</a>
 <p class="small">{t['small']}</p>
-<p class="then">{t['then']}</p>
 </div>
-<div class="scene">
-<div class="holder-cards">
-<div class="card paper kraft back someday"><div class="head">{icon('archive')}{t['someday']}</div></div>
-<div class="card paper cream back anytime"><div class="head">{icon('list')}{t['anytime']}<span class="count">9</span></div></div>
-<div class="card paper cream back upcoming"><div class="head">{icon('today')}{t['upcoming']}<span class="count">6</span></div></div>
-<div class="card paper today"><div class="head"><svg class="icon" style="color:var(--seal)" aria-hidden="true"><use href="{base}img/icons.svg#favoriteFilled"/></svg>{t['today']}<span class="date">{t['date']}</span></div>
-<ul class="rows">{rows}</ul>
-<div class="evening">{icon('darkThemeFilled')}{t['evening']}</div>
-<ul class="rows">{evening}</ul>
+<div class="fan">
+<img class="side left" src="{base}img/{lang}-iphone-3.webp" alt="" width="760" height="1651">
+<img class="side right" src="{base}img/{lang}-iphone-4.webp" alt="" width="760" height="1651">
+<img class="front" src="{base}img/{lang}-iphone-1.webp" alt="{t['shots_alt']}" width="760" height="1651" fetchpriority="high">
 </div>
-</div>
-<div class="oak" aria-hidden="true"></div>
-</div>
-</div></div>
+</div></section>
 
 <section class="part" id="lists"><div class="wrap">
 <h2>{t['lists_h']}</h2>

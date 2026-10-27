@@ -1,34 +1,7 @@
-// Taskward's site: the Today card drawn out of the holder as the page scrolls, its tasks
-// checked off at a tap, a day written into a new card's title, and the desk and ink picked.
+// Taskward's site: tasks checked off at a tap, a day written into a new card's title, and the desk and ink picked.
 (() => {
   const root = document.documentElement;
   const still = matchMedia('(prefers-reduced-motion: reduce)');
-  const narrow = matchMedia('(max-width: 900px)');
-
-  // How far the first screen has been scrolled through, 0 to 1: the card drawn out by it.
-  const stage = document.querySelector('.stage');
-  if (stage) {
-    let queued = false;
-    const draw = () => {
-      queued = false;
-      if (still.matches || narrow.matches) {
-        stage.style.setProperty('--p', 0);
-        return;
-      }
-      const room = stage.offsetHeight - innerHeight;
-      const p = Math.min(1, Math.max(0, -stage.getBoundingClientRect().top / room));
-      // Eased out: quick to start, slowing into its rest.
-      const eased = 1 - Math.pow(1 - p, 3);
-      stage.style.setProperty('--p', eased.toFixed(4));
-      stage.classList.toggle('laid', eased > 0.6);
-    };
-    const ask = () => {
-      if (!queued) { queued = true; requestAnimationFrame(draw); }
-    };
-    addEventListener('scroll', ask, { passive: true });
-    addEventListener('resize', ask);
-    draw();
-  }
 
   // A task's circle: a tap checks it off, and back on.
   document.querySelectorAll('.row .signal').forEach((circle) => {

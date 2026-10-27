@@ -21,12 +21,12 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Pangolin&amp;subset=cyrillic&amp;display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=8ad7d108">
-<style>:root { --grain: url(img/grain.webp); } .oak { background-image: url(img/oak.webp); }</style>
+<link rel="stylesheet" href="style.css?v=f0dcd40d">
+<style>:root { --grain: url(img/grain.webp); }</style>
 <script>try { const d = localStorage.getItem('taskward-desk'), i = localStorage.getItem('taskward-ink');
 if (d && d !== 'default') document.documentElement.dataset.desk = d;
 if (i && i !== 'default') document.documentElement.dataset.ink = i; } catch (_) {}</script>
-<script src="app.js?v=8ad7d108" defer></script>
+<script src="app.js?v=f0dcd40d" defer></script>
 </head>
 <body>
 <header class="wrap top">
@@ -34,28 +34,19 @@ if (i && i !== 'default') document.documentElement.dataset.ink = i; } catch (_) 
 <nav aria-label="Sections"><a class="hide-sm" href="./#lists">Lists</a><a class="hide-sm" href="./#smart">Smart dates</a><a class="hide-sm" href="./#real">iPhone and Mac</a><a class="hide-sm" href="privacy/">Privacy</a><a href="support/">Support</a><a href="ru/" lang="ru">Русский</a></nav>
 </header>
 <main>
-<div class="stage"><div class="wrap stage-in">
+<section class="hero"><div class="wrap hero-in">
 <div class="hero-words">
 <h1>Your day,<br>on one card.</h1>
 <p class="lede">Taskward is a calm to-do list for iPhone and Mac. Every list is a paper card on your desk.</p>
 <a class="button" href="https://testflight.apple.com/join/h82fp1R4"><svg class="icon" aria-hidden="true"><use href="img/icons.svg#add"/></svg>Join the beta on TestFlight</a>
 <p class="small">Free, no account. Coming to the App Store soon.</p>
-<p class="then">Draw a card out of the holder and it lies on your desk. Work right on it.</p>
 </div>
-<div class="scene">
-<div class="holder-cards">
-<div class="card paper kraft back someday"><div class="head"><svg class="icon" aria-hidden="true"><use href="img/icons.svg#archive"/></svg>Someday</div></div>
-<div class="card paper cream back anytime"><div class="head"><svg class="icon" aria-hidden="true"><use href="img/icons.svg#list"/></svg>Anytime<span class="count">9</span></div></div>
-<div class="card paper cream back upcoming"><div class="head"><svg class="icon" aria-hidden="true"><use href="img/icons.svg#today"/></svg>Upcoming<span class="count">6</span></div></div>
-<div class="card paper today"><div class="head"><svg class="icon" style="color:var(--seal)" aria-hidden="true"><use href="img/icons.svg#favoriteFilled"/></svg>Today<span class="date">27.10.26</span></div>
-<ul class="rows"><li class="row done"><button class="signal" aria-pressed="true" aria-label="Check off: Sharpen the sword"><svg viewBox="0 0 24 24"><circle class="ring" cx="12" cy="12" r="9.2"/><circle class="fill" cx="12" cy="12" r="9.2"/></svg></button><div><div class="title">Sharpen the sword</div></div></li><li class="row"><button class="signal" aria-pressed="false" aria-label="Check off: Call the smith about the shield"><svg viewBox="0 0 24 24"><circle class="ring" cx="12" cy="12" r="9.2"/><circle class="fill" cx="12" cy="12" r="9.2"/></svg></button><div><div class="title">Call the smith about the shield</div><div class="print"><span><svg class="icon" aria-hidden="true"><use href="img/icons.svg#flagFilled"/></svg>Friday</span><span><svg class="icon" aria-hidden="true"><use href="img/icons.svg#reminderFilled"/></svg>21:30</span><span>1/3</span></div></div></li><li class="row"><button class="signal" aria-pressed="false" aria-label="Check off: Pay the rent"><svg viewBox="0 0 24 24"><circle class="ring" cx="12" cy="12" r="9.2"/><circle class="fill" cx="12" cy="12" r="9.2"/></svg></button><div><div class="title">Pay the rent</div><div class="print"><span class="due"><svg class="icon" aria-hidden="true"><use href="img/icons.svg#flagFilled"/></svg>Today</span></div></div></li><li class="row"><button class="signal" aria-pressed="false" aria-label="Check off: Plan the ride to the coast"><svg viewBox="0 0 24 24"><circle class="ring" cx="12" cy="12" r="9.2"/><circle class="fill" cx="12" cy="12" r="9.2"/></svg></button><div><div class="title">Plan the ride to the coast</div><div class="print"><span>2/5</span></div></div></li></ul>
-<div class="evening"><svg class="icon" aria-hidden="true"><use href="img/icons.svg#darkThemeFilled"/></svg>This Evening</div>
-<ul class="rows"><li class="row"><button class="signal" aria-pressed="false" aria-label="Check off: Read twenty pages"><svg viewBox="0 0 24 24"><circle class="ring" cx="12" cy="12" r="9.2"/><circle class="fill" cx="12" cy="12" r="9.2"/></svg></button><div><div class="title">Read twenty pages</div></div></li></ul>
+<div class="fan">
+<img class="side left" src="img/en-iphone-3.webp" alt="" width="760" height="1651">
+<img class="side right" src="img/en-iphone-4.webp" alt="" width="760" height="1651">
+<img class="front" src="img/en-iphone-1.webp" alt="Taskward on iPhone" width="760" height="1651" fetchpriority="high">
 </div>
-</div>
-<div class="oak" aria-hidden="true"></div>
-</div>
-</div></div>
+</div></section>
 
 <section class="part" id="lists"><div class="wrap">
 <h2>Every list is a card of its own</h2>
