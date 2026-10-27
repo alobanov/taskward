@@ -333,13 +333,17 @@ footer .by { margin-left: auto; }
   body { font-size: 19px; }
   .spread { grid-template-columns: 1fr 1fr; gap: 16px 12px; margin-top: 36px; }
   .spread .paper { padding: 14px 14px 16px; border-radius: 16px; }
-  .spread .head { font-size: 21px; gap: 8px; margin-bottom: 6px; }
+  .spread .head { font-size: 18px; gap: 7px; margin-bottom: 6px; white-space: nowrap; }
   .spread .head .icon { width: 20px; height: 20px; }
   .spread p { font-size: 15px; line-height: 1.35; }
   .spread .lines { display: none; }
   .shelf img { width: 220px; border-radius: 14px; }
   section.part .say { font-size: 19px; }
   .kept, .knight { grid-template-columns: 1fr; padding: 28px 24px; }
+  .knight { padding-inline: 0; gap: 12px; }
+  .knight .icon.big { width: 84px; height: 84px; }
+  footer .wrap { flex-direction: column; align-items: flex-start; gap: 10px; }
+  footer .by { margin-left: 0; margin-top: 8px; }
   .doc { padding: 30px 22px; }
   .scene { height: 540px; }
   .button { font-size: 17px; padding: 13px 20px; white-space: nowrap; }
