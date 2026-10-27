@@ -3,6 +3,14 @@
   const root = document.documentElement;
   const still = matchMedia('(prefers-reduced-motion: reduce)');
 
+  // A ticket's steps, checked off and back on.
+  document.querySelectorAll('.ticket .steps .box').forEach((box) => {
+    box.addEventListener('click', () => {
+      const done = box.closest('li').classList.toggle('done');
+      box.setAttribute('aria-pressed', String(done));
+    });
+  });
+
   // A task's circle: a tap checks it off, and back on.
   document.querySelectorAll('.row .signal').forEach((circle) => {
     circle.addEventListener('click', () => {
@@ -12,72 +20,103 @@
     });
   });
 
-  // A day written into the new card's title: typed out, marked as it is read, and the
-  // card's foot set from it — one phrase after another while the card is in sight.
-  const card = document.querySelector('.newcard');
-  if (card) {
-    const phrases = JSON.parse(card.dataset.phrases);
-    const typed = card.querySelector('.typed');
-    const foot = card.querySelector('.chip');
-    const blank = foot.innerHTML;
-    const wait = (ms) => new Promise((done) => setTimeout(done, ms));
-    let seen = false;
-    let running = false;
-
-    const show = (title, phrase, marked) => {
-      typed.textContent = '';
-      typed.append(title);
-      if (phrase) {
-        if (marked) {
-          const mark = document.createElement('mark');
-          mark.textContent = phrase;
-          typed.append(mark);
-        } else {
-          typed.append(phrase);
-        }
+  // Try it: a task written on the new card, its day read as it is written — the app's own
+  // rules (when.js) — marked under the highlighter, set at the card's foot, and on Return
+  // the task laid on its card: the Inbox with no day, Today for today, Upcoming for later.
+  const tryIt = document.querySelector('.try');
+  if (tryIt) {
+    const words = JSON.parse(tryIt.dataset.words);
+    const lang = tryIt.dataset.lang;
+    const form = tryIt.querySelector('form');
+    const input = form.querySelector('.title');
+    const mirror = form.querySelector('.mirror');
+    const chip = form.querySelector('.chip');
+    const lists = Object.fromEntries([...tryIt.querySelectorAll('.mini')].map((m) => [m.dataset.list, m]));
+    const dismissed = new Set();
+    let found = null;
+    const esc = (t) => t.replace(/&/g, '&amp;').replace(/</g, '&lt;');
+    const pad = (n) => String(n).padStart(2, '0');
+    const clock = (m) => `${pad(Math.floor(m / 60))}:${pad(m % 60)}`;
+    const today = () => WhenWords.day0(new Date());
+    const dayName = (d) => {
+      const ahead = Math.round((d - today()) / 864e5);
+      if (ahead === 0) return words.today;
+      if (ahead === 1) return words.tomorrow;
+      const f = ahead < 7
+        ? new Intl.DateTimeFormat(lang, { weekday: 'long' }).format(d)
+        : new Intl.DateTimeFormat(lang, { day: 'numeric', month: 'short' }).format(d);
+      return f.charAt(0).toUpperCase() + f.slice(1);
+    };
+    const whenOf = (f) => {
+      if (!f) return `<span class="muted">${words.icons.today}${words.when}</span>`;
+      const isToday = Math.round((f.day - today()) / 864e5) === 0;
+      const icon = f.evening ? words.icons.moon : (isToday ? `<span class="star">${words.icons.star}</span>` : words.icons.today);
+      const name = f.evening && isToday ? words.evening : dayName(f.day);
+      const bell = f.minutes != null ? `${words.icons.bell}<span>${clock(f.minutes)}</span>` : '';
+      return `${icon}<span>${name}</span>${bell}`;
+    };
+    const draw = () => {
+      const text = input.value;
+      found = WhenWords.find(text, new Date(), dismissed);
+      mirror.innerHTML = found
+        ? esc(text.slice(0, found.start)) + '<mark>' + esc(text.slice(found.start, found.end)) + '</mark>' + esc(text.slice(found.end))
+        : esc(text);
+      mirror.scrollLeft = input.scrollLeft;
+      chip.innerHTML = whenOf(found);
+      form.classList.toggle('dated', !!found);
+    };
+    const place = (title, f, fresh) => {
+      const ahead = f ? Math.round((f.day - today()) / 864e5) : null;
+      const list = ahead === null ? 'inbox' : (ahead <= 0 ? 'today' : 'upcoming');
+      const li = document.createElement('li');
+      li.className = 'row' + (fresh ? ' fresh' : '');
+      const print = f ? `<div class="print">${list === 'upcoming' ? `<span>${esc(dayName(f.day))}</span>` : ''}${f.evening ? `<span>${words.icons.moon}</span>` : ''}${f.minutes != null ? `<span>${words.icons.bell}${clock(f.minutes)}</span>` : ''}</div>` : '';
+      li.innerHTML = `<button class="signal" type="button" aria-pressed="false"><svg viewBox="0 0 24 24"><circle class="ring" cx="12" cy="12" r="9.2"/><circle class="fill" cx="12" cy="12" r="9.2"/></svg></button><div><div class="title">${esc(title)}</div>${print}</div>`;
+      li.querySelector('.signal').addEventListener('click', () => {
+        li.setAttribute('aria-pressed', String(li.classList.toggle('done')));
+      });
+      const rows = lists[list].querySelector('.rows');
+      rows.prepend(li);
+      while (rows.children.length > 4) rows.lastElementChild.remove();
+      if (fresh) {
+        lists[list].classList.remove('lifted');
+        void lists[list].offsetWidth;
+        lists[list].classList.add('lifted');
       }
     };
-    const setFoot = (html) => {
-      foot.style.opacity = 0;
-      setTimeout(() => { foot.innerHTML = html; foot.style.opacity = 1; }, 180);
-    };
-
-    const play = async () => {
-      if (running) return;
-      running = true;
-      for (let i = 0; seen; i = (i + 1) % phrases.length) {
-        const { title, phrase, foot: html } = phrases[i];
-        setFoot(blank);
-        for (let n = 0; n <= title.length && seen; n++) {
-          show(title.slice(0, n), '', false);
-          await wait(70);
-        }
-        for (let n = 1; n <= phrase.length && seen; n++) {
-          show(title, phrase.slice(0, n), false);
-          await wait(70);
-        }
-        if (!seen) break;
-        show(title, phrase, true);
-        setFoot(html);
-        await wait(2600);
-        for (let n = title.length + phrase.length; n >= 0 && seen; n -= 2) {
-          show(title.slice(0, Math.min(n, title.length)), phrase.slice(0, Math.max(0, n - title.length)), n > title.length + phrase.length - 2);
-          await wait(18);
-        }
-        await wait(300);
-      }
-      running = false;
-    };
-
-    if (still.matches) {
-      show(phrases[0].title, phrases[0].phrase, true);
-      foot.innerHTML = phrases[0].foot;
-    } else {
-      new IntersectionObserver(([entry]) => {
-        seen = entry.isIntersecting;
-        if (seen) play();
-      }, { threshold: 0.4 }).observe(card);
+    for (const [list, titles] of Object.entries(words.seed)) {
+      for (const title of titles) lists[list].querySelector('.rows').append(Object.assign(document.createElement('li'), {
+        className: 'row', innerHTML: `<span class="signal"><svg viewBox="0 0 24 24"><circle class="ring" cx="12" cy="12" r="9.2"/><circle class="fill" cx="12" cy="12" r="9.2"/></svg></span><div><div class="title">${esc(title)}</div></div>`,
+      }));
     }
+    input.addEventListener('input', () => { dismissed.clear(); draw(); });
+    input.addEventListener('scroll', () => { mirror.scrollLeft = input.scrollLeft; });
+    // A tap in the words marked: they are a title's words again.
+    input.addEventListener('click', () => {
+      const at = input.selectionStart;
+      if (found && input.selectionStart === input.selectionEnd && at > found.start && at < found.end) {
+        dismissed.add(input.value.slice(found.start, found.end).toLowerCase());
+        draw();
+      }
+    });
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const text = input.value.trim();
+      if (!text) { input.focus(); return; }
+      const title = found ? (WhenWords.without(input.value, found) || text) : text;
+      place(title, found, true);
+      input.value = '';
+      dismissed.clear();
+      draw();
+    });
+    tryIt.querySelectorAll('.example').forEach((b) => b.addEventListener('click', () => {
+      input.value = words.base + b.textContent;
+      dismissed.clear();
+      draw();
+      input.focus({ preventScroll: true });
+      input.setSelectionRange(input.value.length, input.value.length);
+    }));
+    draw();
   }
 
   // The desk and the ink picked: the page itself takes them, and keeps them.

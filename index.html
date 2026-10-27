@@ -21,12 +21,13 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Pangolin&amp;subset=cyrillic&amp;display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=6c407306">
+<link rel="stylesheet" href="style.css?v=803013a5">
 <style>:root { --grain: url(img/grain.webp); }</style>
 <script>try { const d = localStorage.getItem('taskward-desk'), i = localStorage.getItem('taskward-ink');
 if (d && d !== 'default') document.documentElement.dataset.desk = d;
 if (i && i !== 'default') document.documentElement.dataset.ink = i; } catch (_) {}</script>
-<script src="app.js?v=6c407306" defer></script>
+<script src="when.js?v=803013a5" defer></script>
+<script src="app.js?v=803013a5" defer></script>
 </head>
 <body>
 <header class="wrap top">
@@ -36,7 +37,7 @@ if (i && i !== 'default') document.documentElement.dataset.ink = i; } catch (_) 
 <main>
 <section class="hero"><div class="wrap hero-in">
 <div class="hero-words">
-<h1>Your day,<br>on one card.</h1>
+<h1 class="written"><span class="pen" style="--i:0">Your day,</span><span class="pen" style="--i:1">on one card.</span></h1>
 <p class="lede">Taskward is a calm to-do list for iPhone and Mac. Every list is a paper card on your desk.</p>
 <a class="button" href="https://testflight.apple.com/join/h82fp1R4"><svg class="icon" aria-hidden="true"><use href="img/icons.svg#add"/></svg>Join the beta on TestFlight</a>
 <p class="small">Free, no account. Coming to the App Store soon.</p>
@@ -57,9 +58,9 @@ if (i && i !== 'default') document.documentElement.dataset.ink = i; } catch (_) 
 <section class="part" id="ticket"><div class="wrap split">
 <div><h2>A task opens as a ticket</h2><p class="say">Notes, a checklist, tags, a deadline and a reminder, on a card torn off along a dashed line. Only what you have added shows; the rest waits as a pencil mark at its foot.</p></div>
 <div class="ticket-wrap"><div class="paper ticket">
-<h3><span class="signal"><svg viewBox="0 0 24 24"><circle class="ring" cx="12" cy="12" r="9.2"/><circle class="fill" cx="12" cy="12" r="9.2"/></svg></span>Call the smith about the shield</h3>
+<h3 class="row"><button class="signal" type="button" aria-pressed="false" aria-label="Check off: Call the smith about the shield"><svg viewBox="0 0 24 24"><circle class="ring" cx="12" cy="12" r="9.2"/><circle class="fill" cx="12" cy="12" r="9.2"/></svg></button><span class="title">Call the smith about the shield</span></h3>
 <p class="notes">The old one is cracked along the rim. Ask if he can match the boss.</p>
-<ul class="steps"><li class="done"><span class="box"></span>Measure the old one</li><li class=""><span class="box"></span>Find the sketch</li><li class=""><span class="box"></span>Ask the price</li></ul>
+<ul class="steps"><li class="done"><button class="box" type="button" aria-pressed="true" aria-label="Check off: Measure the old one"></button>Measure the old one</li><li class=""><button class="box" type="button" aria-pressed="false" aria-label="Check off: Find the sketch"></button>Find the sketch</li><li class=""><button class="box" type="button" aria-pressed="false" aria-label="Check off: Ask the price"></button>Ask the price</li></ul>
 <div class="stub">
 <div class="tags"><span>Armoury</span><span>Errand</span></div>
 <div class="when"><span class="star"><svg class="icon" aria-hidden="true"><use href="img/icons.svg#favoriteFilled"/></svg></span>Today<svg class="icon" aria-hidden="true"><use href="img/icons.svg#reminderFilled"/></svg>21:30<span class="marks"><svg class="icon" aria-hidden="true"><use href="img/icons.svg#flagFilled"/></svg></span></div>
@@ -72,13 +73,22 @@ if (i && i !== 'default') document.documentElement.dataset.ink = i; } catch (_) 
 <div class="paper signals-note"><p class="note-title">Mark</p><ul class="signals"><li class=""><svg viewBox="0 0 30 30" aria-hidden="true"><circle class="ring solid" cx="15" cy="15" r="11"/></svg>Done</li><li class=""><svg viewBox="0 0 30 30" aria-hidden="true"><circle class="ring" cx="15" cy="15" r="11"/><path class="solid" d="M15 4a11 11 0 0 0 0 22z"/></svg>In progress</li><li class=""><svg viewBox="0 0 30 30" aria-hidden="true"><circle class="ring" cx="15" cy="15" r="11"/><path class="mark" d="M4 15h22M15 4v22"/></svg>Delegated</li><li class=""><svg viewBox="0 0 30 30" aria-hidden="true"><circle class="ring" cx="15" cy="15" r="11"/><path class="mark" d="M15 8v7l5 3"/></svg>Meeting</li><li class=""><svg viewBox="0 0 30 30" aria-hidden="true"><path class="mark" d="M15 5v20M6.3 10l17.4 10M6.3 20l17.4-10"/></svg>Important</li><li class="faint"><svg viewBox="0 0 30 30" aria-hidden="true"><circle class="ring" cx="15" cy="15" r="11"/><path class="mark" d="M9 15h.01M15 15h.01M21 15h.01" stroke-width="3"/></svg>Waiting</li></ul></div>
 </div></section>
 
-<section class="part" id="smart"><div class="wrap split">
-<div class="paper newcard" data-phrases="[{&quot;title&quot;: &quot;Gym &quot;, &quot;phrase&quot;: &quot;tomorrow at 9am&quot;, &quot;foot&quot;: &quot;<svg class=\&quot;icon\&quot; aria-hidden=\&quot;true\&quot;><use href=\&quot;img/icons.svg#today\&quot;/></svg><span>Tomorrow</span><svg class=\&quot;icon\&quot; aria-hidden=\&quot;true\&quot;><use href=\&quot;img/icons.svg#reminderFilled\&quot;/></svg><span>09:00</span>&quot;}, {&quot;title&quot;: &quot;Movie night &quot;, &quot;phrase&quot;: &quot;on friday evening&quot;, &quot;foot&quot;: &quot;<svg class=\&quot;icon\&quot; aria-hidden=\&quot;true\&quot;><use href=\&quot;img/icons.svg#darkThemeFilled\&quot;/></svg><span>Friday</span>&quot;}, {&quot;title&quot;: &quot;Dentist &quot;, &quot;phrase&quot;: &quot;Nov 12 at 14:30&quot;, &quot;foot&quot;: &quot;<svg class=\&quot;icon\&quot; aria-hidden=\&quot;true\&quot;><use href=\&quot;img/icons.svg#today\&quot;/></svg><span>Nov 12</span><svg class=\&quot;icon\&quot; aria-hidden=\&quot;true\&quot;><use href=\&quot;img/icons.svg#reminderFilled\&quot;/></svg><span>14:30</span>&quot;}]">
-<div class="field"><span class="ring"></span><span><span class="typed"></span><span class="caret"></span></span></div>
-<p class="hint">Notes</p>
-<div class="foot"><span class="chip"><span class="muted"><svg class="icon" aria-hidden="true"><use href="img/icons.svg#today"/></svg></span><span class="muted">When</span></span><span class="marks"><svg class="icon" aria-hidden="true"><use href="img/icons.svg#tag"/></svg><svg class="icon" aria-hidden="true"><use href="img/icons.svg#paperLines"/></svg><svg class="icon" aria-hidden="true"><use href="img/icons.svg#flagFilled"/></svg></span></div>
+<section class="part" id="smart"><div class="wrap">
+<div class="try-head"><h2>Write it as you’d say it</h2><p class="say">Type a task with a day in it, the way you would say it, and press Return. The day and the reminder set themselves, and the task lands on its card.</p></div>
+<div class="try" data-lang="en" data-words="{&quot;base&quot;: &quot;Gym &quot;, &quot;evening&quot;: &quot;This Evening&quot;, &quot;when&quot;: &quot;When&quot;, &quot;today&quot;: &quot;Today&quot;, &quot;tomorrow&quot;: &quot;Tomorrow&quot;, &quot;seed&quot;: {&quot;inbox&quot;: [&quot;Buy a new pen&quot;], &quot;today&quot;: [&quot;Sharpen the sword&quot;], &quot;upcoming&quot;: [&quot;Tournament at the castle&quot;]}, &quot;icons&quot;: {&quot;today&quot;: &quot;<svg class=\&quot;icon\&quot; aria-hidden=\&quot;true\&quot;><use href=\&quot;img/icons.svg#today\&quot;/></svg>&quot;, &quot;moon&quot;: &quot;<svg class=\&quot;icon\&quot; aria-hidden=\&quot;true\&quot;><use href=\&quot;img/icons.svg#darkThemeFilled\&quot;/></svg>&quot;, &quot;bell&quot;: &quot;<svg class=\&quot;icon\&quot; aria-hidden=\&quot;true\&quot;><use href=\&quot;img/icons.svg#reminderFilled\&quot;/></svg>&quot;, &quot;star&quot;: &quot;<svg class=\&quot;icon\&quot; aria-hidden=\&quot;true\&quot;><use href=\&quot;img/icons.svg#favoriteFilled\&quot;/></svg>&quot;, &quot;inbox&quot;: &quot;<svg class=\&quot;icon\&quot; aria-hidden=\&quot;true\&quot;><use href=\&quot;img/icons.svg#export\&quot;/></svg>&quot;}}">
+<form class="paper newcard" autocomplete="off">
+<label class="field"><span class="ring" aria-hidden="true"></span>
+<span class="line"><span class="mirror" aria-hidden="true"></span>
+<input class="title" type="text" maxlength="70" enterkeyhint="done" aria-label="Gym tomorrow at 9am" placeholder="Gym tomorrow at 9am"></span></label>
+<div class="foot"><span class="chip"></span><button class="put" type="submit">Put it on its card</button></div>
+</form>
+<div class="examples"><button type="button" class="example">tomorrow at 9am</button><button type="button" class="example">on friday evening</button><button type="button" class="example">in 3 days</button><button type="button" class="example">Nov 12 at 14:30</button></div>
+<div class="desk3">
+<div class="paper mini" data-list="inbox"><div class="head"><svg class="icon" aria-hidden="true"><use href="img/icons.svg#export"/></svg>Inbox</div><ul class="rows"></ul></div>
+<div class="paper mini" data-list="today"><div class="head"><svg class="icon" style="color:var(--seal)" aria-hidden="true"><use href="img/icons.svg#favoriteFilled"/></svg>Today</div><ul class="rows"></ul></div>
+<div class="paper cream mini" data-list="upcoming"><div class="head"><svg class="icon" aria-hidden="true"><use href="img/icons.svg#today"/></svg>Upcoming</div><ul class="rows"></ul></div>
 </div>
-<div><h2>Write it as you’d say it</h2><p class="say">Type “Gym tomorrow at 9am” and the day and the reminder set themselves; the words leave the title. Tap the highlight if you meant the words.</p></div>
+</div>
 </div></section>
 
 <section class="part" id="more"><div class="wrap">

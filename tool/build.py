@@ -11,7 +11,7 @@ URL = 'https://alobanov.github.io/taskward/'
 MAIL = 'katleta5000@gmail.com'
 BETA = 'https://testflight.apple.com/join/h82fp1R4'
 import hashlib
-VERSION = hashlib.md5((SITE / 'style.css').read_bytes() + (SITE / 'app.js').read_bytes()).hexdigest()[:8]
+VERSION = hashlib.md5((SITE / 'style.css').read_bytes() + (SITE / 'app.js').read_bytes() + (SITE / 'when.js').read_bytes()).hexdigest()[:8]
 UPDATED = {'en': 'October 27, 2026', 'ru': '27 октября 2026'}
 
 T = {
@@ -64,6 +64,15 @@ T = {
         'signals_note': 'Mark',
         'signals': ['Done', 'In progress', 'Delegated', 'Meeting', 'Important', 'Waiting'],
         'smart_h': 'Write it as you’d say it',
+        'try_say': 'Type a task with a day in it, the way you would say it, and press Return. '
+                   'The day and the reminder set themselves, and the task lands on its card.',
+        'try_ph': 'Gym tomorrow at 9am',
+        'try_add': 'Put it on its card',
+        'try_examples': ['tomorrow at 9am', 'on friday evening', 'in 3 days', 'Nov 12 at 14:30'],
+        'try_base': 'Gym ',
+        'inbox': 'Inbox', 'evening_word': 'This Evening', 'when_word': 'When',
+        'today_word': 'Today', 'tomorrow_word': 'Tomorrow',
+        'try_seed': {'inbox': ['Buy a new pen'], 'today': ['Sharpen the sword'], 'upcoming': ['Tournament at the castle']},
         'smart_say': 'Type “Gym tomorrow at 9am” and the day and the reminder set themselves; the '
                      'words leave the title. Tap the highlight if you meant the words.',
         'smart_hint': 'Notes',
@@ -155,6 +164,15 @@ T = {
         'signals_note': 'Отметить',
         'signals': ['Выполнено', 'В работе', 'Поручено', 'Встреча', 'Важно', 'Жду ответа'],
         'smart_h': 'Пиши, как говоришь',
+        'try_say': 'Напиши задачу с днём, как сказал бы вслух, и нажми ввод. День и напоминание '
+                   'поставятся сами, а задача ляжет на свою карточку.',
+        'try_ph': 'Тренировка завтра в 9 утра',
+        'try_add': 'Положить на карточку',
+        'try_examples': ['завтра в 9 утра', 'в пятницу вечером', 'через 3 дня', '12 ноября в 14:30'],
+        'try_base': 'Тренировка ',
+        'inbox': 'Входящие', 'evening_word': 'Этим вечером', 'when_word': 'Когда',
+        'today_word': 'Сегодня', 'tomorrow_word': 'Завтра',
+        'try_seed': {'inbox': ['Купить новое перо'], 'today': ['Наточить меч'], 'upcoming': ['Турнир в замке']},
         'smart_say': 'Напиши «Тренировка завтра в 9 утра» — день и напоминание поставятся сами, '
                      'а слова уйдут из названия. Тап по подсветке — если имел в виду просто слова.',
         'smart_hint': 'Заметки',
@@ -249,6 +267,7 @@ def head(lang, title, desc, path, base):
 <script>try {{ const d = localStorage.getItem('taskward-desk'), i = localStorage.getItem('taskward-ink');
 if (d && d !== 'default') document.documentElement.dataset.desk = d;
 if (i && i !== 'default') document.documentElement.dataset.ink = i; }} catch (_) {{}}</script>
+<script src="{base}when.js?v={VERSION}" defer></script>
 <script src="{base}app.js?v={VERSION}" defer></script>
 </head>
 '''
@@ -316,7 +335,7 @@ def landing(lang):
               '<svg class="icon" style="color:var(--seal)" aria-hidden="true"><use href="{base}img/icons.svg#favoriteFilled"/></svg>')
     tk = t['ticket']
     steps = ''.join(
-        f'<li class="{"done" if done else ""}"><span class="box"></span>{s}</li>' for s, done in tk['steps']
+        f'<li class="{"done" if done else ""}"><button class="box" type="button" aria-pressed="{"true" if done else "false"}" aria-label="{t["check"]}: {s}"></button>{s}</li>' for s, done in tk['steps']
     )
     signals = ''.join(
         f'<li class="{"faint" if i == 5 else ""}"><svg viewBox="0 0 30 30" aria-hidden="true">{m}</svg>{name}</li>'
@@ -346,6 +365,13 @@ def landing(lang):
         f'<div class="paper {paper}" style="--r:{r}deg"><div class="head">{icon(mark)}{name}</div><p>{say}</p></div>'
         for (mark, name, say), paper, r in zip(t['more'], ['white', 'cream', 'kraft'], [-0.8, 0.6, -0.4])
     )
+    try_words = json.dumps({
+        'base': t['try_base'], 'evening': t['evening_word'], 'when': t['when_word'],
+        'today': t['today_word'], 'tomorrow': t['tomorrow_word'], 'seed': t['try_seed'],
+        'icons': {k: icon(v).replace('{base}', base) for k, v in
+                  {'today': 'today', 'moon': 'darkThemeFilled', 'bell': 'reminderFilled', 'star': 'favoriteFilled', 'inbox': 'export'}.items()},
+    }, ensure_ascii=False).replace('"', '&quot;')
+    examples = ''.join(f'<button type="button" class="example">{e}</button>' for e in t['try_examples'])
     sample_rows = ''.join(row(t, title, '', done) for title, _, done in t['tasks'][:3])
     pre = 'ru/' if lang == 'ru' else ''
     page = head(lang, t['title'], t['desc'], '', base) + f'''<body>
@@ -353,7 +379,7 @@ def landing(lang):
 <main>
 <section class="hero"><div class="wrap hero-in">
 <div class="hero-words">
-<h1>{t['h1']}</h1>
+<h1 class="written">{''.join(f'<span class="pen" style="--i:{i}">{line}</span>' for i, line in enumerate(t['h1'].split('<br>')))}</h1>
 <p class="lede">{t['lede']}</p>
 <a class="button" href="{BETA}">{icon('add')}{t['cta']}</a>
 <p class="small">{t['small']}</p>
@@ -374,7 +400,7 @@ def landing(lang):
 <section class="part" id="ticket"><div class="wrap split">
 <div><h2>{t['ticket_h']}</h2><p class="say">{t['ticket_say']}</p></div>
 <div class="ticket-wrap"><div class="paper ticket">
-<h3><span class="signal">{SIGNAL}</span>{tk['title']}</h3>
+<h3 class="row"><button class="signal" type="button" aria-pressed="false" aria-label="{t['check']}: {tk['title']}">{SIGNAL}</button><span class="title">{tk['title']}</span></h3>
 <p class="notes">{tk['notes']}</p>
 <ul class="steps">{steps}</ul>
 <div class="stub">
@@ -389,13 +415,22 @@ def landing(lang):
 <div class="paper signals-note"><p class="note-title">{t['signals_note']}</p><ul class="signals">{signals}</ul></div>
 </div></section>
 
-<section class="part" id="smart"><div class="wrap split">
-<div class="paper newcard" data-phrases="{phrases}">
-<div class="field"><span class="ring"></span><span><span class="typed"></span><span class="caret"></span></span></div>
-<p class="hint">{t['smart_hint']}</p>
-<div class="foot"><span class="chip"><span class="muted">{icon('today')}</span><span class="muted">{t['smart_blank']}</span></span><span class="marks">{icon('tag')}{icon('paperLines')}{icon('flagFilled')}</span></div>
+<section class="part" id="smart"><div class="wrap">
+<div class="try-head"><h2>{t['smart_h']}</h2><p class="say">{t['try_say']}</p></div>
+<div class="try" data-lang="{lang}" data-words="{try_words}">
+<form class="paper newcard" autocomplete="off">
+<label class="field"><span class="ring" aria-hidden="true"></span>
+<span class="line"><span class="mirror" aria-hidden="true"></span>
+<input class="title" type="text" maxlength="70" enterkeyhint="done" aria-label="{t['try_ph']}" placeholder="{t['try_ph']}"></span></label>
+<div class="foot"><span class="chip"></span><button class="put" type="submit">{t['try_add']}</button></div>
+</form>
+<div class="examples">{examples}</div>
+<div class="desk3">
+<div class="paper mini" data-list="inbox"><div class="head">{icon('export')}{t['inbox']}</div><ul class="rows"></ul></div>
+<div class="paper mini" data-list="today"><div class="head"><svg class="icon" style="color:var(--seal)" aria-hidden="true"><use href="{base}img/icons.svg#favoriteFilled"/></svg>{t['today_word']}</div><ul class="rows"></ul></div>
+<div class="paper cream mini" data-list="upcoming"><div class="head">{icon('today')}{t['upcoming']}</div><ul class="rows"></ul></div>
 </div>
-<div><h2>{t['smart_h']}</h2><p class="say">{t['smart_say']}</p></div>
+</div>
 </div></section>
 
 <section class="part" id="more"><div class="wrap">
