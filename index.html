@@ -21,12 +21,12 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Pangolin&amp;subset=cyrillic&amp;display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=7948013b">
+<link rel="stylesheet" href="style.css?v=7b0ea149">
 <style>:root { --grain: url(img/grain.webp); } .oak { background-image: url(img/oak.webp); }</style>
 <script>try { const d = localStorage.getItem('taskward-desk'), i = localStorage.getItem('taskward-ink');
 if (d && d !== 'default') document.documentElement.dataset.desk = d;
 if (i && i !== 'default') document.documentElement.dataset.ink = i; } catch (_) {}</script>
-<script src="app.js?v=7948013b" defer></script>
+<script src="app.js?v=7b0ea149" defer></script>
 </head>
 <body>
 <header class="wrap top">
@@ -63,7 +63,7 @@ if (i && i !== 'default') document.documentElement.dataset.ink = i; } catch (_) 
 <div class="spread"><div class="paper white" style="--r:-1.2deg"><div class="head"><svg class="icon" aria-hidden="true"><use href="img/icons.svg#export"/></svg>Inbox</div><p>Whatever comes to mind, before you decide what it is.</p><div class="lines"><i></i><i></i></div></div><div class="paper white" style="--r:0.8deg"><div class="head"><svg class="icon" style="color:var(--seal)" aria-hidden="true"><use href="img/icons.svg#favoriteFilled"/></svg>Today</div><p>What you take on today, and this evening under it.</p><div class="lines"><i></i><i></i></div></div><div class="paper cream" style="--r:-0.4deg"><div class="head"><svg class="icon" aria-hidden="true"><use href="img/icons.svg#today"/></svg>Upcoming</div><p>The days ahead, with your calendar beside them.</p><div class="lines"><i></i><i></i></div></div><div class="paper cream" style="--r:1.1deg"><div class="head"><svg class="icon" aria-hidden="true"><use href="img/icons.svg#list"/></svg>Anytime</div><p>Your stock of things to do, there when you are ready.</p><div class="lines"><i></i><i></i></div></div><div class="paper kraft" style="--r:-0.9deg"><div class="head"><svg class="icon" aria-hidden="true"><use href="img/icons.svg#archive"/></svg>Someday</div><p>Put off, not forgotten. Looked through now and then.</p><div class="lines"><i></i><i></i></div></div><div class="paper grey" style="--r:0.5deg"><div class="head"><svg class="icon" aria-hidden="true"><use href="img/icons.svg#check"/></svg>Logbook</div><p>Everything done, kept in the order you did it.</p><div class="lines"><i></i><i></i></div></div></div>
 </div></section>
 
-<section class="part"><div class="wrap split">
+<section class="part" id="ticket"><div class="wrap split">
 <div><h2>A task opens as a ticket</h2><p class="say">Notes, a checklist, tags, a deadline and a reminder, on a card torn off along a dashed line. Only what you have added shows; the rest waits as a pencil mark at its foot.</p></div>
 <div class="ticket-wrap"><div class="paper ticket">
 <h3><span class="signal"><svg viewBox="0 0 24 24"><circle class="ring" cx="12" cy="12" r="9.2"/><circle class="fill" cx="12" cy="12" r="9.2"/></svg></span>Call the smith about the shield</h3>
@@ -76,7 +76,7 @@ if (i && i !== 'default') document.documentElement.dataset.ink = i; } catch (_) 
 </div></div>
 </div></section>
 
-<section class="part"><div class="wrap">
+<section class="part" id="signals"><div class="wrap">
 <h2>More than done or not done</h2>
 <p class="say">Hold a task’s circle and mark how it stands. Delegated and waiting fade into pencil, out of your way.</p>
 <ul class="signals"><li class=""><svg viewBox="0 0 30 30" aria-hidden="true"><circle class="ring solid" cx="15" cy="15" r="11"/></svg>Done</li><li class=""><svg viewBox="0 0 30 30" aria-hidden="true"><circle class="ring" cx="15" cy="15" r="11"/><path class="solid" d="M15 4a11 11 0 0 0 0 22z"/></svg>In progress</li><li class=""><svg viewBox="0 0 30 30" aria-hidden="true"><circle class="ring" cx="15" cy="15" r="11"/><path class="mark" d="M4 15h22M15 4v22"/></svg>Delegated</li><li class=""><svg viewBox="0 0 30 30" aria-hidden="true"><circle class="ring" cx="15" cy="15" r="11"/><path class="mark" d="M15 8v7l5 3"/></svg>Meeting</li><li class=""><svg viewBox="0 0 30 30" aria-hidden="true"><path class="mark" d="M15 5v20M6.3 10l17.4 10M6.3 20l17.4-10"/></svg>Important</li><li class="faint"><svg viewBox="0 0 30 30" aria-hidden="true"><circle class="ring" cx="15" cy="15" r="11"/><path class="mark" d="M9 15h.01M15 15h.01M21 15h.01" stroke-width="3"/></svg>Waiting</li></ul>
@@ -91,7 +91,7 @@ if (i && i !== 'default') document.documentElement.dataset.ink = i; } catch (_) 
 <div><h2>Write it the way you’d say it</h2><p class="say">Type “Gym tomorrow at 9am” and the day and the reminder set themselves; the words leave the title. Tap the highlight if you meant the words.</p></div>
 </div></section>
 
-<section class="part"><div class="wrap split">
+<section class="part" id="zen"><div class="wrap split">
 <div><h2>One card, the whole screen</h2><p class="say">When a day needs all of you, open its card edge to edge: no bar, no desk, nothing else. Draw it down and it is back on the desk.</p></div>
 <div class="zen-phone" aria-hidden="true"><div class="paper">
 <div class="head"><svg class="icon" aria-hidden="true"><use href="img/icons.svg#favoriteFilled"/></svg>Today</div>
@@ -108,7 +108,7 @@ if (i && i !== 'default') document.documentElement.dataset.ink = i; } catch (_) 
 </div>
 </div></section>
 
-<section class="part"><div class="wrap">
+<section class="part" id="yours"><div class="wrap">
 <h2>Your desk, your ink</h2>
 <p class="say">Pick the desk the cards lie on, the ink you write in, how a done task is struck through, and smooth or toothy paper. Try a desk here:</p>
 <div class="picks">
@@ -118,14 +118,14 @@ if (i && i !== 'default') document.documentElement.dataset.ink = i; } catch (_) 
 </div>
 </div></section>
 
-<section class="part"><div class="wrap">
+<section class="part" id="kept"><div class="wrap">
 <div class="paper kept">
 <svg class="icon big" aria-hidden="true"><use href="img/icons.svg#lock"/></svg>
 <div><h2>Nothing of yours leaves your hands</h2><ul><li>No account to make.</li><li>No ads, no tracking, no analytics.</li><li>Your tasks live on your devices and in your own iCloud, which we can’t read.</li></ul><p><a href="privacy/">Read the privacy policy</a></p></div>
 </div>
 </div></section>
 
-<section class="part"><div class="wrap knight">
+<section class="part" id="knight"><div class="wrap knight">
 <svg class="icon big" aria-hidden="true"><use href="img/icons.svg#knight"/></svg>
 <div><h2>New to getting things done?</h2><p class="say">On first launch a little knight hands you a pile of errands and shows you how to sort an inbox, one task at a time. Skip it whenever you like.</p>
 <p><a class="button" href="https://testflight.apple.com/join/h82fp1R4"><svg class="icon" aria-hidden="true"><use href="img/icons.svg#add"/></svg>Join the beta on TestFlight</a></p></div>

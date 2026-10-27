@@ -21,12 +21,12 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Pangolin&amp;subset=cyrillic&amp;display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../style.css?v=7948013b">
+<link rel="stylesheet" href="../style.css?v=7b0ea149">
 <style>:root { --grain: url(../img/grain.webp); } .oak { background-image: url(../img/oak.webp); }</style>
 <script>try { const d = localStorage.getItem('taskward-desk'), i = localStorage.getItem('taskward-ink');
 if (d && d !== 'default') document.documentElement.dataset.desk = d;
 if (i && i !== 'default') document.documentElement.dataset.ink = i; } catch (_) {}</script>
-<script src="../app.js?v=7948013b" defer></script>
+<script src="../app.js?v=7b0ea149" defer></script>
 </head>
 <body>
 <header class="wrap top">
@@ -63,7 +63,7 @@ if (i && i !== 'default') document.documentElement.dataset.ink = i; } catch (_) 
 <div class="spread"><div class="paper white" style="--r:-1.2deg"><div class="head"><svg class="icon" aria-hidden="true"><use href="../img/icons.svg#export"/></svg>Входящие</div><p>Всё, что пришло в голову, пока не решил, что это.</p><div class="lines"><i></i><i></i></div></div><div class="paper white" style="--r:0.8deg"><div class="head"><svg class="icon" style="color:var(--seal)" aria-hidden="true"><use href="../img/icons.svg#favoriteFilled"/></svg>Сегодня</div><p>То, что берёшь на сегодня, и вечер под ним.</p><div class="lines"><i></i><i></i></div></div><div class="paper cream" style="--r:-0.4deg"><div class="head"><svg class="icon" aria-hidden="true"><use href="../img/icons.svg#today"/></svg>Планы</div><p>Ближайшие дни, и календарь рядом с ними.</p><div class="lines"><i></i><i></i></div></div><div class="paper cream" style="--r:1.1deg"><div class="head"><svg class="icon" aria-hidden="true"><use href="../img/icons.svg#list"/></svg>В любое время</div><p>Запас дел, который ждёт, когда будешь готов.</p><div class="lines"><i></i><i></i></div></div><div class="paper kraft" style="--r:-0.9deg"><div class="head"><svg class="icon" aria-hidden="true"><use href="../img/icons.svg#archive"/></svg>Когда-нибудь</div><p>Отложено, а не забыто. Иногда стоит пересмотреть.</p><div class="lines"><i></i><i></i></div></div><div class="paper grey" style="--r:0.5deg"><div class="head"><svg class="icon" aria-hidden="true"><use href="../img/icons.svg#check"/></svg>Журнал</div><p>Всё сделанное, в том порядке, как делал.</p><div class="lines"><i></i><i></i></div></div></div>
 </div></section>
 
-<section class="part"><div class="wrap split">
+<section class="part" id="ticket"><div class="wrap split">
 <div><h2>Задача открывается билетом</h2><p class="say">Заметки, чек-лист, теги, срок и напоминание — на карточке с отрывным корешком. Видно только то, что добавил; остальное ждёт карандашной меткой внизу.</p></div>
 <div class="ticket-wrap"><div class="paper ticket">
 <h3><span class="signal"><svg viewBox="0 0 24 24"><circle class="ring" cx="12" cy="12" r="9.2"/><circle class="fill" cx="12" cy="12" r="9.2"/></svg></span>Позвонить кузнецу насчёт щита</h3>
@@ -76,7 +76,7 @@ if (i && i !== 'default') document.documentElement.dataset.ink = i; } catch (_) 
 </div></div>
 </div></section>
 
-<section class="part"><div class="wrap">
+<section class="part" id="signals"><div class="wrap">
 <h2>Больше, чем сделано или нет</h2>
 <p class="say">Зажми кружок задачи и отметь, как она: в работе, поручено, жду ответа. Поручённое и ожидание уходят в карандаш, чтобы не мешать.</p>
 <ul class="signals"><li class=""><svg viewBox="0 0 30 30" aria-hidden="true"><circle class="ring solid" cx="15" cy="15" r="11"/></svg>Выполнено</li><li class=""><svg viewBox="0 0 30 30" aria-hidden="true"><circle class="ring" cx="15" cy="15" r="11"/><path class="solid" d="M15 4a11 11 0 0 0 0 22z"/></svg>В работе</li><li class=""><svg viewBox="0 0 30 30" aria-hidden="true"><circle class="ring" cx="15" cy="15" r="11"/><path class="mark" d="M4 15h22M15 4v22"/></svg>Поручено</li><li class=""><svg viewBox="0 0 30 30" aria-hidden="true"><circle class="ring" cx="15" cy="15" r="11"/><path class="mark" d="M15 8v7l5 3"/></svg>Встреча</li><li class=""><svg viewBox="0 0 30 30" aria-hidden="true"><path class="mark" d="M15 5v20M6.3 10l17.4 10M6.3 20l17.4-10"/></svg>Важно</li><li class="faint"><svg viewBox="0 0 30 30" aria-hidden="true"><circle class="ring" cx="15" cy="15" r="11"/><path class="mark" d="M9 15h.01M15 15h.01M21 15h.01" stroke-width="3"/></svg>Жду ответа</li></ul>
@@ -91,7 +91,7 @@ if (i && i !== 'default') document.documentElement.dataset.ink = i; } catch (_) 
 <div><h2>Пиши так, как сказал бы</h2><p class="say">Напиши «Тренировка завтра в 9 утра» — день и напоминание поставятся сами, а слова уйдут из названия. Тап по подсветке — если имел в виду просто слова.</p></div>
 </div></section>
 
-<section class="part"><div class="wrap split">
+<section class="part" id="zen"><div class="wrap split">
 <div><h2>Одна карточка на весь экран</h2><p class="say">Когда день требует всего внимания, разверни его карточку от края до края: без панели, без стола, без лишнего. Потяни вниз — и она снова на столе.</p></div>
 <div class="zen-phone" aria-hidden="true"><div class="paper">
 <div class="head"><svg class="icon" aria-hidden="true"><use href="../img/icons.svg#favoriteFilled"/></svg>Сегодня</div>
@@ -108,7 +108,7 @@ if (i && i !== 'default') document.documentElement.dataset.ink = i; } catch (_) 
 </div>
 </div></section>
 
-<section class="part"><div class="wrap">
+<section class="part" id="yours"><div class="wrap">
 <h2>Твой стол, твои чернила</h2>
 <p class="say">Выбери стол, на котором лежат карточки, цвет чернил, как зачёркивается сделанное, и гладкую или фактурную бумагу. Попробуй стол прямо здесь:</p>
 <div class="picks">
@@ -118,14 +118,14 @@ if (i && i !== 'default') document.documentElement.dataset.ink = i; } catch (_) 
 </div>
 </div></section>
 
-<section class="part"><div class="wrap">
+<section class="part" id="kept"><div class="wrap">
 <div class="paper kept">
 <svg class="icon big" aria-hidden="true"><use href="../img/icons.svg#lock"/></svg>
 <div><h2>Твоё остаётся у тебя</h2><ul><li>Не нужно заводить аккаунт.</li><li>Ни рекламы, ни слежки, ни аналитики.</li><li>Задачи живут на твоих устройствах и в твоём iCloud — мы их не видим.</li></ul><p><a href="../ru/privacy/">Политика конфиденциальности</a></p></div>
 </div>
 </div></section>
 
-<section class="part"><div class="wrap knight">
+<section class="part" id="knight"><div class="wrap knight">
 <svg class="icon big" aria-hidden="true"><use href="../img/icons.svg#knight"/></svg>
 <div><h2>Впервые слышишь про GTD?</h2><p class="say">При первом запуске маленький рыцарь вручит тебе ворох поручений и покажет, как разобрать входящие, задачу за задачей. Пропустить можно в любой момент.</p>
 <p><a class="button" href="https://testflight.apple.com/join/h82fp1R4"><svg class="icon" aria-hidden="true"><use href="../img/icons.svg#add"/></svg>Попробовать бету в TestFlight</a></p></div>

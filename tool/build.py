@@ -363,7 +363,7 @@ def landing(lang):
 <div class="spread">{lists}</div>
 </div></section>
 
-<section class="part"><div class="wrap split">
+<section class="part" id="ticket"><div class="wrap split">
 <div><h2>{t['ticket_h']}</h2><p class="say">{t['ticket_say']}</p></div>
 <div class="ticket-wrap"><div class="paper ticket">
 <h3><span class="signal">{SIGNAL}</span>{tk['title']}</h3>
@@ -376,7 +376,7 @@ def landing(lang):
 </div></div>
 </div></section>
 
-<section class="part"><div class="wrap">
+<section class="part" id="signals"><div class="wrap">
 <h2>{t['signals_h']}</h2>
 <p class="say">{t['signals_say']}</p>
 <ul class="signals">{signals}</ul>
@@ -391,7 +391,7 @@ def landing(lang):
 <div><h2>{t['smart_h']}</h2><p class="say">{t['smart_say']}</p></div>
 </div></section>
 
-<section class="part"><div class="wrap split">
+<section class="part" id="zen"><div class="wrap split">
 <div><h2>{t['zen_h']}</h2><p class="say">{t['zen_say']}</p></div>
 <div class="zen-phone" aria-hidden="true"><div class="paper">
 <div class="head"><svg class="icon" aria-hidden="true"><use href="{base}img/icons.svg#favoriteFilled"/></svg>{t['today']}</div>
@@ -408,7 +408,7 @@ def landing(lang):
 </div>
 </div></section>
 
-<section class="part"><div class="wrap">
+<section class="part" id="yours"><div class="wrap">
 <h2>{t['yours_h']}</h2>
 <p class="say">{t['yours_say']}</p>
 <div class="picks">
@@ -418,14 +418,14 @@ def landing(lang):
 </div>
 </div></section>
 
-<section class="part"><div class="wrap">
+<section class="part" id="kept"><div class="wrap">
 <div class="paper kept">
 {icon('lock', 'icon big')}
 <div><h2>{t['kept_h']}</h2><ul>{kept}</ul><p><a href="{base}{pre}privacy/">{t['kept_link']}</a></p></div>
 </div>
 </div></section>
 
-<section class="part"><div class="wrap knight">
+<section class="part" id="knight"><div class="wrap knight">
 {icon('knight', 'icon big')}
 <div><h2>{t['knight_h']}</h2><p class="say">{t['knight_say']}</p>
 <p><a class="button" href="{BETA}">{icon('add')}{t['cta']}</a></p></div>

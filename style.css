@@ -40,7 +40,7 @@
 :root[data-ink="espresso"] { --ink: #3a201c; --pencil: rgba(58, 32, 28, 0.58); }
 
 * { box-sizing: border-box; }
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
 body {
   margin: 0;
   background: var(--desk);
