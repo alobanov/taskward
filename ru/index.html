@@ -65,7 +65,7 @@ if (i && i !== 'default') document.documentElement.dataset.ink = i; } catch (_) 
 
 <section class="part"><div class="wrap split">
 <div><h2>Задача открывается билетом</h2><p class="say">Заметки, чек-лист, теги, срок и напоминание — на карточке с отрывным корешком. Видно только то, что добавил; остальное ждёт карандашной меткой внизу.</p></div>
-<div class="paper ticket">
+<div class="ticket-wrap"><div class="paper ticket">
 <h3><span class="signal"><svg viewBox="0 0 24 24"><circle class="ring" cx="12" cy="12" r="9.2"/><circle class="fill" cx="12" cy="12" r="9.2"/></svg></span>Позвонить кузнецу насчёт щита</h3>
 <p class="notes">Старый треснул по краю. Спросить, подберёт ли он умбон.</p>
 <ul class="steps"><li class="done"><span class="box"></span>Измерить старый</li><li class=""><span class="box"></span>Найти эскиз</li><li class=""><span class="box"></span>Узнать цену</li></ul>
@@ -73,11 +73,11 @@ if (i && i !== 'default') document.documentElement.dataset.ink = i; } catch (_) 
 <div class="tags"><span>Оружейная</span><span>В городе</span></div>
 <div class="when"><span class="star"><svg class="icon" aria-hidden="true"><use href="../img/icons.svg#favoriteFilled"/></svg></span>Сегодня<svg class="icon" aria-hidden="true"><use href="../img/icons.svg#reminderFilled"/></svg>21:30<span class="marks"><svg class="icon" aria-hidden="true"><use href="../img/icons.svg#flagFilled"/></svg></span></div>
 </div>
-</div>
+</div></div>
 </div></section>
 
 <section class="part"><div class="wrap">
-<h2>Не только «сделано» или «нет»</h2>
+<h2>Больше, чем сделано или нет</h2>
 <p class="say">Зажми кружок задачи и отметь, как она: в работе, поручено, жду ответа. Поручённое и ожидание уходят в карандаш, чтобы не мешать.</p>
 <ul class="signals"><li class=""><svg viewBox="0 0 30 30" aria-hidden="true"><circle class="ring solid" cx="15" cy="15" r="11"/></svg>Выполнено</li><li class=""><svg viewBox="0 0 30 30" aria-hidden="true"><circle class="ring" cx="15" cy="15" r="11"/><path class="solid" d="M15 4a11 11 0 0 0 0 22z"/></svg>В работе</li><li class=""><svg viewBox="0 0 30 30" aria-hidden="true"><circle class="ring" cx="15" cy="15" r="11"/><path class="mark" d="M4 15h22M15 4v22"/></svg>Поручено</li><li class=""><svg viewBox="0 0 30 30" aria-hidden="true"><circle class="ring" cx="15" cy="15" r="11"/><path class="mark" d="M15 8v7l5 3"/></svg>Встреча</li><li class=""><svg viewBox="0 0 30 30" aria-hidden="true"><path class="mark" d="M15 5v20M6.3 10l17.4 10M6.3 20l17.4-10"/></svg>Важно</li><li class="faint"><svg viewBox="0 0 30 30" aria-hidden="true"><circle class="ring" cx="15" cy="15" r="11"/><path class="mark" d="M9 15h.01M15 15h.01M21 15h.01" stroke-width="3"/></svg>Жду ответа</li></ul>
 </div></section>
@@ -102,10 +102,9 @@ if (i && i !== 'default') document.documentElement.dataset.ink = i; } catch (_) 
 <section class="part" id="real"><div class="wrap">
 <h2>Настоящее приложение, на iPhone и Mac</h2>
 <p class="say">Одни и те же списки на обоих, синхронно через твой iCloud. На Маке — боковая панель и быстрый поиск по ⌘F.</p>
-<div class="shelf"><img src="../img/ru-iphone-1.webp" alt="Taskward на iPhone" width="560" height="1217" loading="lazy"><img src="../img/ru-iphone-2.webp" alt="Taskward на iPhone" width="560" height="1217" loading="lazy"><img src="../img/ru-iphone-3.webp" alt="Taskward на iPhone" width="560" height="1217" loading="lazy"><img src="../img/ru-iphone-4.webp" alt="Taskward на iPhone" width="560" height="1217" loading="lazy"><img src="../img/ru-iphone-5.webp" alt="Taskward на iPhone" width="560" height="1217" loading="lazy"><img src="../img/ru-iphone-6.webp" alt="Taskward на iPhone" width="560" height="1217" loading="lazy"><img src="../img/ru-iphone-7.webp" alt="Taskward на iPhone" width="560" height="1217" loading="lazy"><img src="../img/ru-iphone-8.webp" alt="Taskward на iPhone" width="560" height="1217" loading="lazy"></div>
+<div class="shelf"><img src="../img/ru-iphone-1.webp" alt="Taskward на iPhone" width="760" height="1651" loading="lazy"><img src="../img/ru-iphone-2.webp" alt="Taskward на iPhone" width="760" height="1651" loading="lazy"><img src="../img/ru-iphone-3.webp" alt="Taskward на iPhone" width="760" height="1651" loading="lazy"><img src="../img/ru-iphone-4.webp" alt="Taskward на iPhone" width="760" height="1651" loading="lazy"><img src="../img/ru-iphone-5.webp" alt="Taskward на iPhone" width="760" height="1651" loading="lazy"><img src="../img/ru-iphone-6.webp" alt="Taskward на iPhone" width="760" height="1651" loading="lazy"><img src="../img/ru-iphone-7.webp" alt="Taskward на iPhone" width="760" height="1651" loading="lazy"><img src="../img/ru-iphone-8.webp" alt="Taskward на iPhone" width="760" height="1651" loading="lazy"></div>
 <div class="macs">
-<img src="../img/ru-mac-1.webp" alt="Taskward на Маке" width="1280" height="800" loading="lazy">
-<img src="../img/ru-mac-2.webp" alt="Taskward на Маке" width="1280" height="800" loading="lazy">
+<img src="../img/ru-mac-1.webp" alt="Taskward на Маке" width="2240" height="1400" loading="lazy">
 </div>
 </div></section>
 
@@ -115,6 +114,7 @@ if (i && i !== 'default') document.documentElement.dataset.ink = i; } catch (_) 
 <div class="picks">
 <div><h3>Стол</h3><div class="swatches"><button class="swatch" style="--c:#b4c2c3" data-desk="default" aria-label="Шалфей" aria-pressed="false"></button><button class="swatch" style="--c:#4a5040" data-desk="olive" aria-label="Олива" aria-pressed="false"></button><button class="swatch" style="--c:#5b4636" data-desk="walnut" aria-label="Орех" aria-pressed="false"></button><button class="swatch" style="--c:#2f2f2d" data-desk="charcoal" aria-label="Уголь" aria-pressed="false"></button><button class="swatch" style="--c:#e9e5da" data-desk="paper" aria-label="Бумага" aria-pressed="false"></button><button class="swatch" style="--c:#f2f3f5" data-desk="mono" aria-label="Монохром" aria-pressed="false"></button></div><p class="named" data-for="desk" aria-live="polite"></p></div>
 <div><h3>Чернила</h3><div class="swatches"><button class="blot" style="--c:#45454f" data-inkpick="default" aria-label="Графит" aria-pressed="false"></button><button class="blot" style="--c:#2b3ac9" data-inkpick="blue" aria-label="Синие" aria-pressed="false"></button><button class="blot" style="--c:#141417" data-inkpick="black" aria-label="Чёрные" aria-pressed="false"></button><button class="blot" style="--c:#3a201c" data-inkpick="espresso" aria-label="Эспрессо" aria-pressed="false"></button></div><p class="named" data-for="inkpick" aria-live="polite"></p></div>
+<div class="paper sample" aria-hidden="true"><div class="head"><svg class="icon" aria-hidden="true"><use href="../img/icons.svg#favoriteFilled"/></svg>Сегодня</div><ul class="rows"><li class="row done"><button class="signal" aria-pressed="true" aria-label="Отметить: Наточить меч"><svg viewBox="0 0 24 24"><circle class="ring" cx="12" cy="12" r="9.2"/><circle class="fill" cx="12" cy="12" r="9.2"/></svg></button><div><div class="title">Наточить меч</div></div></li><li class="row"><button class="signal" aria-pressed="false" aria-label="Отметить: Позвонить кузнецу насчёт щита"><svg viewBox="0 0 24 24"><circle class="ring" cx="12" cy="12" r="9.2"/><circle class="fill" cx="12" cy="12" r="9.2"/></svg></button><div><div class="title">Позвонить кузнецу насчёт щита</div></div></li><li class="row"><button class="signal" aria-pressed="false" aria-label="Отметить: Заплатить за жильё"><svg viewBox="0 0 24 24"><circle class="ring" cx="12" cy="12" r="9.2"/><circle class="fill" cx="12" cy="12" r="9.2"/></svg></button><div><div class="title">Заплатить за жильё</div></div></li></ul></div>
 </div>
 </div></section>
 

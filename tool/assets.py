@@ -22,9 +22,9 @@ icon.resize((180, 180), Image.LANCZOS).save(IMG / 'apple-touch-icon.png', optimi
 icon.resize((64, 64), Image.LANCZOS).save(IMG / 'favicon.png', optimize=True)
 for lang in ['en', 'ru']:
     for i in range(1, 9):
-        webp(APP / f'build/store/{lang}/iphone_{i}.jpg', f'{lang}-iphone-{i}.webp', 560, 80)
+        webp(APP / f'build/store/{lang}/iphone_{i}.jpg', f'{lang}-iphone-{i}.webp', 760, 90)
     for i in range(1, 6):
-        webp(APP / f'build/store/{lang}/mac_{i}.jpg', f'{lang}-mac-{i}.webp', 1280, 80)
+        webp(APP / f'build/store/{lang}/mac_{i}.jpg', f'{lang}-mac-{i}.webp', 2240, 90)
 
 # The icons, inked in the page's own colour.
 names = ['export', 'favoriteFilled', 'today', 'list', 'archive', 'check', 'flagFilled',

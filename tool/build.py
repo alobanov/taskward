@@ -140,7 +140,7 @@ T = {
             'steps': [('Измерить старый', True), ('Найти эскиз', False), ('Узнать цену', False)],
             'tags': ['Оружейная', 'В городе'], 'when': 'Сегодня',
         },
-        'signals_h': 'Не только «сделано» или «нет»',
+        'signals_h': 'Больше, чем сделано или нет',
         'signals_say': 'Зажми кружок задачи и отметь, как она: в работе, поручено, жду ответа. '
                        'Поручённое и ожидание уходят в карандаш, чтобы не мешать.',
         'signals': ['Выполнено', 'В работе', 'Поручено', 'Встреча', 'Важно', 'Жду ответа'],
@@ -314,7 +314,7 @@ def landing(lang):
         for title, phrase, mark, day, time in t['phrases']
     ], ensure_ascii=False).replace('"', '&quot;')
     iphones = ''.join(
-        f'<img src="{base}img/{lang}-iphone-{i}.webp" alt="{t["shots_alt"]}" width="560" height="1217" loading="lazy">'
+        f'<img src="{base}img/{lang}-iphone-{i}.webp" alt="{t["shots_alt"]}" width="760" height="1651" loading="lazy">'
         for i in range(1, 9)
     )
     desks = ''.join(
@@ -326,6 +326,7 @@ def landing(lang):
         for k, n, c in t['inks']
     )
     kept = ''.join(f'<li>{line}</li>' for line in t['kept'])
+    sample_rows = ''.join(row(t, title, '', done) for title, _, done in t['tasks'][:3])
     zen_rows = ''.join(row(t, title, '', done) for title, _, done in t['tasks'])
     pre = 'ru/' if lang == 'ru' else ''
     page = head(lang, t['title'], t['desc'], '', base) + f'''<body>
@@ -362,7 +363,7 @@ def landing(lang):
 
 <section class="part"><div class="wrap split">
 <div><h2>{t['ticket_h']}</h2><p class="say">{t['ticket_say']}</p></div>
-<div class="paper ticket">
+<div class="ticket-wrap"><div class="paper ticket">
 <h3><span class="signal">{SIGNAL}</span>{tk['title']}</h3>
 <p class="notes">{tk['notes']}</p>
 <ul class="steps">{steps}</ul>
@@ -370,7 +371,7 @@ def landing(lang):
 <div class="tags">{''.join(f'<span>{x}</span>' for x in tk['tags'])}</div>
 <div class="when"><span class="star">{icon('favoriteFilled')}</span>{tk['when']}{icon('reminderFilled')}21:30<span class="marks">{icon('flagFilled')}</span></div>
 </div>
-</div>
+</div></div>
 </div></section>
 
 <section class="part"><div class="wrap">
@@ -401,8 +402,7 @@ def landing(lang):
 <p class="say">{t['real_say']}</p>
 <div class="shelf">{iphones}</div>
 <div class="macs">
-<img src="{base}img/{lang}-mac-1.webp" alt="{t['mac_alt']}" width="1280" height="800" loading="lazy">
-<img src="{base}img/{lang}-mac-2.webp" alt="{t['mac_alt']}" width="1280" height="800" loading="lazy">
+<img src="{base}img/{lang}-mac-1.webp" alt="{t['mac_alt']}" width="2240" height="1400" loading="lazy">
 </div>
 </div></section>
 
@@ -412,6 +412,7 @@ def landing(lang):
 <div class="picks">
 <div><h3>{t['desk_h']}</h3><div class="swatches">{desks}</div><p class="named" data-for="desk" aria-live="polite"></p></div>
 <div><h3>{t['ink_h']}</h3><div class="swatches">{inks}</div><p class="named" data-for="inkpick" aria-live="polite"></p></div>
+<div class="paper sample" aria-hidden="true"><div class="head"><svg class="icon" aria-hidden="true"><use href="{base}img/icons.svg#favoriteFilled"/></svg>{t['today']}</div><ul class="rows">{sample_rows}</ul></div>
 </div>
 </div></section>
 

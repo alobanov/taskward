@@ -112,7 +112,7 @@ a { color: inherit; }
   opacity: calc((var(--p, 0) - 0.55) * 3); transform: translateY(calc((1 - var(--p, 0)) * 16px));
 }
 
-.scene { position: relative; height: min(82vh, 720px); clip-path: inset(-100vh -100vw 0 -100vw); }
+.scene { position: relative; height: min(82vh, 720px); clip-path: inset(-100vh -100vw calc(var(--p, 0) * -60vh) -100vw); }
 .holder-cards { position: absolute; inset: 0; }
 .card {
   position: absolute; left: 50%; width: min(440px, 92%);
@@ -124,11 +124,13 @@ a { color: inherit; }
 .card .head .count { margin-left: auto; font-size: 18px; color: var(--pencil); }
 
 /* The cards behind Today, each a little narrower, only their heads above the slot. */
-.back { transition: transform 0.2s linear; }
-.back.someday { width: min(380px, 80%); top: 4%; }
-.back.anytime { width: min(400px, 84%); top: 11%; }
+.back { transition: transform 0.2s linear; padding-top: 12px; }
+.back .head { font-size: 26px; }
+.back .head .icon { width: 24px; height: 24px; }
+.back.someday { width: min(380px, 80%); top: 2%; }
+.back.anytime { width: min(400px, 84%); top: 10%; }
 .back.upcoming { width: min(420px, 88%); top: 18%; }
-.today { top: 25%; z-index: 3; padding-bottom: 26px; will-change: transform; }
+.today { top: 26.5%; z-index: 3; padding-bottom: 26px; will-change: transform; }
 .holder-cards .back, .oak {
   transform: translateY(calc(var(--p, 0) * 70vh));
   opacity: calc(1 - var(--p, 0) * 1.4);
@@ -184,8 +186,8 @@ a { color: inherit; }
 .row.done .title::after { transform: scaleX(1); }
 
 /* The pages under the first screen. */
-section.part { padding: 110px 0; }
-section.part h2 { font-size: clamp(38px, 4.6vw, 58px); line-height: 1.08; font-weight: 400; margin: 0 0 18px; }
+section.part { padding: 84px 0; }
+section.part h2 { text-wrap: balance; font-size: clamp(38px, 4.6vw, 58px); line-height: 1.08; font-weight: 400; margin: 0 0 18px; }
 section.part .say { font-size: 22px; color: var(--on-desk-soft); max-width: 40ch; margin: 0; }
 .split { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; }
 
@@ -199,8 +201,9 @@ section.part .say { font-size: 22px; color: var(--on-desk-soft); max-width: 40ch
 .spread .lines i { display: block; height: 30px; border-bottom: 1px solid var(--rule); }
 
 /* A task's ticket: its stub torn off along a dashed line, a notch cut into each edge. */
+.ticket-wrap { justify-self: end; filter: drop-shadow(0 16px 18px rgba(20, 28, 30, 0.22)) drop-shadow(0 2px 3px rgba(20, 28, 30, 0.08)); rotate: 1.2deg; }
 .ticket {
-  padding: 26px 28px 0; max-width: 470px; justify-self: end; rotate: 1.2deg;
+  padding: 26px 28px 0; max-width: 470px; box-shadow: none;
   -webkit-mask: radial-gradient(circle 13px at 0 calc(100% - 128px), transparent 98%, #000) ,
                 radial-gradient(circle 13px at 100% calc(100% - 128px), transparent 98%, #000);
   -webkit-mask-composite: source-in; mask-composite: intersect;
@@ -261,12 +264,13 @@ section.part .say { font-size: 22px; color: var(--on-desk-soft); max-width: 40ch
 
 /* The real app, from the store's own pictures. */
 .shelf {
-  display: flex; gap: 22px; overflow-x: auto; padding: 46px 16px 30px; margin: 0 -16px;
+  display: flex; gap: 22px; overflow-x: auto; padding: 46px calc(50vw - 50%) 30px;
+  margin-inline: calc(50% - 50vw);
   scroll-snap-type: x mandatory; scrollbar-width: thin;
 }
-.shelf img { width: 250px; border-radius: 18px; box-shadow: var(--shadow); scroll-snap-align: center; flex: none; }
-.macs { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; margin-top: 18px; }
-.macs img { border-radius: 14px; box-shadow: var(--shadow); }
+.shelf img { width: 300px; border-radius: 18px; box-shadow: var(--shadow); scroll-snap-align: center; flex: none; }
+.macs { margin-top: 18px; }
+.macs img { border-radius: 18px; box-shadow: var(--lift); width: 100%; height: auto; }
 
 /* Make it yours: the desks and inks, picked here as in Appearance. */
 .picks { display: flex; flex-wrap: wrap; gap: 40px; margin-top: 40px; }
@@ -283,6 +287,9 @@ section.part .say { font-size: 22px; color: var(--on-desk-soft); max-width: 40ch
 .swatch[aria-pressed="true"] { outline: 2.5px solid var(--on-desk); outline-offset: 4px; }
 .blot { width: 46px; height: 46px; border-radius: 50%; border: 0; cursor: pointer; background: var(--c); box-shadow: var(--shadow); }
 .blot[aria-pressed="true"] { outline: 2.5px solid var(--on-desk); outline-offset: 4px; }
+.picks .sample { padding: 16px 22px 10px; width: min(340px, 100%); rotate: -1deg; }
+.picks .sample .head { display: flex; align-items: center; gap: 10px; font-size: 24px; }
+.picks .sample .head .icon { color: var(--seal); width: 22px; height: 22px; }
 .picks .named { font-size: 17px; color: var(--on-desk-soft); margin-top: 10px; min-height: 26px; }
 
 /* Nothing of yours leaves your hands. */
@@ -317,7 +324,7 @@ footer .by { margin-left: auto; }
   .hero-words .then { display: none; }
   .split, .macs { grid-template-columns: 1fr; }
   .spread { grid-template-columns: 1fr 1fr; }
-  .ticket { justify-self: start; }
+  .ticket-wrap { justify-self: start; }
   section.part { padding: 70px 0; }
 }
 @media (max-width: 560px) {

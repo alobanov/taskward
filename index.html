@@ -65,7 +65,7 @@ if (i && i !== 'default') document.documentElement.dataset.ink = i; } catch (_) 
 
 <section class="part"><div class="wrap split">
 <div><h2>A task opens as a ticket</h2><p class="say">Notes, a checklist, tags, a deadline and a reminder, on a card torn off along a dashed line. Only what you have added shows; the rest waits as a pencil mark at its foot.</p></div>
-<div class="paper ticket">
+<div class="ticket-wrap"><div class="paper ticket">
 <h3><span class="signal"><svg viewBox="0 0 24 24"><circle class="ring" cx="12" cy="12" r="9.2"/><circle class="fill" cx="12" cy="12" r="9.2"/></svg></span>Call the smith about the shield</h3>
 <p class="notes">The old one is cracked along the rim. Ask if he can match the boss.</p>
 <ul class="steps"><li class="done"><span class="box"></span>Measure the old one</li><li class=""><span class="box"></span>Find the sketch</li><li class=""><span class="box"></span>Ask the price</li></ul>
@@ -73,7 +73,7 @@ if (i && i !== 'default') document.documentElement.dataset.ink = i; } catch (_) 
 <div class="tags"><span>Armoury</span><span>Errand</span></div>
 <div class="when"><span class="star"><svg class="icon" aria-hidden="true"><use href="img/icons.svg#favoriteFilled"/></svg></span>Today<svg class="icon" aria-hidden="true"><use href="img/icons.svg#reminderFilled"/></svg>21:30<span class="marks"><svg class="icon" aria-hidden="true"><use href="img/icons.svg#flagFilled"/></svg></span></div>
 </div>
-</div>
+</div></div>
 </div></section>
 
 <section class="part"><div class="wrap">
@@ -102,10 +102,9 @@ if (i && i !== 'default') document.documentElement.dataset.ink = i; } catch (_) 
 <section class="part" id="real"><div class="wrap">
 <h2>The real app, on iPhone and Mac</h2>
 <p class="say">The same lists on both, kept in step through your iCloud. On a Mac, a sidebar and Quick Find on ⌘F.</p>
-<div class="shelf"><img src="img/en-iphone-1.webp" alt="Taskward on iPhone" width="560" height="1217" loading="lazy"><img src="img/en-iphone-2.webp" alt="Taskward on iPhone" width="560" height="1217" loading="lazy"><img src="img/en-iphone-3.webp" alt="Taskward on iPhone" width="560" height="1217" loading="lazy"><img src="img/en-iphone-4.webp" alt="Taskward on iPhone" width="560" height="1217" loading="lazy"><img src="img/en-iphone-5.webp" alt="Taskward on iPhone" width="560" height="1217" loading="lazy"><img src="img/en-iphone-6.webp" alt="Taskward on iPhone" width="560" height="1217" loading="lazy"><img src="img/en-iphone-7.webp" alt="Taskward on iPhone" width="560" height="1217" loading="lazy"><img src="img/en-iphone-8.webp" alt="Taskward on iPhone" width="560" height="1217" loading="lazy"></div>
+<div class="shelf"><img src="img/en-iphone-1.webp" alt="Taskward on iPhone" width="760" height="1651" loading="lazy"><img src="img/en-iphone-2.webp" alt="Taskward on iPhone" width="760" height="1651" loading="lazy"><img src="img/en-iphone-3.webp" alt="Taskward on iPhone" width="760" height="1651" loading="lazy"><img src="img/en-iphone-4.webp" alt="Taskward on iPhone" width="760" height="1651" loading="lazy"><img src="img/en-iphone-5.webp" alt="Taskward on iPhone" width="760" height="1651" loading="lazy"><img src="img/en-iphone-6.webp" alt="Taskward on iPhone" width="760" height="1651" loading="lazy"><img src="img/en-iphone-7.webp" alt="Taskward on iPhone" width="760" height="1651" loading="lazy"><img src="img/en-iphone-8.webp" alt="Taskward on iPhone" width="760" height="1651" loading="lazy"></div>
 <div class="macs">
-<img src="img/en-mac-1.webp" alt="Taskward on a Mac" width="1280" height="800" loading="lazy">
-<img src="img/en-mac-2.webp" alt="Taskward on a Mac" width="1280" height="800" loading="lazy">
+<img src="img/en-mac-1.webp" alt="Taskward on a Mac" width="2240" height="1400" loading="lazy">
 </div>
 </div></section>
 
@@ -115,6 +114,7 @@ if (i && i !== 'default') document.documentElement.dataset.ink = i; } catch (_) 
 <div class="picks">
 <div><h3>Desk</h3><div class="swatches"><button class="swatch" style="--c:#b4c2c3" data-desk="default" aria-label="Sage" aria-pressed="false"></button><button class="swatch" style="--c:#4a5040" data-desk="olive" aria-label="Olive" aria-pressed="false"></button><button class="swatch" style="--c:#5b4636" data-desk="walnut" aria-label="Walnut" aria-pressed="false"></button><button class="swatch" style="--c:#2f2f2d" data-desk="charcoal" aria-label="Charcoal" aria-pressed="false"></button><button class="swatch" style="--c:#e9e5da" data-desk="paper" aria-label="Paper" aria-pressed="false"></button><button class="swatch" style="--c:#f2f3f5" data-desk="mono" aria-label="Monochrome" aria-pressed="false"></button></div><p class="named" data-for="desk" aria-live="polite"></p></div>
 <div><h3>Ink</h3><div class="swatches"><button class="blot" style="--c:#45454f" data-inkpick="default" aria-label="Graphite" aria-pressed="false"></button><button class="blot" style="--c:#2b3ac9" data-inkpick="blue" aria-label="Blue" aria-pressed="false"></button><button class="blot" style="--c:#141417" data-inkpick="black" aria-label="Black" aria-pressed="false"></button><button class="blot" style="--c:#3a201c" data-inkpick="espresso" aria-label="Espresso" aria-pressed="false"></button></div><p class="named" data-for="inkpick" aria-live="polite"></p></div>
+<div class="paper sample" aria-hidden="true"><div class="head"><svg class="icon" aria-hidden="true"><use href="img/icons.svg#favoriteFilled"/></svg>Today</div><ul class="rows"><li class="row done"><button class="signal" aria-pressed="true" aria-label="Check off: Sharpen the sword"><svg viewBox="0 0 24 24"><circle class="ring" cx="12" cy="12" r="9.2"/><circle class="fill" cx="12" cy="12" r="9.2"/></svg></button><div><div class="title">Sharpen the sword</div></div></li><li class="row"><button class="signal" aria-pressed="false" aria-label="Check off: Call the smith about the shield"><svg viewBox="0 0 24 24"><circle class="ring" cx="12" cy="12" r="9.2"/><circle class="fill" cx="12" cy="12" r="9.2"/></svg></button><div><div class="title">Call the smith about the shield</div></div></li><li class="row"><button class="signal" aria-pressed="false" aria-label="Check off: Pay the rent"><svg viewBox="0 0 24 24"><circle class="ring" cx="12" cy="12" r="9.2"/><circle class="fill" cx="12" cy="12" r="9.2"/></svg></button><div><div class="title">Pay the rent</div></div></li></ul></div>
 </div>
 </div></section>
 
