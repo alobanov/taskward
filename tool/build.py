@@ -19,7 +19,7 @@ T = {
         'title': 'Taskward: a calm to-do list on paper cards',
         'desc': 'A calm to-do list for iPhone and Mac. Every list is a paper card on your desk: '
                 'Today in front, the rest in a wooden holder behind it.',
-        'nav': ['Lists', 'Smart dates', 'iPhone and Mac', 'Privacy', 'Support'],
+        'nav': ['Smart dates', 'Lists', 'iPhone and Mac', 'Privacy', 'Support'],
         'other': ('Русский', 'ru/'),
         'h1': 'Your day,<br>on one card.',
         'lede': 'Taskward is a calm to-do list for iPhone and Mac. Every list is a paper card on '
@@ -119,7 +119,7 @@ T = {
         'title': 'Taskward: спокойный список дел на бумажных карточках',
         'desc': 'Спокойный список дел для iPhone и Mac. Каждый список — бумажная карточка на '
                 'столе: «Сегодня» впереди, остальные в деревянной подставке за ней.',
-        'nav': ['Списки', 'Умная дата', 'iPhone и Mac', 'Приватность', 'Поддержка'],
+        'nav': ['Умная дата', 'Списки', 'iPhone и Mac', 'Приватность', 'Поддержка'],
         'other': ('English', '../'),
         'h1': 'Весь день —<br>на одной карточке.',
         'lede': 'Taskward — спокойный список дел для iPhone и Mac. Каждый список — бумажная '
@@ -275,7 +275,7 @@ if (i && i !== 'default') document.documentElement.dataset.ink = i; }} catch (_)
 
 def bar(t, base, lang, home):
     other, href = t['other']
-    anchors = ['#lists', '#smart', '#real']
+    anchors = ['#smart', '#lists', '#real']
     links = ''.join(
         f'<a class="hide-sm" href="{home}{a}">{name}</a>' for a, name in zip(anchors, t['nav'][:3])
     )
