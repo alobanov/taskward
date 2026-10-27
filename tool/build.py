@@ -10,6 +10,8 @@ SITE = Path(__file__).resolve().parent.parent
 URL = 'https://alobanov.github.io/taskward/'
 MAIL = 'katleta5000@gmail.com'
 BETA = 'https://testflight.apple.com/join/h82fp1R4'
+import hashlib
+VERSION = hashlib.md5((SITE / 'style.css').read_bytes() + (SITE / 'app.js').read_bytes()).hexdigest()[:8]
 UPDATED = {'en': 'October 27, 2026', 'ru': '27 октября 2026'}
 
 T = {
@@ -228,12 +230,12 @@ def head(lang, title, desc, path, base):
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Pangolin&amp;subset=cyrillic&amp;display=swap" rel="stylesheet">
-<link rel="stylesheet" href="{base}style.css">
+<link rel="stylesheet" href="{base}style.css?v={VERSION}">
 <style>:root {{ --grain: url({base}img/grain.webp); }} .oak {{ background-image: url({base}img/oak.webp); }}</style>
 <script>try {{ const d = localStorage.getItem('taskward-desk'), i = localStorage.getItem('taskward-ink');
 if (d && d !== 'default') document.documentElement.dataset.desk = d;
 if (i && i !== 'default') document.documentElement.dataset.ink = i; }} catch (_) {{}}</script>
-<script src="{base}app.js" defer></script>
+<script src="{base}app.js?v={VERSION}" defer></script>
 </head>
 '''
 
