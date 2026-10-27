@@ -277,6 +277,12 @@ section.part .say { font-size: 22px; color: var(--on-desk-soft); max-width: 40ch
   margin-inline: calc(50% - 50vw);
   scroll-snap-type: x mandatory; scrollbar-width: thin;
 }
+@media (min-width: 901px) {
+  .shelf { display: grid; grid-template-columns: repeat(4, 1fr); gap: 22px; overflow: visible; margin-inline: 0; padding: 40px 0 26px; }
+  .shelf img { width: 100% !important; }
+  .shelf img:nth-child(odd) { rotate: -0.6deg; }
+  .shelf img:nth-child(even) { rotate: 0.5deg; }
+}
 .shelf img { height: auto; width: 300px; border-radius: 18px; box-shadow: var(--shadow); scroll-snap-align: center; flex: none; }
 .macs { margin-top: 18px; }
 .macs img { border-radius: 18px; box-shadow: var(--lift); width: 100%; height: auto; }

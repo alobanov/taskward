@@ -409,12 +409,6 @@ def landing(lang):
 </div>
 </div></section>
 
-<section class="part" id="lists"><div class="wrap">
-<h2>{t['lists_h']}</h2>
-<p class="say">{t['lists_say']}</p>
-<div class="spread">{lists}</div>
-</div></section>
-
 <section class="part" id="ticket"><div class="wrap split">
 <div><h2>{t['ticket_h']}</h2><p class="say">{t['ticket_say']}</p></div>
 <div class="ticket-wrap"><div class="paper ticket">
@@ -431,6 +425,12 @@ def landing(lang):
 <section class="part" id="signals"><div class="wrap split">
 <div><h2>{t['signals_h']}</h2><p class="say">{t['signals_say']}</p></div>
 <div class="paper signals-note"><p class="note-title">{t['signals_note']}</p><ul class="signals">{signals}</ul></div>
+</div></section>
+
+<section class="part" id="lists"><div class="wrap">
+<h2>{t['lists_h']}</h2>
+<p class="say">{t['lists_say']}</p>
+<div class="spread">{lists}</div>
 </div></section>
 
 <section class="part" id="more"><div class="wrap">
