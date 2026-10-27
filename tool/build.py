@@ -391,6 +391,24 @@ def landing(lang):
 </div>
 </div></section>
 
+<section class="part" id="smart"><div class="wrap">
+<div class="try-head"><h2>{t['smart_h']}</h2><p class="say">{t['try_say']}</p></div>
+<div class="try" data-lang="{lang}" data-words="{try_words}">
+<form class="paper newcard" autocomplete="off">
+<label class="field"><span class="ring" aria-hidden="true"></span>
+<span class="line"><span class="mirror" aria-hidden="true"></span>
+<input class="title" type="text" maxlength="70" enterkeyhint="done" aria-label="{t['try_ph']}" placeholder="{t['try_ph']}"></span></label>
+<div class="foot"><span class="chip"></span><button class="put" type="submit">{t['try_add']}</button></div>
+</form>
+<div class="examples">{examples}</div>
+<div class="desk3">
+<div class="paper mini" data-list="inbox"><div class="head">{icon('export')}{t['inbox']}</div><ul class="rows"></ul></div>
+<div class="paper mini" data-list="today"><div class="head"><svg class="icon" style="color:var(--seal)" aria-hidden="true"><use href="{base}img/icons.svg#favoriteFilled"/></svg>{t['today_word']}</div><ul class="rows"></ul></div>
+<div class="paper cream mini" data-list="upcoming"><div class="head">{icon('today')}{t['upcoming']}</div><ul class="rows"></ul></div>
+</div>
+</div>
+</div></section>
+
 <section class="part" id="lists"><div class="wrap">
 <h2>{t['lists_h']}</h2>
 <p class="say">{t['lists_say']}</p>
@@ -413,24 +431,6 @@ def landing(lang):
 <section class="part" id="signals"><div class="wrap split">
 <div><h2>{t['signals_h']}</h2><p class="say">{t['signals_say']}</p></div>
 <div class="paper signals-note"><p class="note-title">{t['signals_note']}</p><ul class="signals">{signals}</ul></div>
-</div></section>
-
-<section class="part" id="smart"><div class="wrap">
-<div class="try-head"><h2>{t['smart_h']}</h2><p class="say">{t['try_say']}</p></div>
-<div class="try" data-lang="{lang}" data-words="{try_words}">
-<form class="paper newcard" autocomplete="off">
-<label class="field"><span class="ring" aria-hidden="true"></span>
-<span class="line"><span class="mirror" aria-hidden="true"></span>
-<input class="title" type="text" maxlength="70" enterkeyhint="done" aria-label="{t['try_ph']}" placeholder="{t['try_ph']}"></span></label>
-<div class="foot"><span class="chip"></span><button class="put" type="submit">{t['try_add']}</button></div>
-</form>
-<div class="examples">{examples}</div>
-<div class="desk3">
-<div class="paper mini" data-list="inbox"><div class="head">{icon('export')}{t['inbox']}</div><ul class="rows"></ul></div>
-<div class="paper mini" data-list="today"><div class="head"><svg class="icon" style="color:var(--seal)" aria-hidden="true"><use href="{base}img/icons.svg#favoriteFilled"/></svg>{t['today_word']}</div><ul class="rows"></ul></div>
-<div class="paper cream mini" data-list="upcoming"><div class="head">{icon('today')}{t['upcoming']}</div><ul class="rows"></ul></div>
-</div>
-</div>
 </div></section>
 
 <section class="part" id="more"><div class="wrap">

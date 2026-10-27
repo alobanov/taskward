@@ -49,6 +49,11 @@ body {
   -webkit-font-smoothing: antialiased;
   transition: background-color 0.5s ease, color 0.5s ease;
   overflow-x: clip;
+  /* The light from a lamp over the desk's top left, the far corner in shade. */
+  background-image:
+    radial-gradient(120% 80% at 18% -10%, rgba(255, 255, 255, 0.28), transparent 60%),
+    radial-gradient(140% 90% at 100% 110%, rgba(0, 0, 0, 0.10), transparent 55%);
+  background-attachment: fixed;
 }
 .hero-in > *, .split > *, .spread > *, .knight > *, .kept > * { min-width: 0; }
 h1, h2 { overflow-wrap: break-word; }
@@ -349,6 +354,12 @@ footer .by { margin-left: auto; }
   footer .by { margin-left: 0; margin-top: 8px; }
   .doc { padding: 30px 22px; }
   .button { font-size: 17px; padding: 13px 20px; white-space: nowrap; }
+  .newcard { padding: 18px 16px 12px; }
+  .newcard .mirror, .newcard .title { font-size: 20px; }
+  .newcard .field .ring { width: 22px; height: 22px; }
+  .newcard .chip { font-size: 18px; }
+  .newcard .put { font-size: 16px; padding: 8px 14px; }
+  .example { font-size: 16px; }
   .signals-note { padding: 22px 20px 24px; }
   .signals-note .signals { gap: 14px 12px; }
   .signals-note .signals li { font-size: 18px; white-space: nowrap; gap: 9px; }

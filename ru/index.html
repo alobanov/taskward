@@ -21,13 +21,13 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Pangolin&amp;subset=cyrillic&amp;display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../style.css?v=803013a5">
+<link rel="stylesheet" href="../style.css?v=20159eb2">
 <style>:root { --grain: url(../img/grain.webp); }</style>
 <script>try { const d = localStorage.getItem('taskward-desk'), i = localStorage.getItem('taskward-ink');
 if (d && d !== 'default') document.documentElement.dataset.desk = d;
 if (i && i !== 'default') document.documentElement.dataset.ink = i; } catch (_) {}</script>
-<script src="../when.js?v=803013a5" defer></script>
-<script src="../app.js?v=803013a5" defer></script>
+<script src="../when.js?v=20159eb2" defer></script>
+<script src="../app.js?v=20159eb2" defer></script>
 </head>
 <body>
 <header class="wrap top">
@@ -46,6 +46,24 @@ if (i && i !== 'default') document.documentElement.dataset.ink = i; } catch (_) 
 <img class="side left" src="../img/ru-iphone-3.webp" alt="" width="760" height="1651">
 <img class="side right" src="../img/ru-iphone-4.webp" alt="" width="760" height="1651">
 <img class="front" src="../img/ru-iphone-1.webp" alt="Taskward на iPhone" width="760" height="1651" fetchpriority="high">
+</div>
+</div></section>
+
+<section class="part" id="smart"><div class="wrap">
+<div class="try-head"><h2>Пиши, как говоришь</h2><p class="say">Напиши задачу с днём, как сказал бы вслух, и нажми ввод. День и напоминание поставятся сами, а задача ляжет на свою карточку.</p></div>
+<div class="try" data-lang="ru" data-words="{&quot;base&quot;: &quot;Тренировка &quot;, &quot;evening&quot;: &quot;Этим вечером&quot;, &quot;when&quot;: &quot;Когда&quot;, &quot;today&quot;: &quot;Сегодня&quot;, &quot;tomorrow&quot;: &quot;Завтра&quot;, &quot;seed&quot;: {&quot;inbox&quot;: [&quot;Купить новое перо&quot;], &quot;today&quot;: [&quot;Наточить меч&quot;], &quot;upcoming&quot;: [&quot;Турнир в замке&quot;]}, &quot;icons&quot;: {&quot;today&quot;: &quot;<svg class=\&quot;icon\&quot; aria-hidden=\&quot;true\&quot;><use href=\&quot;../img/icons.svg#today\&quot;/></svg>&quot;, &quot;moon&quot;: &quot;<svg class=\&quot;icon\&quot; aria-hidden=\&quot;true\&quot;><use href=\&quot;../img/icons.svg#darkThemeFilled\&quot;/></svg>&quot;, &quot;bell&quot;: &quot;<svg class=\&quot;icon\&quot; aria-hidden=\&quot;true\&quot;><use href=\&quot;../img/icons.svg#reminderFilled\&quot;/></svg>&quot;, &quot;star&quot;: &quot;<svg class=\&quot;icon\&quot; aria-hidden=\&quot;true\&quot;><use href=\&quot;../img/icons.svg#favoriteFilled\&quot;/></svg>&quot;, &quot;inbox&quot;: &quot;<svg class=\&quot;icon\&quot; aria-hidden=\&quot;true\&quot;><use href=\&quot;../img/icons.svg#export\&quot;/></svg>&quot;}}">
+<form class="paper newcard" autocomplete="off">
+<label class="field"><span class="ring" aria-hidden="true"></span>
+<span class="line"><span class="mirror" aria-hidden="true"></span>
+<input class="title" type="text" maxlength="70" enterkeyhint="done" aria-label="Тренировка завтра в 9 утра" placeholder="Тренировка завтра в 9 утра"></span></label>
+<div class="foot"><span class="chip"></span><button class="put" type="submit">Положить на карточку</button></div>
+</form>
+<div class="examples"><button type="button" class="example">завтра в 9 утра</button><button type="button" class="example">в пятницу вечером</button><button type="button" class="example">через 3 дня</button><button type="button" class="example">12 ноября в 14:30</button></div>
+<div class="desk3">
+<div class="paper mini" data-list="inbox"><div class="head"><svg class="icon" aria-hidden="true"><use href="../img/icons.svg#export"/></svg>Входящие</div><ul class="rows"></ul></div>
+<div class="paper mini" data-list="today"><div class="head"><svg class="icon" style="color:var(--seal)" aria-hidden="true"><use href="../img/icons.svg#favoriteFilled"/></svg>Сегодня</div><ul class="rows"></ul></div>
+<div class="paper cream mini" data-list="upcoming"><div class="head"><svg class="icon" aria-hidden="true"><use href="../img/icons.svg#today"/></svg>Планы</div><ul class="rows"></ul></div>
+</div>
 </div>
 </div></section>
 
@@ -71,24 +89,6 @@ if (i && i !== 'default') document.documentElement.dataset.ink = i; } catch (_) 
 <section class="part" id="signals"><div class="wrap split">
 <div><h2>Больше, чем сделано или нет</h2><p class="say">Зажми кружок задачи и отметь, как она: в работе, поручено, жду ответа. Поручённое и ожидание уходят в карандаш, чтобы не мешать.</p></div>
 <div class="paper signals-note"><p class="note-title">Отметить</p><ul class="signals"><li class=""><svg viewBox="0 0 30 30" aria-hidden="true"><circle class="ring solid" cx="15" cy="15" r="11"/></svg>Выполнено</li><li class=""><svg viewBox="0 0 30 30" aria-hidden="true"><circle class="ring" cx="15" cy="15" r="11"/><path class="solid" d="M15 4a11 11 0 0 0 0 22z"/></svg>В работе</li><li class=""><svg viewBox="0 0 30 30" aria-hidden="true"><circle class="ring" cx="15" cy="15" r="11"/><path class="mark" d="M4 15h22M15 4v22"/></svg>Поручено</li><li class=""><svg viewBox="0 0 30 30" aria-hidden="true"><circle class="ring" cx="15" cy="15" r="11"/><path class="mark" d="M15 8v7l5 3"/></svg>Встреча</li><li class=""><svg viewBox="0 0 30 30" aria-hidden="true"><path class="mark" d="M15 5v20M6.3 10l17.4 10M6.3 20l17.4-10"/></svg>Важно</li><li class="faint"><svg viewBox="0 0 30 30" aria-hidden="true"><circle class="ring" cx="15" cy="15" r="11"/><path class="mark" d="M9 15h.01M15 15h.01M21 15h.01" stroke-width="3"/></svg>Жду ответа</li></ul></div>
-</div></section>
-
-<section class="part" id="smart"><div class="wrap">
-<div class="try-head"><h2>Пиши, как говоришь</h2><p class="say">Напиши задачу с днём, как сказал бы вслух, и нажми ввод. День и напоминание поставятся сами, а задача ляжет на свою карточку.</p></div>
-<div class="try" data-lang="ru" data-words="{&quot;base&quot;: &quot;Тренировка &quot;, &quot;evening&quot;: &quot;Этим вечером&quot;, &quot;when&quot;: &quot;Когда&quot;, &quot;today&quot;: &quot;Сегодня&quot;, &quot;tomorrow&quot;: &quot;Завтра&quot;, &quot;seed&quot;: {&quot;inbox&quot;: [&quot;Купить новое перо&quot;], &quot;today&quot;: [&quot;Наточить меч&quot;], &quot;upcoming&quot;: [&quot;Турнир в замке&quot;]}, &quot;icons&quot;: {&quot;today&quot;: &quot;<svg class=\&quot;icon\&quot; aria-hidden=\&quot;true\&quot;><use href=\&quot;../img/icons.svg#today\&quot;/></svg>&quot;, &quot;moon&quot;: &quot;<svg class=\&quot;icon\&quot; aria-hidden=\&quot;true\&quot;><use href=\&quot;../img/icons.svg#darkThemeFilled\&quot;/></svg>&quot;, &quot;bell&quot;: &quot;<svg class=\&quot;icon\&quot; aria-hidden=\&quot;true\&quot;><use href=\&quot;../img/icons.svg#reminderFilled\&quot;/></svg>&quot;, &quot;star&quot;: &quot;<svg class=\&quot;icon\&quot; aria-hidden=\&quot;true\&quot;><use href=\&quot;../img/icons.svg#favoriteFilled\&quot;/></svg>&quot;, &quot;inbox&quot;: &quot;<svg class=\&quot;icon\&quot; aria-hidden=\&quot;true\&quot;><use href=\&quot;../img/icons.svg#export\&quot;/></svg>&quot;}}">
-<form class="paper newcard" autocomplete="off">
-<label class="field"><span class="ring" aria-hidden="true"></span>
-<span class="line"><span class="mirror" aria-hidden="true"></span>
-<input class="title" type="text" maxlength="70" enterkeyhint="done" aria-label="Тренировка завтра в 9 утра" placeholder="Тренировка завтра в 9 утра"></span></label>
-<div class="foot"><span class="chip"></span><button class="put" type="submit">Положить на карточку</button></div>
-</form>
-<div class="examples"><button type="button" class="example">завтра в 9 утра</button><button type="button" class="example">в пятницу вечером</button><button type="button" class="example">через 3 дня</button><button type="button" class="example">12 ноября в 14:30</button></div>
-<div class="desk3">
-<div class="paper mini" data-list="inbox"><div class="head"><svg class="icon" aria-hidden="true"><use href="../img/icons.svg#export"/></svg>Входящие</div><ul class="rows"></ul></div>
-<div class="paper mini" data-list="today"><div class="head"><svg class="icon" style="color:var(--seal)" aria-hidden="true"><use href="../img/icons.svg#favoriteFilled"/></svg>Сегодня</div><ul class="rows"></ul></div>
-<div class="paper cream mini" data-list="upcoming"><div class="head"><svg class="icon" aria-hidden="true"><use href="../img/icons.svg#today"/></svg>Планы</div><ul class="rows"></ul></div>
-</div>
-</div>
 </div></section>
 
 <section class="part" id="more"><div class="wrap">

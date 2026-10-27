@@ -3,6 +3,19 @@
   const root = document.documentElement;
   const still = matchMedia('(prefers-reduced-motion: reduce)');
 
+  // The fan of the app's pictures leans a little after the pointer, on a screen with one.
+  const fan = document.querySelector('.fan');
+  if (fan && matchMedia('(hover: hover) and (pointer: fine)').matches && !still.matches) {
+    const front = fan.querySelector('.front');
+    fan.addEventListener('pointermove', (e) => {
+      const r = fan.getBoundingClientRect();
+      const x = (e.clientX - r.left) / r.width - 0.5;
+      const y = (e.clientY - r.top) / r.height - 0.5;
+      front.style.transform = `perspective(1200px) rotateY(${x * 8}deg) rotateX(${-y * 6}deg)`;
+    });
+    fan.addEventListener('pointerleave', () => { front.style.transform = ''; });
+  }
+
   // A ticket's steps, checked off and back on.
   document.querySelectorAll('.ticket .steps .box').forEach((box) => {
     box.addEventListener('click', () => {
