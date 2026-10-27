@@ -128,6 +128,7 @@ a { color: inherit; }
 .back .head { font-size: 21px; }
 .back .head .icon { width: 20px; height: 20px; }
 .back .head .count { font-size: 15px; }
+.back { height: 70%; }
 .back.someday { width: min(380px, 80%); top: 2%; }
 .back.anytime { width: min(400px, 84%); top: 10%; }
 .back.upcoming { width: min(420px, 88%); top: 18%; }
@@ -269,7 +270,7 @@ section.part .say { font-size: 22px; color: var(--on-desk-soft); max-width: 40ch
   margin-inline: calc(50% - 50vw);
   scroll-snap-type: x mandatory; scrollbar-width: thin;
 }
-.shelf img { width: 300px; border-radius: 18px; box-shadow: var(--shadow); scroll-snap-align: center; flex: none; }
+.shelf img { height: auto; width: 300px; border-radius: 18px; box-shadow: var(--shadow); scroll-snap-align: center; flex: none; }
 .macs { margin-top: 18px; }
 .macs img { border-radius: 18px; box-shadow: var(--lift); width: 100%; height: auto; }
 
