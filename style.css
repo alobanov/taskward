@@ -118,15 +118,16 @@ a { color: inherit; }
   position: absolute; left: 50%; width: min(440px, 92%);
   translate: -50% 0; padding: 20px 24px 18px;
 }
-.card .head { display: flex; align-items: center; gap: 12px; font-size: 30px; line-height: 1.1; }
+.card .head { display: flex; align-items: center; gap: 12px; font-size: 27px; line-height: 1.1; }
 .card .head .icon { width: 28px; height: 28px; }
 .card .head .date { margin-left: auto; font-size: 20px; color: var(--ink); border-bottom: 1px solid var(--rule); padding-bottom: 2px; }
 .card .head .count { margin-left: auto; font-size: 18px; color: var(--pencil); }
 
 /* The cards behind Today, each a little narrower, only their heads above the slot. */
 .back { transition: transform 0.2s linear; padding-top: 12px; }
-.back .head { font-size: 26px; }
-.back .head .icon { width: 24px; height: 24px; }
+.back .head { font-size: 21px; }
+.back .head .icon { width: 20px; height: 20px; }
+.back .head .count { font-size: 15px; }
 .back.someday { width: min(380px, 80%); top: 2%; }
 .back.anytime { width: min(400px, 84%); top: 10%; }
 .back.upcoming { width: min(420px, 88%); top: 18%; }
@@ -341,7 +342,15 @@ footer .by { margin-left: auto; }
   .kept, .knight { grid-template-columns: 1fr; padding: 28px 24px; }
   .doc { padding: 30px 22px; }
   .scene { height: 540px; }
-  .card { padding: 16px 18px; }
+  .card { padding: 14px 16px; }
+  .card .head { font-size: 23px; gap: 9px; }
+  .card .head .icon { width: 21px; height: 21px; }
+  .card .head .date { font-size: 16px; }
+  .back { padding-top: 9px; }
+  .back .head { font-size: 17px; }
+  .back .head .icon { width: 17px; height: 17px; }
+  .row .title { font-size: 17px; }
+  .row .print { font-size: 14px; }
 }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
