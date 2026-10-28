@@ -4,6 +4,7 @@ the landing page, the privacy policy and support.
     python3 tool/build.py
 """
 import json
+import re
 from pathlib import Path
 
 SITE = Path(__file__).resolve().parent.parent
@@ -20,11 +21,25 @@ T = {
                 'Today in front, the rest in a wooden holder behind it.',
         'nav': ['Smart dates', 'Lists', 'iPhone and Mac', 'Privacy', 'Support'],
         'other': ('Русский', 'ru/'),
-        'h1': 'Your day,<br>on one card.',
-        'lede': 'Taskward is a calm to-do list for iPhone and Mac. Every list is a paper card on '
-                'your desk.',
+        'h1': 'Your day,<br>on <u>one card</u>.',
+        'lede': ('A calm to-do list for iPhone and Mac.',
+                 'Every list is a paper card on your desk. Write a task the way you’d say it, and '
+                 'work your day from one card.'),
+        'small': 'No account · no ads · kept in your own iCloud',
         'cta': 'Coming soon to the App Store',
-        'small': 'For iPhone and Mac. No account, no ads.',
+        # The card under the lede: what Taskward comes to, as tasks on a list, each its small
+        # print as the app writes it — {today}, {bell}, {cloud}, {knight} and the signals' marks
+        # {s1}, {s2}, {s5} laid in as icons.
+        'points_h': 'Why Taskward',
+        'why_h': 'Four reasons to try it',
+        'why_say': 'A to-do list that keeps out of your way. Each reason is a line on a card, as '
+                   'tasks are in the app: tick them off as you read.',
+        'points': [
+            ('Write it as you’d say it', '“Gym <mark>tomorrow at 9</mark>” → {today}Tomorrow {bell}09:00'),
+            ('More than done or not', '{s1}in progress {s2}delegated {s5}waiting'),
+            ('The same lists on iPhone and Mac', '{cloud}kept in step through your iCloud'),
+            ('A knight to show you the way', '{knight}on first launch, Getting Things Done step by step'),
+        ],
         'then': 'Draw a card out of the holder and it lies on your desk. Work right on it.',
         'today': 'Today', 'upcoming': 'Upcoming', 'anytime': 'Anytime', 'someday': 'Someday',
         'date': '27.10.26',
@@ -38,6 +53,17 @@ T = {
         'evening_tasks': ['Read twenty pages'],
         'check': 'Check off',
         'lists_h': 'Every list is a card of its own',
+        # Each list's card with the hint the app shows under its head (list_hint in the app's
+        # translations), its words cut short for the page: (icon, name, paper, marker, pen, title, text);
+        # the pen is the marker taken toward the ink, as ListHint writes in it.
+        'hints': [
+            ('export', 'Inbox', 'white', '#4AA8F0', '#487ba8', 'Catch it all here', 'Whatever comes to mind. Sort it once a day.'),
+            ('today', 'Upcoming', 'cream', '#FF6B5E', '#ab5a57', 'What has a day of its own', "Dated tasks wait here and come up in Today on their day."),
+            ('list', 'Anytime', 'cream', '#3FB27F', '#428169', 'Next steps', 'When Today is done, take the next one from here.'),
+            ('archive', 'Someday', 'kraft', '#FFA23A', '#a85900', 'Dreams and later', "What you’d like to do, just not now. Look in once a week."),
+            ('project', 'Projects', 'white', '#8B6CF0', '#6c5aa8', 'Projects and areas', 'A project is a goal of several steps; an area, a part of life: work, home, health.'),
+            ('notebook', 'Notes', 'white', '#F6C945', '#a68e4a', 'Not a to-do, just written down', 'Thoughts worth keeping, out of your to-dos. A note becomes a task once it is one.'),
+        ],
         'lists_say': 'Things come in, get a day or wait for one, and end up done. Each list has its own paper, so you always know where you are.',
         'lists': [
             ('export', 'Inbox', 'white', 'Whatever comes to mind, before you decide what it is.'),
@@ -53,17 +79,25 @@ T = {
                       'pencil mark at its foot.',
         'ticket': {
             'title': 'Call the smith about the shield',
-            'notes': 'The old one is cracked along the rim. Ask if he can match the boss.',
+            'notes': 'The old one is **cracked** along the rim. Ask if he can match the ::boss::.',
             'steps': [('Measure the old one', True), ('Find the sketch', False), ('Ask the price', False)],
             'tags': ['Armoury', 'Errand'], 'when': 'Today',
         },
         'signals_h': 'More than done or not done',
         'signals_say': 'Hold a task’s circle and mark how it stands. Delegated and waiting fade '
                        'into pencil, out of your way.',
-        'signals_note': 'Mark',
-        'signals': ['Done', 'In progress', 'Delegated', 'Meeting', 'Important', 'Waiting'],
+        'signals_note': ('Mark it', 'Complete', 'Signals…'),
+        'md_h': 'Notes in Markdown',
+        'md_say': 'Headings, bold, highlights, lists, boxes to tick, links, even tables. The marks '
+                  'stay where you wrote them, in pencil; what they mark takes its look at once.',
+        'md': ['Heading', 'bold', 'highlight', 'to do', 'link', 'table'],
+        'signals': ['In progress', 'Delegated', 'Appointment', 'Important'],
+        # Written in pen round the phone, each pointing at its place on the screen.
         'float': {'smart': ('Gym ', 'tomorrow at 9'), 'when': 'Tomorrow', 'progress': 'In progress',
-                  'tag': 'Armoury', 'note': 'the real app'},
+                  'tag': 'Armoury'},
+        'notes': ['the other lists, standing behind', 'Today in front: work right on it',
+                  'a deadline today, in red', 'a tap, and a new task',
+                  'Inbox, projects and notes, on the oak'],
         'gtd_h': 'Built on Getting Things Done',
         'gtd_say': 'David Allen’s method for a clear head: get everything out of it and into a trusted place, then decide, one thing at a time. Taskward’s lists are its steps.',
         'gtd': [('Capture', 'Everything goes into the Inbox, as it comes.'),
@@ -104,14 +138,24 @@ T = {
         'more': [
             ('paperLines', 'Zen', 'A card edge to edge when a day needs all of you.'),
             ('search', 'Quick Find', 'Draw Today down, or ⌘F on a Mac.'),
-            ('notebook', 'Notes', 'For what isn’t a task. Turns into one when it is.'),
+            ('today', 'Calendar', 'Your calendars’ events in Today and Upcoming, beside your to-dos. Only read, never changed.'),
         ],
+        'more_say': 'Small things that make a calm day calmer.',
+        # What each card shows: Zen's tasks, the word typed into Quick Find and what it finds,
+        # the day's events (time, title, its calendar's colour) as Today lists them.
+        'more_demo': {
+            'zen': ['Sharpen the sword', 'Call the smith', 'Pay the rent'],
+            'find': ('sadd', ['Oil the <mark>sadd</mark>le', 'Mend the <mark>sadd</mark>le bags']),
+            'cal': [('07:30', 'Morning ride', '#7cc9f2'), ('10:30', 'Council at the keep', '#f5a03c'),
+                    ('19:00', 'Supper with Masha', '#3aa0e8')],
+        },
         'zen_h': 'One card, the whole screen',
         'zen_say': 'When a day needs all of you, open its card edge to edge: no bar, no desk, '
                    'nothing else. Draw it down and it is back on the desk.',
         'real_h': 'The real app, on iPhone and Mac',
-        'real_say': 'The same lists on both, kept in step through your iCloud. On a Mac, a '
-                    'sidebar and Quick Find on ⌘F.',
+        'real_say': 'The same lists on both, kept in step through your iCloud. On a Mac the '
+                    'holder stands in a window of its own, by day or by night, and Quick Find is '
+                    'one key away: ⌘F.',
         'shots_alt': 'Taskward on iPhone',
         'mac_alt': 'Taskward on a Mac',
         'yours_h': 'Your desk, your ink',
@@ -138,11 +182,22 @@ T = {
                 'столе: «Сегодня» впереди, остальные в деревянной подставке за ней.',
         'nav': ['Умная дата', 'Списки', 'iPhone и Mac', 'Приватность', 'Поддержка'],
         'other': ('English', '../'),
-        'h1': 'Весь день —<br>на одной карточке.',
-        'lede': 'Taskward — спокойный список дел для iPhone и Mac. Каждый список — бумажная '
-                'карточка на твоём столе.',
+        'h1': 'Весь день —<br>на <u>одной карточке</u>.',
+        'lede': ('Спокойный список дел для iPhone и Mac.',
+                 'Каждый список — бумажная карточка на твоём столе. Пиши задачу, как говоришь, '
+                 'и веди весь день с одной карточки.'),
+        'small': 'Без аккаунта · без рекламы · в твоём iCloud',
         'cta': 'Скоро в App Store',
-        'small': 'Для iPhone и Mac. Без аккаунта и рекламы.',
+        'points_h': 'Почему Taskward',
+        'why_h': 'Четыре причины попробовать',
+        'why_say': 'Список дел, который не мешает. Каждая причина — строка на карточке, как '
+                   'задачи в приложении: отмечай их по ходу чтения.',
+        'points': [
+            ('Пиши, как говоришь', '«Тренировка <mark>завтра в 9</mark>» → {today}Завтра {bell}09:00'),
+            ('Не только «сделано»', '{s1}в работе {s2}поручено {s5}жду ответа'),
+            ('Одни списки на iPhone и Mac', '{cloud}синхронно через твой iCloud'),
+            ('Рыцарь проведёт по методу', '{knight}при первом запуске, GTD шаг за шагом'),
+        ],
         'then': 'Вытяни карточку из подставки — она ляжет на стол. Работай прямо на ней.',
         'today': 'Сегодня', 'upcoming': 'Планы', 'anytime': 'В любое время', 'someday': 'Когда-нибудь',
         'date': '27.10.26',
@@ -156,6 +211,14 @@ T = {
         'evening_tasks': ['Прочитать двадцать страниц'],
         'check': 'Отметить',
         'lists_h': 'У каждого списка своя карточка',
+        'hints': [
+            ('export', 'Входящие', 'white', '#4AA8F0', '#487ba8', 'Всё сюда — разберёшь потом', 'Всё, что пришло в голову. Раз в день разбирай.'),
+            ('today', 'Планы', 'cream', '#FF6B5E', '#ab5a57', 'То, у чего есть свой день', 'Задачи с датой ждут здесь и сами придут в «Сегодня» в свой день.'),
+            ('list', 'В любое время', 'cream', '#3FB27F', '#428169', 'Следующие шаги', 'Опустело «Сегодня» — возьми отсюда следующее.'),
+            ('archive', 'Когда-нибудь', 'kraft', '#FFA23A', '#a85900', 'Мечты и «потом»', 'То, чего хочется, но не сейчас. Загляни раз в неделю.'),
+            ('project', 'Проекты', 'white', '#8B6CF0', '#6c5aa8', 'Проекты и области', 'Проект — цель из нескольких шагов, область — часть жизни: работа, дом, здоровье.'),
+            ('notebook', 'Заметки', 'white', '#F6C945', '#a68e4a', 'Не задача, просто запись', 'Мысли, которые стоит сохранить, — не среди задач. Станет делом — перенеси.'),
+        ],
         'lists_say': 'Дела приходят во входящие, получают свой день или ждут его — и уходят в журнал. У каждого списка своя бумага, так что сразу видно, где ты.',
         'lists': [
             ('export', 'Входящие', 'white', 'Всё, что пришло в голову, пока не решил, что это.'),
@@ -171,17 +234,24 @@ T = {
                       'внизу.',
         'ticket': {
             'title': 'Позвонить кузнецу насчёт щита',
-            'notes': 'Старый треснул по краю. Спросить, подберёт ли он умбон.',
+            'notes': 'Старый **треснул** по краю. Спросить, подберёт ли он ::умбон::.',
             'steps': [('Измерить старый', True), ('Найти эскиз', False), ('Узнать цену', False)],
             'tags': ['Оружейная', 'В городе'], 'when': 'Сегодня',
         },
         'signals_h': 'Больше, чем сделано или нет',
         'signals_say': 'Зажми кружок задачи и отметь, как она: в работе, поручено, жду ответа. '
                        'Поручённое и ожидание уходят в карандаш, чтобы не мешать.',
-        'signals_note': 'Отметить',
-        'signals': ['Выполнено', 'В работе', 'Поручено', 'Встреча', 'Важно', 'Жду ответа'],
+        'signals_note': ('Отметить', 'Выполнить', 'Сигналы…'),
+        'md_h': 'Заметки в Markdown',
+        'md_say': 'Заголовки, жирный, выделение, списки, галочки, ссылки и даже таблицы. Значки '
+                  'остаются там, где ты их написал, карандашом, а размеченное сразу меняет вид.',
+        'md': ['Заголовок', 'жирный', 'выделение', 'сделать', 'ссылка', 'таблица'],
+        'signals': ['В работе', 'Поручено', 'Встреча', 'Важно'],
         'float': {'smart': ('Тренировка ', 'завтра в 9'), 'when': 'Завтра', 'progress': 'В работе',
-                  'tag': 'Оружейная', 'note': 'настоящее приложение'},
+                  'tag': 'Оружейная'},
+        'notes': ['остальные списки стоят позади', '«Сегодня» впереди — работай на нём',
+                  'срок сегодня — красным', 'тап — и новая задача',
+                  'входящие, проекты и заметки — на дубовой подставке'],
         'gtd_h': 'По методу GTD',
         'gtd_say': 'Метод Дэвида Аллена для ясной головы: выгрузить из неё всё в надёжное место и решать по одному делу за раз. Списки Taskward — это его шаги.',
         'gtd': [('Собрать', 'Всё, что приходит в голову, — во входящие, сразу.'),
@@ -222,14 +292,21 @@ T = {
         'more': [
             ('paperLines', 'Дзен', 'Карточка на весь экран, когда нужно сосредоточиться.'),
             ('search', 'Быстрый поиск', 'Потяни «Сегодня» вниз или нажми ⌘F на Маке.'),
-            ('notebook', 'Заметки', 'Для того, что не задача. Станет задачей, когда нужно.'),
+            ('today', 'Календарь', 'События твоих календарей — в «Сегодня» и «Планах», рядом с задачами. Только читаются, ничего не меняется.'),
         ],
+        'more_say': 'Мелочи, от которых спокойный день становится ещё спокойнее.',
+        'more_demo': {
+            'zen': ['Наточить меч', 'Позвонить кузнецу', 'Заплатить за жильё'],
+            'find': ('седл', ['Смазать <mark>седл</mark>о', 'Починить <mark>седл</mark>ьные сумки']),
+            'cal': [('07:30', 'Утренняя прогулка верхом', '#7cc9f2'), ('10:30', 'Совет в замке', '#f5a03c'),
+                    ('19:00', 'Ужин с Машей', '#3aa0e8')],
+        },
         'zen_h': 'Одна карточка на весь экран',
         'zen_say': 'Когда день требует всего внимания, разверни его карточку от края до края: '
                    'без панели, без стола, без лишнего. Потяни вниз — и она снова на столе.',
         'real_h': 'Настоящее приложение, на iPhone и Mac',
-        'real_say': 'Одни и те же списки на обоих, синхронно через твой iCloud. На Маке — '
-                    'боковая панель и быстрый поиск по ⌘F.',
+        'real_say': 'Одни и те же списки на обоих, синхронно через твой iCloud. На Маке '
+                    'подставка стоит в своём окне, днём и ночью, а быстрый поиск — по ⌘F.',
         'shots_alt': 'Taskward на iPhone',
         'mac_alt': 'Taskward на Маке',
         'yours_h': 'Твой стол, твои чернила',
@@ -259,15 +336,53 @@ def icon(name, cls='icon'):
 
 SIGNAL = '<svg viewBox="0 0 24 24"><circle class="ring" cx="12" cy="12" r="9.2"/><circle class="fill" cx="12" cy="12" r="9.2"/></svg>'
 
-# The signals' marks, drawn as the app draws them in the circle.
-MARKS = [
-    '<circle class="ring solid" cx="15" cy="15" r="11"/>',
-    '<circle class="ring" cx="15" cy="15" r="11"/><path class="solid" d="M15 4a11 11 0 0 0 0 22z"/>',
-    '<circle class="ring" cx="15" cy="15" r="11"/><path class="mark" d="M4 15h22M15 4v22"/>',
-    '<circle class="ring" cx="15" cy="15" r="11"/><path class="mark" d="M15 8v7l5 3"/>',
-    '<path class="mark" d="M15 5v20M6.3 10l17.4 10M6.3 20l17.4-10"/>',
-    '<circle class="ring" cx="15" cy="15" r="11"/><path class="mark" d="M9 15h.01M15 15h.01M21 15h.01" stroke-width="3"/>',
-]
+def knight_sticker():
+    """The app's knight as a sticker on the desk: his paths from the icons' sprite, laid
+    three times — thick in white for the sticker's edge and the shield filled white under
+    it, then in the icon's navy over them."""
+    import re
+    sprite = (SITE / 'img/icons.svg').read_text()
+    start = sprite.index('<symbol id="knight"')
+    body = sprite[sprite.index('>', start) + 1:sprite.index('</symbol>', start)]
+    tags = re.findall(r'<path [^>]*/>', body)
+    lines = [re.search(r'd="([^"]+)"', p).group(1) for p in tags if 'fill="#000"' not in p]
+    eyes = [re.search(r'd="([^"]+)"', p).group(1) for p in tags if 'fill="#000"' in p]
+    edge = ''.join(f'<path d="{d}"/>' for d in lines)
+    ink = ''.join(f'<path d="{d}"/>' for d in lines) + ''.join(f'<path class="eye" d="{d}"/>' for d in eyes)
+    return (f'<svg class="sticker" viewBox="-3 -3 46 46" aria-hidden="true">'
+            f'<g class="edge">{edge}<path class="body" d="{lines[0]}"/></g>'
+            f'<path class="shield" d="{lines[0]}"/><g class="ink">{ink}</g></svg>')
+
+
+# Where the notes round the phone point, in hundredths of the phone: the stack of cards
+# behind Today, Today's head, the rent due today, the plus, the oak's Inbox.
+NOTES = [('l', 11.4, 19.5, 4), ('r', 92.5, 31.3, -7), ('l', 9.0, 52.9, -3), ('r', 89.6, 83.6, -6),
+         ('l', 11.0, 92.0, -2)]
+# A stroke of the pen under a word, a little uphill, its end flicked back.
+UNDER = ('<svg viewBox="0 0 300 24" preserveAspectRatio="none" aria-hidden="true">'
+         '<path d="M4 17 C 70 11, 170 9, 292 8 C 230 12, 170 15, 120 19"/></svg>')
+# A hand-drawn arrow, its head at the right middle; a note on the right turns it round.
+ARROW = ('<svg class="arrow" viewBox="0 0 64 40" aria-hidden="true">'
+         '<path d="M3 31 C 17 36, 41 33, 61 20"/><path d="M51 17.5 L 61.5 19.8 L 55.5 28.5"/></svg>')
+SIGNAL_HALF = ('<svg class="icon" viewBox="0 0 30 30" aria-hidden="true"><circle cx="15" cy="15" r="11" '
+               'fill="none" stroke="currentColor" stroke-width="1.9"/><path fill="currentColor" '
+               'd="M15 4a11 11 0 0 0 0 22z"/></svg>')
+
+# The signals' marks as the app draws them (lib/widgets/pen_signal.dart): in its 24, the
+# ring of 8.6 the first stroke, the mark in it; the asterisk stands alone.
+RING = '<circle class="ring" cx="12" cy="12" r="8.6"/>'
+SIG = {
+    'done': RING + '<circle class="solid" cx="12" cy="12" r="8.6"/>',
+    'progress': RING + '<path class="solid" d="M12 3.4a8.6 8.6 0 0 0 0 17.2z"/>',
+    'delegated': RING + '<path class="line" d="M12 3.4v17.2M3.4 12h17.2M15.2 7.2l5.4 4.8-5.4 4.8"/>',
+    'appointment': RING + '<path class="line" d="M12 3.4v17.2M3.4 12h17.2"/>',
+    'important': '<path class="line" stroke-width="2.2" d="M12 4v16M18.93 8 5.07 16M18.93 16 5.07 8"/>',
+    'pending': RING + '<path class="line" d="M8.6 7.4h6.8M8.6 7.4l6.8 9.2M15.4 7.4l-6.8 9.2M8.6 16.6h6.8"/>',
+}
+
+
+def sig(name):
+    return f'<svg class="sig" viewBox="0 0 24 24" aria-hidden="true">{SIG[name]}</svg>'
 
 
 def head(lang, title, desc, path, base):
@@ -363,18 +478,28 @@ def landing(lang):
     rows = ''.join(row(t, *task) for task in t['tasks'])
     evening = ''.join(row(t, title, '', False) for title in t['evening_tasks'])
     lists = ''.join(
-        f'<div class="paper {paper}" style="--r:{r}deg"><div class="head">'
-        f'{icon(mark)}{name}</div><p>{say}</p></div>'
-        for (mark, name, paper, say), r in zip(t['lists'], [-1.2, 0.8, -0.4, 1.1, -0.9, 0.5])
-    ).replace('<svg class="icon" aria-hidden="true"><use href="{base}img/icons.svg#favoriteFilled"/></svg>',
-              '<svg class="icon" style="color:var(--seal)" aria-hidden="true"><use href="{base}img/icons.svg#favoriteFilled"/></svg>')
+        f'<div class="paper {paper} lcard" style="--r:{r}deg;--marker:{marker};--pen:{pen}">'
+        f'<div class="head">{icon(mark)}{name}</div>'
+        f'<div class="hint"><b>{title}</b><span>{text}</span></div></div>'
+        for (mark, name, paper, marker, pen, title, text), r
+        in zip(t['hints'], [-1.4, 0.9, -0.6, 1.2, -1.0, 0.7])
+    )
     tk = t['ticket']
+    mk = lambda m: f'<span class="mk">{m}</span>'
+    h, bold, hl, todo, link, table = t['md']
+    md = ''.join(f'<li>{x}</li>' for x in [
+        f'{mk("#")} <b class="h">{h}</b>', f'{mk("**")}<b>{bold}</b>{mk("**")}',
+        f'{mk("::")}<mark>{hl}</mark>{mk("::")}', f'{mk("- [ ]")} {todo}',
+        f'{mk("[")}<u>{link}</u>{mk("](…)")}', f'{mk("|")} {table} {mk("|")}',
+    ])
+    ticket_notes = re.sub(r'::(.+?)::', lambda m: mk('::') + f'<mark>{m[1]}</mark>' + mk('::'),
+                          re.sub(r'\*\*(.+?)\*\*', lambda m: mk('**') + f'<b>{m[1]}</b>' + mk('**'), tk['notes']))
     steps = ''.join(
         f'<li class="{"done" if done else ""}"><button class="box" type="button" aria-pressed="{"true" if done else "false"}" aria-label="{t["check"]}: {s}"></button>{s}</li>' for s, done in tk['steps']
     )
     signals = ''.join(
-        f'<li class="{"faint" if i == 5 else ""}"><svg viewBox="0 0 30 30" aria-hidden="true">{m}</svg>{name}</li>'
-        for i, (m, name) in enumerate(zip(MARKS, t['signals']))
+        f'<li>{sig(mark)}{name}</li>'
+        for mark, name in zip(['progress', 'delegated', 'appointment', 'important'], t['signals'])
     )
     phrases = json.dumps([
         {'title': title, 'phrase': phrase,
@@ -396,9 +521,23 @@ def landing(lang):
         for k, n, c in t['inks']
     )
     kept = ''.join(f'<li>{line}</li>' for line in t['kept'])
+    demo = t['more_demo']
+    ring = '<span class="o"></span>'
+    demos = [
+        # Zen: the card edge to edge in a little screen, nothing round it.
+        '<div class="demo zen"><div class="screen-mini">'
+        + ''.join(f'<p>{ring}<span>{x}</span></p>' for x in demo['zen']) + '<p>' + ring + '</p></div></div>',
+        # Quick Find: its field with a word typed, a caret blinking after it, and what it finds.
+        f'<div class="demo find"><div class="field">{icon("search")}{demo["find"][0]}<span class="caret"></span></div>'
+        + ''.join(f'<p>{ring}<span>{x}</span></p>' for x in demo['find'][1]) + '</div>',
+        # Calendar: the day's events by their calendars' dots, a task of the day under them.
+        '<div class="demo cal">'
+        + ''.join(f'<p><span class="dot" style="background:{c}"></span><span class="at">{at}</span><span>{x}</span></p>' for at, x, c in demo['cal'])
+        + '</div>',
+    ]
     more = ''.join(
-        f'<div class="paper {paper} small"><div class="head">{icon(mark)}{name}</div><p>{say}</p></div>'
-        for (mark, name, say), paper, r in zip(t['more'], ['white', 'cream', 'kraft'], [-0.8, 0.6, -0.4])
+        f'<div class="paper {paper} small"><div class="head">{icon(mark)}{name}</div><p>{say}</p>{d}</div>'
+        for (mark, name, say), paper, d in zip(t['more'], ['white', 'cream', 'kraft'], demos)
     )
     try_words = json.dumps({
         'base': t['try_base'], 'evening': t['evening_word'], 'when': t['when_word'],
@@ -407,9 +546,18 @@ def landing(lang):
                   {'today': 'today', 'moon': 'darkThemeFilled', 'bell': 'reminderFilled', 'star': 'favoriteFilled', 'inbox': 'export'}.items()},
     }, ensure_ascii=False).replace('"', '&quot;')
     examples = ''.join(f'<button type="button" class="example">{e}</button>' for e in t['try_examples'])
-    strips = ''.join(
-        f'<div class="paper {paper} strip m-{mark}" style="--i:{i}">{icon(mark)}<span>{name}</span></div>'
-        for i, (mark, name, paper, _) in enumerate(reversed(t['lists']))
+    marks = {'s1': sig('progress'), 's2': sig('delegated'), 's5': sig('pending')}
+    glyphs = {'today': icon('today'), 'bell': icon('reminderFilled'), 'cloud': icon('backup'),
+              'knight': icon('knight'), **marks}
+    points = ''.join(
+        f'<li class="row"><button class="signal" aria-pressed="false" aria-label="{t["check"]}: {title}">'
+        f'{SIGNAL}</button><div><div class="title">{title}</div>'
+        f'<div class="print">{re.sub(r"(\{\w+\}[^{]*?)(?= ?\{|$)", r"<i>\1</i>", say).format(**glyphs)}</div></div></li>'
+        for title, say in t['points']
+    )
+    notes = ''.join(
+        f'<p class="pen-note {side}" style="--x:{x}%;--y:{y}%;--r:{r}deg">{ARROW}<span>{words}</span></p>'
+        for words, (side, x, y, r) in zip(t['notes'], NOTES)
     )
     gtd = ''.join(f'<li><b>{name}</b><span>{say}</span></li>' for name, say in t['gtd'])
     sample_rows = ''.join(row(t, title, '', done) for title, _, done in t['tasks'][:3])
@@ -419,23 +567,25 @@ def landing(lang):
 <main>
 <section class="hero"><div class="wrap hero-in">
 <div class="hero-words">
-<h1 class="written">{''.join(f'<span class="pen" style="--i:{i}">{line}</span>' for i, line in enumerate(t['h1'].split('<br>')))}</h1>
-<p class="lede">{t['lede']}</p>
+<h1 class="written">{''.join(f'<span class="pen" style="--i:{i}">{line}</span>' for i, line in enumerate(t['h1'].split('<br>'))).replace('<u>', '<span class="under">').replace('</u>', UNDER + '</span>')}</h1>
+<p class="lede"><b>{t['lede'][0]}</b> {t['lede'][1]}</p>
 <span class="button soon"><svg class="icon" viewBox="0 0 17 20" aria-hidden="true"><path fill="currentColor" d="M14.07 10.63c-.02-2.33 1.9-3.45 1.99-3.51-1.08-1.58-2.77-1.8-3.37-1.82-1.43-.15-2.8.84-3.53.84-.73 0-1.85-.82-3.05-.8-1.57.03-3.02.92-3.83 2.33-1.63 2.83-.42 7.02 1.17 9.32.78 1.12 1.71 2.38 2.93 2.34 1.18-.05 1.62-.76 3.05-.76 1.42 0 1.82.76 3.06.74 1.27-.03 2.07-1.14 2.84-2.27.9-1.31 1.27-2.58 1.29-2.64-.03-.01-2.47-.95-2.49-3.77zM11.77 3.79c.65-.79 1.09-1.88.97-2.97-.94.04-2.07.62-2.74 1.41-.6.7-1.13 1.81-.99 2.88 1.05.08 2.11-.53 2.76-1.32z"/></svg>{t['cta']}</span>
 <p class="small">{t['small']}</p>
 </div>
 <div class="scene" aria-hidden="true">
+<div class="rig">
 <div class="phone"><div class="screen"><img src="{base}img/{lang}-home.webp" alt="" width="786" height="1708" fetchpriority="high">
 <div class="bar"><b>9:41</b><svg viewBox="0 0 52 12"><g fill="#f4f1e8"><rect x="0" y="8" width="3" height="4" rx="1"/><rect x="4.5" y="6" width="3" height="6" rx="1"/><rect x="9" y="3.5" width="3" height="8.5" rx="1"/><rect x="13.5" y="1" width="3" height="11" rx="1"/><rect x="36.5" y="1.5" width="13" height="9" rx="2.5" fill="none" stroke="#f4f1e8" stroke-opacity=".5"/><rect x="38" y="3" width="10" height="6" rx="1.3"/></g></svg></div></div>
 <div class="glass"></div></div>
-<div class="float paper chip smart" style="--r:-4deg;top:14%;left:-6%"><span class="ring"></span>{t['float']['smart'][0]}<mark>{t['float']['smart'][1]}</mark></div>
-<div class="float paper chip when" style="--r:3deg;top:31%;right:-4%;animation-delay:-2s">{icon('today')}{t['float']['when']}{icon('reminderFilled')}09:00</div>
-<div class="float paper chip progress" style="--r:2deg;bottom:30%;left:-9%;animation-delay:-4s"><svg viewBox="0 0 30 30" class="sig"><circle class="ring" cx="15" cy="15" r="11"/><path class="solid" d="M15 4a11 11 0 0 0 0 22z"/></svg>{t['float']['progress']}</div>
-<div class="float tag" style="--r:-6deg;bottom:16%;right:-2%;animation-delay:-3s">{t['float']['tag']}</div>
-<span class="float doodle star" style="--r:12deg;top:4%;right:8%;animation-delay:-1s">{icon('favoriteFilled')}</span>
-<span class="float doodle flag" style="--r:-10deg;bottom:6%;left:10%;animation-delay:-5s">{icon('flagFilled')}</span>
-<span class="float knight" style="--r:-8deg;bottom:-2%;right:12%;animation-delay:-2.5s">{icon('knight')}</span>
-<p class="scribble"><svg viewBox="0 0 60 40"><path d="M56 30 C 44 36, 22 34, 10 16"/><path d="M6 25 L 9 14 L 19 17"/></svg>{t['float']['note']}</p>
+<div class="pen-notes">{notes}</div>
+</div>
+<div class="float paper chip smart" style="--r:-4deg;top:35%;left:-5%"><span class="ring"></span>{t['float']['smart'][0]}<mark>{t['float']['smart'][1]}</mark></div>
+<div class="float paper chip when" style="--r:3deg;top:51%;right:-5%;animation-delay:-2s">{icon('today')}{t['float']['when']}{icon('reminderFilled')}09:00</div>
+<div class="float paper chip progress" style="--r:2deg;top:69%;left:-3%;animation-delay:-4s"><svg viewBox="0 0 30 30" class="sig"><circle class="ring" cx="15" cy="15" r="11"/><path class="solid" d="M15 4a11 11 0 0 0 0 22z"/></svg>{t['float']['progress']}</div>
+<div class="float tag" style="--r:-6deg;top:3%;left:8%;animation-delay:-3s">{t['float']['tag']}</div>
+<span class="float doodle star" style="--r:12deg;top:2%;right:9%;animation-delay:-1s">{icon('favoriteFilled')}</span>
+<span class="float doodle flag" style="--r:-10deg;top:66%;right:4%;animation-delay:-5s">{icon('flagFilled')}</span>
+<span class="knight">{knight_sticker()}</span>
 </div>
 </div></section>
 
@@ -443,10 +593,17 @@ def landing(lang):
 <div class="shelf">{iphones}</div>
 </div></section>
 
-<section class="part board-part"><div class="wrap board">
+<section class="part features"><div class="wrap">
 
-<div class="tile t-try" id="smart">
-<h2>{t['smart_h']}</h2><p class="cap">{t['cap']['try']}</p>
+<article class="feature flip" id="why">
+<div class="say"><h2>{t['why_h']}</h2><p>{t['why_say']}</p></div>
+<div class="show"><div class="paper why"><div class="why-head">{icon('favoriteFilled')}{t['points_h']}<span class="count">{len(t['points'])}</span></div><ul class="rows">{points}</ul></div>
+</div>
+</article>
+
+<article class="feature" id="smart">
+<div class="say"><h2>{t['smart_h']}</h2><p>{t['try_say']}</p></div>
+<div class="show">
 <div class="try" data-lang="{lang}" data-words="{try_words}">
 <form class="paper newcard" autocomplete="off">
 <label class="field"><span class="ring" aria-hidden="true"></span>
@@ -461,13 +618,15 @@ def landing(lang):
 <div class="paper cream mini" data-list="upcoming"><div class="head">{icon('today')}{t['upcoming']}</div><ul class="rows"></ul></div>
 </div>
 </div>
-</div>
+</article>
 
-<div class="tile t-ticket" id="ticket">
-<h3>{t['cap']['ticket'][0]}</h3><p class="cap">{t['cap']['ticket'][1]}</p>
+<article class="feature flip" id="ticket">
+<div class="say"><h2>{t['ticket_h']}</h2><p>{t['ticket_say']}</p>
+<h3>{t['md_h']}</h3><p>{t['md_say']}</p><ul class="md">{md}</ul></div>
+<div class="show">
 <div class="ticket-wrap"><div class="paper ticket">
 <h4 class="row"><button class="signal" type="button" aria-pressed="false" aria-label="{t['check']}: {tk['title']}">{SIGNAL}</button><span class="title">{tk['title']}</span></h4>
-<p class="notes">{tk['notes']}</p>
+<p class="notes">{ticket_notes}</p>
 <ul class="steps">{steps}</ul>
 <div class="stub">
 <div class="tags">{''.join(f'<span>{x}</span>' for x in tk['tags'])}</div>
@@ -475,44 +634,56 @@ def landing(lang):
 </div>
 </div></div>
 </div>
+</article>
 
-<div class="tile t-signals" id="signals">
-<h3>{t['cap']['signals'][0]}</h3><p class="cap">{t['cap']['signals'][1]}</p>
-<div class="paper signals-note"><p class="note-title">{t['signals_note']}</p><ul class="signals">{signals}</ul></div>
+<article class="feature" id="signals">
+<div class="say"><h2>{t['signals_h']}</h2><p>{t['signals_say']}</p></div>
+<div class="show">
+<div class="taped"><span class="tape"></span><p class="note-title">{t['signals_note'][0]}</p>
+<p class="complete">{sig('done')}{t['signals_note'][1]}</p><ul class="sigs">{signals}</ul><p class="more">{t['signals_note'][2]}</p></div>
 </div>
+</article>
 
-<div class="tile t-lists" id="lists">
-<h3>{t['cap']['lists'][0]}</h3><p class="cap">{t['cap']['lists'][1]}</p>
-<div class="stack">{strips}</div>
-</div>
+<article class="feature wide" id="lists">
+<div class="say"><h2>{t['lists_h']}</h2><p>{t['lists_say']}</p></div>
+<div class="deck">{lists}</div>
+</article>
 
-<div class="tile t-more">{more}</div>
+<article class="feature trio">
+<h2>{t['more_h']}</h2><p class="lead">{t['more_say']}</p>
+<div class="cards3">{more}</div>
+</article>
 
-<div class="tile t-mac">
-<h3>{t['cap']['mac'][0]}</h3><p class="cap">{t['cap']['mac'][1]}</p>
+<article class="feature" id="mac">
+<div class="say"><h2>{t['cap']['mac'][0]}</h2><p>{t['real_say']}</p></div>
+<div class="show"><div class="macs">
+<img src="{base}img/{lang}-mac-5.webp" alt="" width="2240" height="1400" loading="lazy">
+<img src="{base}img/{lang}-mac-2.webp" alt="" width="2240" height="1400" loading="lazy">
 <img src="{base}img/{lang}-mac-1.webp" alt="{t['mac_alt']}" width="2240" height="1400" loading="lazy">
-</div>
+</div></div>
+</article>
 
-<div class="tile t-yours" id="yours">
-<h3>{t['cap']['yours'][0]}</h3><p class="cap">{t['cap']['yours'][1]}</p>
+<article class="feature pair">
+<div class="say" id="yours"><h2>{t['yours_h']}</h2><p>{t['yours_say']}</p>
 <div class="swatches">{desks}</div>
 <div class="swatches inks">{inks}</div>
 <p class="named"><span data-for="desk" aria-live="polite"></span> · <span data-for="inkpick" aria-live="polite"></span></p>
 </div>
-
-<div class="tile t-kept" id="kept">
+<div class="show" id="kept">
 <div class="paper kept">
 <h3>{icon('lock')}{t['kept_h']}</h3><ul>{kept}</ul><p><a href="{base}{pre}privacy/">{t['kept_link']}</a></p>
 </div>
 </div>
+</article>
 
-<div class="tile t-knight" id="knight">
-<h3>{t['gtd_h']}</h3><p class="cap">{t['gtd_say']}</p>
+<article class="feature gtd-row" id="knight">
+<h2>{t['gtd_h']}</h2><p class="lead">{t['gtd_say']}</p>
 <ol class="gtd">{gtd}</ol>
 <div class="gtd-foot">{icon('knight', 'icon big')}<p>{t['gtd_knight']}</p><span class="button soon"><svg class="icon" viewBox="0 0 17 20" aria-hidden="true"><path fill="currentColor" d="M14.07 10.63c-.02-2.33 1.9-3.45 1.99-3.51-1.08-1.58-2.77-1.8-3.37-1.82-1.43-.15-2.8.84-3.53.84-.73 0-1.85-.82-3.05-.8-1.57.03-3.02.92-3.83 2.33-1.63 2.83-.42 7.02 1.17 9.32.78 1.12 1.71 2.38 2.93 2.34 1.18-.05 1.62-.76 3.05-.76 1.42 0 1.82.76 3.06.74 1.27-.03 2.07-1.14 2.84-2.27.9-1.31 1.27-2.58 1.29-2.64-.03-.01-2.47-.95-2.49-3.77zM11.77 3.79c.65-.79 1.09-1.88.97-2.97-.94.04-2.07.62-2.74 1.41-.6.7-1.13 1.81-.99 2.88 1.05.08 2.11-.53 2.76-1.32z"/></svg>{t['cta']}</span></div>
-</div>
+</article>
 
 </div></section>
+
 </main>
 {foot(t, base, lang)}
 </body>
