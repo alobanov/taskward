@@ -21,13 +21,13 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Pangolin&amp;subset=cyrillic&amp;display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=4de150ba">
+<link rel="stylesheet" href="style.css?v=5fc635b5">
 <style>:root { --grain: url(img/grain.webp); }</style>
 <script>try { const d = localStorage.getItem('taskward-desk'), i = localStorage.getItem('taskward-ink');
 if (d && d !== 'default') document.documentElement.dataset.desk = d;
 if (i && i !== 'default') document.documentElement.dataset.ink = i; } catch (_) {}</script>
-<script src="when.js?v=4de150ba" defer></script>
-<script src="app.js?v=4de150ba" defer></script>
+<script src="when.js?v=5fc635b5" defer></script>
+<script src="app.js?v=5fc635b5" defer></script>
 </head>
 <body>
 <header class="wrap top">
@@ -49,8 +49,14 @@ if (i && i !== 'default') document.documentElement.dataset.ink = i; } catch (_) 
 </div>
 </div></section>
 
-<section class="part" id="smart"><div class="wrap">
-<div class="try-head"><h2>Write it as you’d say it</h2><p class="say">Type a task with a day in it, the way you would say it, and press Return. The day and the reminder set themselves, and the task lands on its card.</p></div>
+<section class="part" id="real"><div class="wrap">
+<div class="shelf"><img src="img/en-iphone-1.webp" alt="Taskward on iPhone" width="760" height="1651" loading="lazy"><img src="img/en-iphone-2.webp" alt="Taskward on iPhone" width="760" height="1651" loading="lazy"><img src="img/en-iphone-3.webp" alt="Taskward on iPhone" width="760" height="1651" loading="lazy"><img src="img/en-iphone-4.webp" alt="Taskward on iPhone" width="760" height="1651" loading="lazy"><img src="img/en-iphone-5.webp" alt="Taskward on iPhone" width="760" height="1651" loading="lazy"><img src="img/en-iphone-6.webp" alt="Taskward on iPhone" width="760" height="1651" loading="lazy"><img src="img/en-iphone-7.webp" alt="Taskward on iPhone" width="760" height="1651" loading="lazy"><img src="img/en-iphone-8.webp" alt="Taskward on iPhone" width="760" height="1651" loading="lazy"></div>
+</div></section>
+
+<section class="part board-part"><div class="wrap board">
+
+<div class="tile t-try" id="smart">
+<h2>Write it as you’d say it</h2><p class="cap">Type a task with a day in it and press Return.</p>
 <div class="try" data-lang="en" data-words="{&quot;base&quot;: &quot;Gym &quot;, &quot;evening&quot;: &quot;This Evening&quot;, &quot;when&quot;: &quot;When&quot;, &quot;today&quot;: &quot;Today&quot;, &quot;tomorrow&quot;: &quot;Tomorrow&quot;, &quot;seed&quot;: {&quot;inbox&quot;: [&quot;Buy a new pen&quot;], &quot;today&quot;: [&quot;Sharpen the sword&quot;], &quot;upcoming&quot;: [&quot;Tournament at the castle&quot;]}, &quot;icons&quot;: {&quot;today&quot;: &quot;<svg class=\&quot;icon\&quot; aria-hidden=\&quot;true\&quot;><use href=\&quot;img/icons.svg#today\&quot;/></svg>&quot;, &quot;moon&quot;: &quot;<svg class=\&quot;icon\&quot; aria-hidden=\&quot;true\&quot;><use href=\&quot;img/icons.svg#darkThemeFilled\&quot;/></svg>&quot;, &quot;bell&quot;: &quot;<svg class=\&quot;icon\&quot; aria-hidden=\&quot;true\&quot;><use href=\&quot;img/icons.svg#reminderFilled\&quot;/></svg>&quot;, &quot;star&quot;: &quot;<svg class=\&quot;icon\&quot; aria-hidden=\&quot;true\&quot;><use href=\&quot;img/icons.svg#favoriteFilled\&quot;/></svg>&quot;, &quot;inbox&quot;: &quot;<svg class=\&quot;icon\&quot; aria-hidden=\&quot;true\&quot;><use href=\&quot;img/icons.svg#export\&quot;/></svg>&quot;}}">
 <form class="paper newcard" autocomplete="off">
 <label class="field"><span class="ring" aria-hidden="true"></span>
@@ -65,12 +71,12 @@ if (i && i !== 'default') document.documentElement.dataset.ink = i; } catch (_) 
 <div class="paper cream mini" data-list="upcoming"><div class="head"><svg class="icon" aria-hidden="true"><use href="img/icons.svg#today"/></svg>Upcoming</div><ul class="rows"></ul></div>
 </div>
 </div>
-</div></section>
+</div>
 
-<section class="part" id="ticket"><div class="wrap split">
-<div><h2>A task opens as a ticket</h2><p class="say">Notes, a checklist, tags, a deadline and a reminder, on a card torn off along a dashed line. Only what you have added shows; the rest waits as a pencil mark at its foot.</p></div>
+<div class="tile t-ticket" id="ticket">
+<h3>A task opens as a ticket</h3><p class="cap">Notes, a checklist, tags, a deadline, a reminder.</p>
 <div class="ticket-wrap"><div class="paper ticket">
-<h3 class="row"><button class="signal" type="button" aria-pressed="false" aria-label="Check off: Call the smith about the shield"><svg viewBox="0 0 24 24"><circle class="ring" cx="12" cy="12" r="9.2"/><circle class="fill" cx="12" cy="12" r="9.2"/></svg></button><span class="title">Call the smith about the shield</span></h3>
+<h4 class="row"><button class="signal" type="button" aria-pressed="false" aria-label="Check off: Call the smith about the shield"><svg viewBox="0 0 24 24"><circle class="ring" cx="12" cy="12" r="9.2"/><circle class="fill" cx="12" cy="12" r="9.2"/></svg></button><span class="title">Call the smith about the shield</span></h4>
 <p class="notes">The old one is cracked along the rim. Ask if he can match the boss.</p>
 <ul class="steps"><li class="done"><button class="box" type="button" aria-pressed="true" aria-label="Check off: Measure the old one"></button>Measure the old one</li><li class=""><button class="box" type="button" aria-pressed="false" aria-label="Check off: Find the sketch"></button>Find the sketch</li><li class=""><button class="box" type="button" aria-pressed="false" aria-label="Check off: Ask the price"></button>Ask the price</li></ul>
 <div class="stub">
@@ -78,54 +84,44 @@ if (i && i !== 'default') document.documentElement.dataset.ink = i; } catch (_) 
 <div class="when"><span class="star"><svg class="icon" aria-hidden="true"><use href="img/icons.svg#favoriteFilled"/></svg></span>Today<svg class="icon" aria-hidden="true"><use href="img/icons.svg#reminderFilled"/></svg>21:30<span class="marks"><svg class="icon" aria-hidden="true"><use href="img/icons.svg#flagFilled"/></svg></span></div>
 </div>
 </div></div>
-</div></section>
+</div>
 
-<section class="part" id="signals"><div class="wrap split">
-<div><h2>More than done or not done</h2><p class="say">Hold a task’s circle and mark how it stands. Delegated and waiting fade into pencil, out of your way.</p></div>
+<div class="tile t-signals" id="signals">
+<h3>More than done</h3><p class="cap">Hold a task’s circle to mark how it stands.</p>
 <div class="paper signals-note"><p class="note-title">Mark</p><ul class="signals"><li class=""><svg viewBox="0 0 30 30" aria-hidden="true"><circle class="ring solid" cx="15" cy="15" r="11"/></svg>Done</li><li class=""><svg viewBox="0 0 30 30" aria-hidden="true"><circle class="ring" cx="15" cy="15" r="11"/><path class="solid" d="M15 4a11 11 0 0 0 0 22z"/></svg>In progress</li><li class=""><svg viewBox="0 0 30 30" aria-hidden="true"><circle class="ring" cx="15" cy="15" r="11"/><path class="mark" d="M4 15h22M15 4v22"/></svg>Delegated</li><li class=""><svg viewBox="0 0 30 30" aria-hidden="true"><circle class="ring" cx="15" cy="15" r="11"/><path class="mark" d="M15 8v7l5 3"/></svg>Meeting</li><li class=""><svg viewBox="0 0 30 30" aria-hidden="true"><path class="mark" d="M15 5v20M6.3 10l17.4 10M6.3 20l17.4-10"/></svg>Important</li><li class="faint"><svg viewBox="0 0 30 30" aria-hidden="true"><circle class="ring" cx="15" cy="15" r="11"/><path class="mark" d="M9 15h.01M15 15h.01M21 15h.01" stroke-width="3"/></svg>Waiting</li></ul></div>
-</div></section>
+</div>
 
-<section class="part" id="lists"><div class="wrap">
-<h2>Every list is a card of its own</h2>
-<p class="say">Things come in, get a day or wait for one, and end up done. Each list has its own paper, so you always know where you are.</p>
-<div class="spread"><div class="paper white" style="--r:-1.2deg"><div class="head"><svg class="icon" aria-hidden="true"><use href="img/icons.svg#export"/></svg>Inbox</div><p>Whatever comes to mind, before you decide what it is.</p></div><div class="paper white" style="--r:0.8deg"><div class="head"><svg class="icon" style="color:var(--seal)" aria-hidden="true"><use href="img/icons.svg#favoriteFilled"/></svg>Today</div><p>What you take on today, and this evening under it.</p></div><div class="paper cream" style="--r:-0.4deg"><div class="head"><svg class="icon" aria-hidden="true"><use href="img/icons.svg#today"/></svg>Upcoming</div><p>The days ahead, with your calendar beside them.</p></div><div class="paper cream" style="--r:1.1deg"><div class="head"><svg class="icon" aria-hidden="true"><use href="img/icons.svg#list"/></svg>Anytime</div><p>Your stock of things to do, there when you are ready.</p></div><div class="paper kraft" style="--r:-0.9deg"><div class="head"><svg class="icon" aria-hidden="true"><use href="img/icons.svg#archive"/></svg>Someday</div><p>Put off, not forgotten. Looked through now and then.</p></div><div class="paper grey" style="--r:0.5deg"><div class="head"><svg class="icon" aria-hidden="true"><use href="img/icons.svg#check"/></svg>Logbook</div><p>Everything done, kept in the order you did it.</p></div></div>
-</div></section>
+<div class="tile t-lists" id="lists">
+<h3>Every list, its own card</h3><p class="cap">Each on its own paper, behind Today.</p>
+<div class="stack"><div class="paper grey strip m-check" style="--i:0"><svg class="icon" aria-hidden="true"><use href="img/icons.svg#check"/></svg><span>Logbook</span></div><div class="paper kraft strip m-archive" style="--i:1"><svg class="icon" aria-hidden="true"><use href="img/icons.svg#archive"/></svg><span>Someday</span></div><div class="paper cream strip m-list" style="--i:2"><svg class="icon" aria-hidden="true"><use href="img/icons.svg#list"/></svg><span>Anytime</span></div><div class="paper cream strip m-today" style="--i:3"><svg class="icon" aria-hidden="true"><use href="img/icons.svg#today"/></svg><span>Upcoming</span></div><div class="paper white strip m-favoriteFilled" style="--i:4"><svg class="icon" aria-hidden="true"><use href="img/icons.svg#favoriteFilled"/></svg><span>Today</span></div><div class="paper white strip m-export" style="--i:5"><svg class="icon" aria-hidden="true"><use href="img/icons.svg#export"/></svg><span>Inbox</span></div></div>
+</div>
 
-<section class="part" id="more"><div class="wrap">
-<h2>And a little more</h2>
-<div class="trio"><div class="paper white" style="--r:-0.8deg"><div class="head"><svg class="icon" aria-hidden="true"><use href="img/icons.svg#paperLines"/></svg>Zen</div><p>Open a card edge to edge when a day needs all of you. Draw it down and it is back on the desk.</p></div><div class="paper cream" style="--r:0.6deg"><div class="head"><svg class="icon" aria-hidden="true"><use href="img/icons.svg#search"/></svg>Quick Find</div><p>Draw Today down on home, or press ⌘F on a Mac: lists, projects, tags and tasks, as you type.</p></div><div class="paper kraft" style="--r:-0.4deg"><div class="head"><svg class="icon" aria-hidden="true"><use href="img/icons.svg#notebook"/></svg>Notes</div><p>A card of its own for what isn’t a task. Move a note into your tasks, or a task back into notes.</p></div></div>
-</div></section>
+<div class="tile t-more"><div class="paper white small"><div class="head"><svg class="icon" aria-hidden="true"><use href="img/icons.svg#paperLines"/></svg>Zen</div><p>A card edge to edge when a day needs all of you.</p></div><div class="paper cream small"><div class="head"><svg class="icon" aria-hidden="true"><use href="img/icons.svg#search"/></svg>Quick Find</div><p>Draw Today down, or ⌘F on a Mac.</p></div><div class="paper kraft small"><div class="head"><svg class="icon" aria-hidden="true"><use href="img/icons.svg#notebook"/></svg>Notes</div><p>For what isn’t a task. Turns into one when it is.</p></div></div>
 
-<section class="part" id="real"><div class="wrap">
-<h2>The real app, on iPhone and Mac</h2>
-<p class="say">The same lists on both, kept in step through your iCloud. On a Mac, a sidebar and Quick Find on ⌘F.</p>
-<div class="shelf"><img src="img/en-iphone-1.webp" alt="Taskward on iPhone" width="760" height="1651" loading="lazy"><img src="img/en-iphone-2.webp" alt="Taskward on iPhone" width="760" height="1651" loading="lazy"><img src="img/en-iphone-3.webp" alt="Taskward on iPhone" width="760" height="1651" loading="lazy"><img src="img/en-iphone-4.webp" alt="Taskward on iPhone" width="760" height="1651" loading="lazy"><img src="img/en-iphone-5.webp" alt="Taskward on iPhone" width="760" height="1651" loading="lazy"><img src="img/en-iphone-6.webp" alt="Taskward on iPhone" width="760" height="1651" loading="lazy"><img src="img/en-iphone-7.webp" alt="Taskward on iPhone" width="760" height="1651" loading="lazy"><img src="img/en-iphone-8.webp" alt="Taskward on iPhone" width="760" height="1651" loading="lazy"></div>
-<div class="macs">
+<div class="tile t-mac">
+<h3>On a Mac too</h3><p class="cap">A sidebar, Quick Find on ⌘F, kept in step through iCloud.</p>
 <img src="img/en-mac-1.webp" alt="Taskward on a Mac" width="2240" height="1400" loading="lazy">
 </div>
-</div></section>
 
-<section class="part" id="yours"><div class="wrap">
-<h2>Your desk, your ink</h2>
-<p class="say">Pick the desk the cards lie on, the ink you write in, how a done task is struck through, and smooth or toothy paper. Try a desk here:</p>
-<div class="picks">
-<div><h3>Desk</h3><div class="swatches"><button class="swatch" style="--c:#b4c2c3" data-desk="default" aria-label="Sage" aria-pressed="false"></button><button class="swatch" style="--c:#4a5040" data-desk="olive" aria-label="Olive" aria-pressed="false"></button><button class="swatch" style="--c:#5b4636" data-desk="walnut" aria-label="Walnut" aria-pressed="false"></button><button class="swatch" style="--c:#2f2f2d" data-desk="charcoal" aria-label="Charcoal" aria-pressed="false"></button><button class="swatch" style="--c:#e9e5da" data-desk="paper" aria-label="Paper" aria-pressed="false"></button><button class="swatch" style="--c:#f2f3f5" data-desk="mono" aria-label="Monochrome" aria-pressed="false"></button></div><p class="named" data-for="desk" aria-live="polite"></p></div>
-<div><h3>Ink</h3><div class="swatches"><button class="blot" style="--c:#45454f" data-inkpick="default" aria-label="Graphite" aria-pressed="false"></button><button class="blot" style="--c:#2b3ac9" data-inkpick="blue" aria-label="Blue" aria-pressed="false"></button><button class="blot" style="--c:#141417" data-inkpick="black" aria-label="Black" aria-pressed="false"></button><button class="blot" style="--c:#3a201c" data-inkpick="espresso" aria-label="Espresso" aria-pressed="false"></button></div><p class="named" data-for="inkpick" aria-live="polite"></p></div>
-<div class="paper sample" aria-hidden="true"><div class="head"><svg class="icon" aria-hidden="true"><use href="img/icons.svg#favoriteFilled"/></svg>Today</div><ul class="rows"><li class="row done"><button class="signal" aria-pressed="true" aria-label="Check off: Sharpen the sword"><svg viewBox="0 0 24 24"><circle class="ring" cx="12" cy="12" r="9.2"/><circle class="fill" cx="12" cy="12" r="9.2"/></svg></button><div><div class="title">Sharpen the sword</div></div></li><li class="row"><button class="signal" aria-pressed="false" aria-label="Check off: Call the smith about the shield"><svg viewBox="0 0 24 24"><circle class="ring" cx="12" cy="12" r="9.2"/><circle class="fill" cx="12" cy="12" r="9.2"/></svg></button><div><div class="title">Call the smith about the shield</div></div></li><li class="row"><button class="signal" aria-pressed="false" aria-label="Check off: Pay the rent"><svg viewBox="0 0 24 24"><circle class="ring" cx="12" cy="12" r="9.2"/><circle class="fill" cx="12" cy="12" r="9.2"/></svg></button><div><div class="title">Pay the rent</div></div></li></ul></div>
+<div class="tile t-yours" id="yours">
+<h3>Your desk, your ink</h3><p class="cap">Try a desk on this page:</p>
+<div class="swatches"><button class="swatch" style="--c:#b4c2c3" data-desk="default" aria-label="Sage" aria-pressed="false"></button><button class="swatch" style="--c:#4a5040" data-desk="olive" aria-label="Olive" aria-pressed="false"></button><button class="swatch" style="--c:#5b4636" data-desk="walnut" aria-label="Walnut" aria-pressed="false"></button><button class="swatch" style="--c:#2f2f2d" data-desk="charcoal" aria-label="Charcoal" aria-pressed="false"></button><button class="swatch" style="--c:#e9e5da" data-desk="paper" aria-label="Paper" aria-pressed="false"></button><button class="swatch" style="--c:#f2f3f5" data-desk="mono" aria-label="Monochrome" aria-pressed="false"></button></div>
+<div class="swatches inks"><button class="blot" style="--c:#45454f" data-inkpick="default" aria-label="Graphite" aria-pressed="false"></button><button class="blot" style="--c:#2b3ac9" data-inkpick="blue" aria-label="Blue" aria-pressed="false"></button><button class="blot" style="--c:#141417" data-inkpick="black" aria-label="Black" aria-pressed="false"></button><button class="blot" style="--c:#3a201c" data-inkpick="espresso" aria-label="Espresso" aria-pressed="false"></button></div>
+<p class="named"><span data-for="desk" aria-live="polite"></span> · <span data-for="inkpick" aria-live="polite"></span></p>
 </div>
-</div></section>
 
-<section class="part" id="kept"><div class="wrap">
+<div class="tile t-kept" id="kept">
 <div class="paper kept">
-<svg class="icon big" aria-hidden="true"><use href="img/icons.svg#lock"/></svg>
-<div><h2>Nothing of yours leaves your hands</h2><ul><li>No account to make.</li><li>No ads, no tracking, no analytics.</li><li>Your tasks live on your devices and in your own iCloud, which we can’t read.</li></ul><p><a href="privacy/">Read the privacy policy</a></p></div>
+<h3><svg class="icon" aria-hidden="true"><use href="img/icons.svg#lock"/></svg>Nothing of yours leaves your hands</h3><ul><li>No account to make.</li><li>No ads, no tracking, no analytics.</li><li>Your tasks live on your devices and in your own iCloud, which we can’t read.</li></ul><p><a href="privacy/">Read the privacy policy</a></p>
 </div>
-</div></section>
+</div>
 
-<section class="part" id="knight"><div class="wrap knight">
+<div class="tile t-knight" id="knight">
 <svg class="icon big" aria-hidden="true"><use href="img/icons.svg#knight"/></svg>
-<div><h2>New to getting things done?</h2><p class="say">On first launch a little knight hands you a pile of errands and shows you how to sort an inbox, one task at a time. Skip it whenever you like.</p>
-<p><a class="button" href="https://testflight.apple.com/join/h82fp1R4"><svg class="icon" aria-hidden="true"><use href="img/icons.svg#add"/></svg>Join the beta on TestFlight</a></p></div>
+<div><h3>New to getting things done?</h3><p class="cap">A little knight shows you how to sort an inbox on first launch.</p>
+<a class="button" href="https://testflight.apple.com/join/h82fp1R4"><svg class="icon" aria-hidden="true"><use href="img/icons.svg#add"/></svg>Join the beta on TestFlight</a></div>
+</div>
+
 </div></section>
 </main>
 <footer><div class="wrap">

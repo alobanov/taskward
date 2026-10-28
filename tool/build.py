@@ -63,6 +63,15 @@ T = {
                        'into pencil, out of your way.',
         'signals_note': 'Mark',
         'signals': ['Done', 'In progress', 'Delegated', 'Meeting', 'Important', 'Waiting'],
+        'cap': {
+            'shots': 'The real app',
+            'try': 'Type a task with a day in it and press Return.',
+            'ticket': ('A task opens as a ticket', 'Notes, a checklist, tags, a deadline, a reminder.'),
+            'signals': ('More than done', 'Hold a task’s circle to mark how it stands.'),
+            'lists': ('Every list, its own card', 'Each on its own paper, behind Today.'),
+            'mac': ('On a Mac too', 'A sidebar, Quick Find on ⌘F, kept in step through iCloud.'),
+            'yours': ('Your desk, your ink', 'Try a desk on this page:'),
+        },
         'smart_h': 'Write it as you’d say it',
         'try_say': 'Type a task with a day in it, the way you would say it, and press Return. '
                    'The day and the reminder set themselves, and the task lands on its card.',
@@ -84,9 +93,9 @@ T = {
         ],
         'more_h': 'And a little more',
         'more': [
-            ('paperLines', 'Zen', 'Open a card edge to edge when a day needs all of you. Draw it down and it is back on the desk.'),
-            ('search', 'Quick Find', 'Draw Today down on home, or press ⌘F on a Mac: lists, projects, tags and tasks, as you type.'),
-            ('notebook', 'Notes', 'A card of its own for what isn’t a task. Move a note into your tasks, or a task back into notes.'),
+            ('paperLines', 'Zen', 'A card edge to edge when a day needs all of you.'),
+            ('search', 'Quick Find', 'Draw Today down, or ⌘F on a Mac.'),
+            ('notebook', 'Notes', 'For what isn’t a task. Turns into one when it is.'),
         ],
         'zen_h': 'One card, the whole screen',
         'zen_say': 'When a day needs all of you, open its card edge to edge: no bar, no desk, '
@@ -110,8 +119,7 @@ T = {
                  'Your tasks live on your devices and in your own iCloud, which we can’t read.'],
         'kept_link': 'Read the privacy policy',
         'knight_h': 'New to getting things done?',
-        'knight_say': 'On first launch a little knight hands you a pile of errands and shows you '
-                      'how to sort an inbox, one task at a time. Skip it whenever you like.',
+        'knight_say': 'A little knight shows you how to sort an inbox on first launch.',
         'support': 'Support', 'privacy': 'Privacy policy', 'by': 'Made by Aleksei Lobanov',
         'back': 'Taskward',
     },
@@ -163,6 +171,15 @@ T = {
                        'Поручённое и ожидание уходят в карандаш, чтобы не мешать.',
         'signals_note': 'Отметить',
         'signals': ['Выполнено', 'В работе', 'Поручено', 'Встреча', 'Важно', 'Жду ответа'],
+        'cap': {
+            'shots': 'Настоящее приложение',
+            'try': 'Напиши задачу с днём и нажми ввод.',
+            'ticket': ('Задача — это билет', 'Заметки, чек-лист, теги, срок, напоминание.'),
+            'signals': ('Не только «сделано»', 'Зажми кружок и отметь, как задача.'),
+            'lists': ('У списка своя карточка', 'Каждый на своей бумаге, позади «Сегодня».'),
+            'mac': ('И на Маке', 'Боковая панель, поиск по ⌘F, синхронно через iCloud.'),
+            'yours': ('Твой стол, твои чернила', 'Попробуй стол прямо здесь:'),
+        },
         'smart_h': 'Пиши, как говоришь',
         'try_say': 'Напиши задачу с днём, как сказал бы вслух, и нажми ввод. День и напоминание '
                    'поставятся сами, а задача ляжет на свою карточку.',
@@ -184,9 +201,9 @@ T = {
         ],
         'more_h': 'И ещё немного',
         'more': [
-            ('paperLines', 'Дзен', 'Разверни карточку на весь экран, когда день требует всего внимания. Потяни вниз — и она снова на столе.'),
-            ('search', 'Быстрый поиск', 'Потяни «Сегодня» вниз на главном или нажми ⌘F на Маке: списки, проекты, теги и задачи прямо по мере ввода.'),
-            ('notebook', 'Заметки', 'Отдельная карточка для того, что не задача. Заметку можно сделать задачей, а задачу — заметкой.'),
+            ('paperLines', 'Дзен', 'Карточка на весь экран, когда нужно сосредоточиться.'),
+            ('search', 'Быстрый поиск', 'Потяни «Сегодня» вниз или нажми ⌘F на Маке.'),
+            ('notebook', 'Заметки', 'Для того, что не задача. Станет задачей, когда нужно.'),
         ],
         'zen_h': 'Одна карточка на весь экран',
         'zen_say': 'Когда день требует всего внимания, разверни его карточку от края до края: '
@@ -210,8 +227,7 @@ T = {
                  'Задачи живут на твоих устройствах и в твоём iCloud — мы их не видим.'],
         'kept_link': 'Политика конфиденциальности',
         'knight_h': 'Впервые слышишь про GTD?',
-        'knight_say': 'При первом запуске маленький рыцарь вручит тебе ворох поручений и покажет, '
-                      'как разобрать входящие, задачу за задачей. Пропустить можно в любой момент.',
+        'knight_say': 'При первом запуске маленький рыцарь покажет, как разобрать входящие.',
         'support': 'Поддержка', 'privacy': 'Политика конфиденциальности',
         'by': 'Сделал Алексей Лобанов', 'back': 'Taskward',
     },
@@ -362,7 +378,7 @@ def landing(lang):
     )
     kept = ''.join(f'<li>{line}</li>' for line in t['kept'])
     more = ''.join(
-        f'<div class="paper {paper}" style="--r:{r}deg"><div class="head">{icon(mark)}{name}</div><p>{say}</p></div>'
+        f'<div class="paper {paper} small"><div class="head">{icon(mark)}{name}</div><p>{say}</p></div>'
         for (mark, name, say), paper, r in zip(t['more'], ['white', 'cream', 'kraft'], [-0.8, 0.6, -0.4])
     )
     try_words = json.dumps({
@@ -372,6 +388,10 @@ def landing(lang):
                   {'today': 'today', 'moon': 'darkThemeFilled', 'bell': 'reminderFilled', 'star': 'favoriteFilled', 'inbox': 'export'}.items()},
     }, ensure_ascii=False).replace('"', '&quot;')
     examples = ''.join(f'<button type="button" class="example">{e}</button>' for e in t['try_examples'])
+    strips = ''.join(
+        f'<div class="paper {paper} strip m-{mark}" style="--i:{i}">{icon(mark)}<span>{name}</span></div>'
+        for i, (mark, name, paper, _) in enumerate(reversed(t['lists']))
+    )
     sample_rows = ''.join(row(t, title, '', done) for title, _, done in t['tasks'][:3])
     pre = 'ru/' if lang == 'ru' else ''
     page = head(lang, t['title'], t['desc'], '', base) + f'''<body>
@@ -391,8 +411,14 @@ def landing(lang):
 </div>
 </div></section>
 
-<section class="part" id="smart"><div class="wrap">
-<div class="try-head"><h2>{t['smart_h']}</h2><p class="say">{t['try_say']}</p></div>
+<section class="part" id="real"><div class="wrap">
+<div class="shelf">{iphones}</div>
+</div></section>
+
+<section class="part board-part"><div class="wrap board">
+
+<div class="tile t-try" id="smart">
+<h2>{t['smart_h']}</h2><p class="cap">{t['cap']['try']}</p>
 <div class="try" data-lang="{lang}" data-words="{try_words}">
 <form class="paper newcard" autocomplete="off">
 <label class="field"><span class="ring" aria-hidden="true"></span>
@@ -407,12 +433,12 @@ def landing(lang):
 <div class="paper cream mini" data-list="upcoming"><div class="head">{icon('today')}{t['upcoming']}</div><ul class="rows"></ul></div>
 </div>
 </div>
-</div></section>
+</div>
 
-<section class="part" id="ticket"><div class="wrap split">
-<div><h2>{t['ticket_h']}</h2><p class="say">{t['ticket_say']}</p></div>
+<div class="tile t-ticket" id="ticket">
+<h3>{t['cap']['ticket'][0]}</h3><p class="cap">{t['cap']['ticket'][1]}</p>
 <div class="ticket-wrap"><div class="paper ticket">
-<h3 class="row"><button class="signal" type="button" aria-pressed="false" aria-label="{t['check']}: {tk['title']}">{SIGNAL}</button><span class="title">{tk['title']}</span></h3>
+<h4 class="row"><button class="signal" type="button" aria-pressed="false" aria-label="{t['check']}: {tk['title']}">{SIGNAL}</button><span class="title">{tk['title']}</span></h4>
 <p class="notes">{tk['notes']}</p>
 <ul class="steps">{steps}</ul>
 <div class="stub">
@@ -420,54 +446,44 @@ def landing(lang):
 <div class="when"><span class="star">{icon('favoriteFilled')}</span>{tk['when']}{icon('reminderFilled')}21:30<span class="marks">{icon('flagFilled')}</span></div>
 </div>
 </div></div>
-</div></section>
+</div>
 
-<section class="part" id="signals"><div class="wrap split">
-<div><h2>{t['signals_h']}</h2><p class="say">{t['signals_say']}</p></div>
+<div class="tile t-signals" id="signals">
+<h3>{t['cap']['signals'][0]}</h3><p class="cap">{t['cap']['signals'][1]}</p>
 <div class="paper signals-note"><p class="note-title">{t['signals_note']}</p><ul class="signals">{signals}</ul></div>
-</div></section>
+</div>
 
-<section class="part" id="lists"><div class="wrap">
-<h2>{t['lists_h']}</h2>
-<p class="say">{t['lists_say']}</p>
-<div class="spread">{lists}</div>
-</div></section>
+<div class="tile t-lists" id="lists">
+<h3>{t['cap']['lists'][0]}</h3><p class="cap">{t['cap']['lists'][1]}</p>
+<div class="stack">{strips}</div>
+</div>
 
-<section class="part" id="more"><div class="wrap">
-<h2>{t['more_h']}</h2>
-<div class="trio">{more}</div>
-</div></section>
+<div class="tile t-more">{more}</div>
 
-<section class="part" id="real"><div class="wrap">
-<h2>{t['real_h']}</h2>
-<p class="say">{t['real_say']}</p>
-<div class="shelf">{iphones}</div>
-<div class="macs">
+<div class="tile t-mac">
+<h3>{t['cap']['mac'][0]}</h3><p class="cap">{t['cap']['mac'][1]}</p>
 <img src="{base}img/{lang}-mac-1.webp" alt="{t['mac_alt']}" width="2240" height="1400" loading="lazy">
 </div>
-</div></section>
 
-<section class="part" id="yours"><div class="wrap">
-<h2>{t['yours_h']}</h2>
-<p class="say">{t['yours_say']}</p>
-<div class="picks">
-<div><h3>{t['desk_h']}</h3><div class="swatches">{desks}</div><p class="named" data-for="desk" aria-live="polite"></p></div>
-<div><h3>{t['ink_h']}</h3><div class="swatches">{inks}</div><p class="named" data-for="inkpick" aria-live="polite"></p></div>
-<div class="paper sample" aria-hidden="true"><div class="head"><svg class="icon" aria-hidden="true"><use href="{base}img/icons.svg#favoriteFilled"/></svg>{t['today']}</div><ul class="rows">{sample_rows}</ul></div>
+<div class="tile t-yours" id="yours">
+<h3>{t['cap']['yours'][0]}</h3><p class="cap">{t['cap']['yours'][1]}</p>
+<div class="swatches">{desks}</div>
+<div class="swatches inks">{inks}</div>
+<p class="named"><span data-for="desk" aria-live="polite"></span> · <span data-for="inkpick" aria-live="polite"></span></p>
 </div>
-</div></section>
 
-<section class="part" id="kept"><div class="wrap">
+<div class="tile t-kept" id="kept">
 <div class="paper kept">
-{icon('lock', 'icon big')}
-<div><h2>{t['kept_h']}</h2><ul>{kept}</ul><p><a href="{base}{pre}privacy/">{t['kept_link']}</a></p></div>
+<h3>{icon('lock')}{t['kept_h']}</h3><ul>{kept}</ul><p><a href="{base}{pre}privacy/">{t['kept_link']}</a></p>
 </div>
-</div></section>
+</div>
 
-<section class="part" id="knight"><div class="wrap knight">
+<div class="tile t-knight" id="knight">
 {icon('knight', 'icon big')}
-<div><h2>{t['knight_h']}</h2><p class="say">{t['knight_say']}</p>
-<p><a class="button" href="{BETA}">{icon('add')}{t['cta']}</a></p></div>
+<div><h3>{t['knight_h']}</h3><p class="cap">{t['knight_say']}</p>
+<a class="button" href="{BETA}">{icon('add')}{t['cta']}</a></div>
+</div>
+
 </div></section>
 </main>
 {foot(t, base, lang)}

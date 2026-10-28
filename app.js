@@ -137,7 +137,7 @@
   const kept = (key) => { try { return localStorage.getItem(key); } catch (_) { return null; } };
   const pick = (group, attr, key) => {
     const buttons = document.querySelectorAll(`[data-${group}]`);
-    const named = document.querySelector(`.named[data-for="${group}"]`);
+    const named = document.querySelector(`[data-for="${group}"]`);
     const choose = (value) => {
       if (value === 'default') delete root.dataset[attr]; else root.dataset[attr] = value;
       buttons.forEach((b) => {

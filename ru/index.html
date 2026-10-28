@@ -21,13 +21,13 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Pangolin&amp;subset=cyrillic&amp;display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../style.css?v=4de150ba">
+<link rel="stylesheet" href="../style.css?v=5fc635b5">
 <style>:root { --grain: url(../img/grain.webp); }</style>
 <script>try { const d = localStorage.getItem('taskward-desk'), i = localStorage.getItem('taskward-ink');
 if (d && d !== 'default') document.documentElement.dataset.desk = d;
 if (i && i !== 'default') document.documentElement.dataset.ink = i; } catch (_) {}</script>
-<script src="../when.js?v=4de150ba" defer></script>
-<script src="../app.js?v=4de150ba" defer></script>
+<script src="../when.js?v=5fc635b5" defer></script>
+<script src="../app.js?v=5fc635b5" defer></script>
 </head>
 <body>
 <header class="wrap top">
@@ -49,8 +49,14 @@ if (i && i !== 'default') document.documentElement.dataset.ink = i; } catch (_) 
 </div>
 </div></section>
 
-<section class="part" id="smart"><div class="wrap">
-<div class="try-head"><h2>Пиши, как говоришь</h2><p class="say">Напиши задачу с днём, как сказал бы вслух, и нажми ввод. День и напоминание поставятся сами, а задача ляжет на свою карточку.</p></div>
+<section class="part" id="real"><div class="wrap">
+<div class="shelf"><img src="../img/ru-iphone-1.webp" alt="Taskward на iPhone" width="760" height="1651" loading="lazy"><img src="../img/ru-iphone-2.webp" alt="Taskward на iPhone" width="760" height="1651" loading="lazy"><img src="../img/ru-iphone-3.webp" alt="Taskward на iPhone" width="760" height="1651" loading="lazy"><img src="../img/ru-iphone-4.webp" alt="Taskward на iPhone" width="760" height="1651" loading="lazy"><img src="../img/ru-iphone-5.webp" alt="Taskward на iPhone" width="760" height="1651" loading="lazy"><img src="../img/ru-iphone-6.webp" alt="Taskward на iPhone" width="760" height="1651" loading="lazy"><img src="../img/ru-iphone-7.webp" alt="Taskward на iPhone" width="760" height="1651" loading="lazy"><img src="../img/ru-iphone-8.webp" alt="Taskward на iPhone" width="760" height="1651" loading="lazy"></div>
+</div></section>
+
+<section class="part board-part"><div class="wrap board">
+
+<div class="tile t-try" id="smart">
+<h2>Пиши, как говоришь</h2><p class="cap">Напиши задачу с днём и нажми ввод.</p>
 <div class="try" data-lang="ru" data-words="{&quot;base&quot;: &quot;Тренировка &quot;, &quot;evening&quot;: &quot;Этим вечером&quot;, &quot;when&quot;: &quot;Когда&quot;, &quot;today&quot;: &quot;Сегодня&quot;, &quot;tomorrow&quot;: &quot;Завтра&quot;, &quot;seed&quot;: {&quot;inbox&quot;: [&quot;Купить новое перо&quot;], &quot;today&quot;: [&quot;Наточить меч&quot;], &quot;upcoming&quot;: [&quot;Турнир в замке&quot;]}, &quot;icons&quot;: {&quot;today&quot;: &quot;<svg class=\&quot;icon\&quot; aria-hidden=\&quot;true\&quot;><use href=\&quot;../img/icons.svg#today\&quot;/></svg>&quot;, &quot;moon&quot;: &quot;<svg class=\&quot;icon\&quot; aria-hidden=\&quot;true\&quot;><use href=\&quot;../img/icons.svg#darkThemeFilled\&quot;/></svg>&quot;, &quot;bell&quot;: &quot;<svg class=\&quot;icon\&quot; aria-hidden=\&quot;true\&quot;><use href=\&quot;../img/icons.svg#reminderFilled\&quot;/></svg>&quot;, &quot;star&quot;: &quot;<svg class=\&quot;icon\&quot; aria-hidden=\&quot;true\&quot;><use href=\&quot;../img/icons.svg#favoriteFilled\&quot;/></svg>&quot;, &quot;inbox&quot;: &quot;<svg class=\&quot;icon\&quot; aria-hidden=\&quot;true\&quot;><use href=\&quot;../img/icons.svg#export\&quot;/></svg>&quot;}}">
 <form class="paper newcard" autocomplete="off">
 <label class="field"><span class="ring" aria-hidden="true"></span>
@@ -65,12 +71,12 @@ if (i && i !== 'default') document.documentElement.dataset.ink = i; } catch (_) 
 <div class="paper cream mini" data-list="upcoming"><div class="head"><svg class="icon" aria-hidden="true"><use href="../img/icons.svg#today"/></svg>Планы</div><ul class="rows"></ul></div>
 </div>
 </div>
-</div></section>
+</div>
 
-<section class="part" id="ticket"><div class="wrap split">
-<div><h2>Задача открывается билетом</h2><p class="say">Заметки, чек-лист, теги, срок и напоминание — на карточке с отрывным корешком. Видно только то, что добавил; остальное ждёт карандашной меткой внизу.</p></div>
+<div class="tile t-ticket" id="ticket">
+<h3>Задача — это билет</h3><p class="cap">Заметки, чек-лист, теги, срок, напоминание.</p>
 <div class="ticket-wrap"><div class="paper ticket">
-<h3 class="row"><button class="signal" type="button" aria-pressed="false" aria-label="Отметить: Позвонить кузнецу насчёт щита"><svg viewBox="0 0 24 24"><circle class="ring" cx="12" cy="12" r="9.2"/><circle class="fill" cx="12" cy="12" r="9.2"/></svg></button><span class="title">Позвонить кузнецу насчёт щита</span></h3>
+<h4 class="row"><button class="signal" type="button" aria-pressed="false" aria-label="Отметить: Позвонить кузнецу насчёт щита"><svg viewBox="0 0 24 24"><circle class="ring" cx="12" cy="12" r="9.2"/><circle class="fill" cx="12" cy="12" r="9.2"/></svg></button><span class="title">Позвонить кузнецу насчёт щита</span></h4>
 <p class="notes">Старый треснул по краю. Спросить, подберёт ли он умбон.</p>
 <ul class="steps"><li class="done"><button class="box" type="button" aria-pressed="true" aria-label="Отметить: Измерить старый"></button>Измерить старый</li><li class=""><button class="box" type="button" aria-pressed="false" aria-label="Отметить: Найти эскиз"></button>Найти эскиз</li><li class=""><button class="box" type="button" aria-pressed="false" aria-label="Отметить: Узнать цену"></button>Узнать цену</li></ul>
 <div class="stub">
@@ -78,54 +84,44 @@ if (i && i !== 'default') document.documentElement.dataset.ink = i; } catch (_) 
 <div class="when"><span class="star"><svg class="icon" aria-hidden="true"><use href="../img/icons.svg#favoriteFilled"/></svg></span>Сегодня<svg class="icon" aria-hidden="true"><use href="../img/icons.svg#reminderFilled"/></svg>21:30<span class="marks"><svg class="icon" aria-hidden="true"><use href="../img/icons.svg#flagFilled"/></svg></span></div>
 </div>
 </div></div>
-</div></section>
+</div>
 
-<section class="part" id="signals"><div class="wrap split">
-<div><h2>Больше, чем сделано или нет</h2><p class="say">Зажми кружок задачи и отметь, как она: в работе, поручено, жду ответа. Поручённое и ожидание уходят в карандаш, чтобы не мешать.</p></div>
+<div class="tile t-signals" id="signals">
+<h3>Не только «сделано»</h3><p class="cap">Зажми кружок и отметь, как задача.</p>
 <div class="paper signals-note"><p class="note-title">Отметить</p><ul class="signals"><li class=""><svg viewBox="0 0 30 30" aria-hidden="true"><circle class="ring solid" cx="15" cy="15" r="11"/></svg>Выполнено</li><li class=""><svg viewBox="0 0 30 30" aria-hidden="true"><circle class="ring" cx="15" cy="15" r="11"/><path class="solid" d="M15 4a11 11 0 0 0 0 22z"/></svg>В работе</li><li class=""><svg viewBox="0 0 30 30" aria-hidden="true"><circle class="ring" cx="15" cy="15" r="11"/><path class="mark" d="M4 15h22M15 4v22"/></svg>Поручено</li><li class=""><svg viewBox="0 0 30 30" aria-hidden="true"><circle class="ring" cx="15" cy="15" r="11"/><path class="mark" d="M15 8v7l5 3"/></svg>Встреча</li><li class=""><svg viewBox="0 0 30 30" aria-hidden="true"><path class="mark" d="M15 5v20M6.3 10l17.4 10M6.3 20l17.4-10"/></svg>Важно</li><li class="faint"><svg viewBox="0 0 30 30" aria-hidden="true"><circle class="ring" cx="15" cy="15" r="11"/><path class="mark" d="M9 15h.01M15 15h.01M21 15h.01" stroke-width="3"/></svg>Жду ответа</li></ul></div>
-</div></section>
+</div>
 
-<section class="part" id="lists"><div class="wrap">
-<h2>У каждого списка своя карточка</h2>
-<p class="say">Дела приходят во входящие, получают свой день или ждут его — и уходят в журнал. У каждого списка своя бумага, так что сразу видно, где ты.</p>
-<div class="spread"><div class="paper white" style="--r:-1.2deg"><div class="head"><svg class="icon" aria-hidden="true"><use href="../img/icons.svg#export"/></svg>Входящие</div><p>Всё, что пришло в голову, пока не решил, что это.</p></div><div class="paper white" style="--r:0.8deg"><div class="head"><svg class="icon" style="color:var(--seal)" aria-hidden="true"><use href="../img/icons.svg#favoriteFilled"/></svg>Сегодня</div><p>То, что берёшь на сегодня, и вечер под ним.</p></div><div class="paper cream" style="--r:-0.4deg"><div class="head"><svg class="icon" aria-hidden="true"><use href="../img/icons.svg#today"/></svg>Планы</div><p>Ближайшие дни, и календарь рядом с ними.</p></div><div class="paper cream" style="--r:1.1deg"><div class="head"><svg class="icon" aria-hidden="true"><use href="../img/icons.svg#list"/></svg>В любое время</div><p>Запас дел, который ждёт, когда будешь готов.</p></div><div class="paper kraft" style="--r:-0.9deg"><div class="head"><svg class="icon" aria-hidden="true"><use href="../img/icons.svg#archive"/></svg>Когда-нибудь</div><p>Отложено, а не забыто. Иногда стоит пересмотреть.</p></div><div class="paper grey" style="--r:0.5deg"><div class="head"><svg class="icon" aria-hidden="true"><use href="../img/icons.svg#check"/></svg>Журнал</div><p>Всё сделанное, в том порядке, как делал.</p></div></div>
-</div></section>
+<div class="tile t-lists" id="lists">
+<h3>У списка своя карточка</h3><p class="cap">Каждый на своей бумаге, позади «Сегодня».</p>
+<div class="stack"><div class="paper grey strip m-check" style="--i:0"><svg class="icon" aria-hidden="true"><use href="../img/icons.svg#check"/></svg><span>Журнал</span></div><div class="paper kraft strip m-archive" style="--i:1"><svg class="icon" aria-hidden="true"><use href="../img/icons.svg#archive"/></svg><span>Когда-нибудь</span></div><div class="paper cream strip m-list" style="--i:2"><svg class="icon" aria-hidden="true"><use href="../img/icons.svg#list"/></svg><span>В любое время</span></div><div class="paper cream strip m-today" style="--i:3"><svg class="icon" aria-hidden="true"><use href="../img/icons.svg#today"/></svg><span>Планы</span></div><div class="paper white strip m-favoriteFilled" style="--i:4"><svg class="icon" aria-hidden="true"><use href="../img/icons.svg#favoriteFilled"/></svg><span>Сегодня</span></div><div class="paper white strip m-export" style="--i:5"><svg class="icon" aria-hidden="true"><use href="../img/icons.svg#export"/></svg><span>Входящие</span></div></div>
+</div>
 
-<section class="part" id="more"><div class="wrap">
-<h2>И ещё немного</h2>
-<div class="trio"><div class="paper white" style="--r:-0.8deg"><div class="head"><svg class="icon" aria-hidden="true"><use href="../img/icons.svg#paperLines"/></svg>Дзен</div><p>Разверни карточку на весь экран, когда день требует всего внимания. Потяни вниз — и она снова на столе.</p></div><div class="paper cream" style="--r:0.6deg"><div class="head"><svg class="icon" aria-hidden="true"><use href="../img/icons.svg#search"/></svg>Быстрый поиск</div><p>Потяни «Сегодня» вниз на главном или нажми ⌘F на Маке: списки, проекты, теги и задачи прямо по мере ввода.</p></div><div class="paper kraft" style="--r:-0.4deg"><div class="head"><svg class="icon" aria-hidden="true"><use href="../img/icons.svg#notebook"/></svg>Заметки</div><p>Отдельная карточка для того, что не задача. Заметку можно сделать задачей, а задачу — заметкой.</p></div></div>
-</div></section>
+<div class="tile t-more"><div class="paper white small"><div class="head"><svg class="icon" aria-hidden="true"><use href="../img/icons.svg#paperLines"/></svg>Дзен</div><p>Карточка на весь экран, когда нужно сосредоточиться.</p></div><div class="paper cream small"><div class="head"><svg class="icon" aria-hidden="true"><use href="../img/icons.svg#search"/></svg>Быстрый поиск</div><p>Потяни «Сегодня» вниз или нажми ⌘F на Маке.</p></div><div class="paper kraft small"><div class="head"><svg class="icon" aria-hidden="true"><use href="../img/icons.svg#notebook"/></svg>Заметки</div><p>Для того, что не задача. Станет задачей, когда нужно.</p></div></div>
 
-<section class="part" id="real"><div class="wrap">
-<h2>Настоящее приложение, на iPhone и Mac</h2>
-<p class="say">Одни и те же списки на обоих, синхронно через твой iCloud. На Маке — боковая панель и быстрый поиск по ⌘F.</p>
-<div class="shelf"><img src="../img/ru-iphone-1.webp" alt="Taskward на iPhone" width="760" height="1651" loading="lazy"><img src="../img/ru-iphone-2.webp" alt="Taskward на iPhone" width="760" height="1651" loading="lazy"><img src="../img/ru-iphone-3.webp" alt="Taskward на iPhone" width="760" height="1651" loading="lazy"><img src="../img/ru-iphone-4.webp" alt="Taskward на iPhone" width="760" height="1651" loading="lazy"><img src="../img/ru-iphone-5.webp" alt="Taskward на iPhone" width="760" height="1651" loading="lazy"><img src="../img/ru-iphone-6.webp" alt="Taskward на iPhone" width="760" height="1651" loading="lazy"><img src="../img/ru-iphone-7.webp" alt="Taskward на iPhone" width="760" height="1651" loading="lazy"><img src="../img/ru-iphone-8.webp" alt="Taskward на iPhone" width="760" height="1651" loading="lazy"></div>
-<div class="macs">
+<div class="tile t-mac">
+<h3>И на Маке</h3><p class="cap">Боковая панель, поиск по ⌘F, синхронно через iCloud.</p>
 <img src="../img/ru-mac-1.webp" alt="Taskward на Маке" width="2240" height="1400" loading="lazy">
 </div>
-</div></section>
 
-<section class="part" id="yours"><div class="wrap">
-<h2>Твой стол, твои чернила</h2>
-<p class="say">Выбери стол, на котором лежат карточки, цвет чернил, как зачёркивается сделанное, и гладкую или фактурную бумагу. Попробуй стол прямо здесь:</p>
-<div class="picks">
-<div><h3>Стол</h3><div class="swatches"><button class="swatch" style="--c:#b4c2c3" data-desk="default" aria-label="Шалфей" aria-pressed="false"></button><button class="swatch" style="--c:#4a5040" data-desk="olive" aria-label="Олива" aria-pressed="false"></button><button class="swatch" style="--c:#5b4636" data-desk="walnut" aria-label="Орех" aria-pressed="false"></button><button class="swatch" style="--c:#2f2f2d" data-desk="charcoal" aria-label="Уголь" aria-pressed="false"></button><button class="swatch" style="--c:#e9e5da" data-desk="paper" aria-label="Бумага" aria-pressed="false"></button><button class="swatch" style="--c:#f2f3f5" data-desk="mono" aria-label="Монохром" aria-pressed="false"></button></div><p class="named" data-for="desk" aria-live="polite"></p></div>
-<div><h3>Чернила</h3><div class="swatches"><button class="blot" style="--c:#45454f" data-inkpick="default" aria-label="Графит" aria-pressed="false"></button><button class="blot" style="--c:#2b3ac9" data-inkpick="blue" aria-label="Синие" aria-pressed="false"></button><button class="blot" style="--c:#141417" data-inkpick="black" aria-label="Чёрные" aria-pressed="false"></button><button class="blot" style="--c:#3a201c" data-inkpick="espresso" aria-label="Эспрессо" aria-pressed="false"></button></div><p class="named" data-for="inkpick" aria-live="polite"></p></div>
-<div class="paper sample" aria-hidden="true"><div class="head"><svg class="icon" aria-hidden="true"><use href="../img/icons.svg#favoriteFilled"/></svg>Сегодня</div><ul class="rows"><li class="row done"><button class="signal" aria-pressed="true" aria-label="Отметить: Наточить меч"><svg viewBox="0 0 24 24"><circle class="ring" cx="12" cy="12" r="9.2"/><circle class="fill" cx="12" cy="12" r="9.2"/></svg></button><div><div class="title">Наточить меч</div></div></li><li class="row"><button class="signal" aria-pressed="false" aria-label="Отметить: Позвонить кузнецу насчёт щита"><svg viewBox="0 0 24 24"><circle class="ring" cx="12" cy="12" r="9.2"/><circle class="fill" cx="12" cy="12" r="9.2"/></svg></button><div><div class="title">Позвонить кузнецу насчёт щита</div></div></li><li class="row"><button class="signal" aria-pressed="false" aria-label="Отметить: Заплатить за жильё"><svg viewBox="0 0 24 24"><circle class="ring" cx="12" cy="12" r="9.2"/><circle class="fill" cx="12" cy="12" r="9.2"/></svg></button><div><div class="title">Заплатить за жильё</div></div></li></ul></div>
+<div class="tile t-yours" id="yours">
+<h3>Твой стол, твои чернила</h3><p class="cap">Попробуй стол прямо здесь:</p>
+<div class="swatches"><button class="swatch" style="--c:#b4c2c3" data-desk="default" aria-label="Шалфей" aria-pressed="false"></button><button class="swatch" style="--c:#4a5040" data-desk="olive" aria-label="Олива" aria-pressed="false"></button><button class="swatch" style="--c:#5b4636" data-desk="walnut" aria-label="Орех" aria-pressed="false"></button><button class="swatch" style="--c:#2f2f2d" data-desk="charcoal" aria-label="Уголь" aria-pressed="false"></button><button class="swatch" style="--c:#e9e5da" data-desk="paper" aria-label="Бумага" aria-pressed="false"></button><button class="swatch" style="--c:#f2f3f5" data-desk="mono" aria-label="Монохром" aria-pressed="false"></button></div>
+<div class="swatches inks"><button class="blot" style="--c:#45454f" data-inkpick="default" aria-label="Графит" aria-pressed="false"></button><button class="blot" style="--c:#2b3ac9" data-inkpick="blue" aria-label="Синие" aria-pressed="false"></button><button class="blot" style="--c:#141417" data-inkpick="black" aria-label="Чёрные" aria-pressed="false"></button><button class="blot" style="--c:#3a201c" data-inkpick="espresso" aria-label="Эспрессо" aria-pressed="false"></button></div>
+<p class="named"><span data-for="desk" aria-live="polite"></span> · <span data-for="inkpick" aria-live="polite"></span></p>
 </div>
-</div></section>
 
-<section class="part" id="kept"><div class="wrap">
+<div class="tile t-kept" id="kept">
 <div class="paper kept">
-<svg class="icon big" aria-hidden="true"><use href="../img/icons.svg#lock"/></svg>
-<div><h2>Твоё остаётся у тебя</h2><ul><li>Не нужно заводить аккаунт.</li><li>Ни рекламы, ни слежки, ни аналитики.</li><li>Задачи живут на твоих устройствах и в твоём iCloud — мы их не видим.</li></ul><p><a href="../ru/privacy/">Политика конфиденциальности</a></p></div>
+<h3><svg class="icon" aria-hidden="true"><use href="../img/icons.svg#lock"/></svg>Твоё остаётся у тебя</h3><ul><li>Не нужно заводить аккаунт.</li><li>Ни рекламы, ни слежки, ни аналитики.</li><li>Задачи живут на твоих устройствах и в твоём iCloud — мы их не видим.</li></ul><p><a href="../ru/privacy/">Политика конфиденциальности</a></p>
 </div>
-</div></section>
+</div>
 
-<section class="part" id="knight"><div class="wrap knight">
+<div class="tile t-knight" id="knight">
 <svg class="icon big" aria-hidden="true"><use href="../img/icons.svg#knight"/></svg>
-<div><h2>Впервые слышишь про GTD?</h2><p class="say">При первом запуске маленький рыцарь вручит тебе ворох поручений и покажет, как разобрать входящие, задачу за задачей. Пропустить можно в любой момент.</p>
-<p><a class="button" href="https://testflight.apple.com/join/h82fp1R4"><svg class="icon" aria-hidden="true"><use href="../img/icons.svg#add"/></svg>Попробовать бету в TestFlight</a></p></div>
+<div><h3>Впервые слышишь про GTD?</h3><p class="cap">При первом запуске маленький рыцарь покажет, как разобрать входящие.</p>
+<a class="button" href="https://testflight.apple.com/join/h82fp1R4"><svg class="icon" aria-hidden="true"><use href="../img/icons.svg#add"/></svg>Попробовать бету в TestFlight</a></div>
+</div>
+
 </div></section>
 </main>
 <footer><div class="wrap">
