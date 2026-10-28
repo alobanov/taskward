@@ -97,6 +97,8 @@ a { color: inherit; }
   transition: transform 0.15s ease;
 }
 .button:active { transform: scale(0.97); }
+.button.soon { cursor: default; }
+.button.soon:active { transform: none; }
 .button .icon { width: 20px; height: 20px; }
 
 /* The first screen: the words on the desk, and the real app beside them — three of the

@@ -9,7 +9,6 @@ from pathlib import Path
 SITE = Path(__file__).resolve().parent.parent
 URL = 'https://alobanov.github.io/taskward/'
 MAIL = 'katleta5000@gmail.com'
-BETA = 'https://testflight.apple.com/join/h82fp1R4'
 import hashlib
 VERSION = hashlib.md5((SITE / 'style.css').read_bytes() + (SITE / 'app.js').read_bytes() + (SITE / 'when.js').read_bytes()).hexdigest()[:8]
 UPDATED = {'en': 'October 27, 2026', 'ru': '27 октября 2026'}
@@ -24,8 +23,8 @@ T = {
         'h1': 'Your day,<br>on one card.',
         'lede': 'Taskward is a calm to-do list for iPhone and Mac. Every list is a paper card on '
                 'your desk.',
-        'cta': 'Join the beta on TestFlight',
-        'small': 'Free, no account. Coming to the App Store soon.',
+        'cta': 'Coming soon to the App Store',
+        'small': 'For iPhone and Mac. No account, no ads.',
         'then': 'Draw a card out of the holder and it lies on your desk. Work right on it.',
         'today': 'Today', 'upcoming': 'Upcoming', 'anytime': 'Anytime', 'someday': 'Someday',
         'date': '27.10.26',
@@ -142,8 +141,8 @@ T = {
         'h1': 'Весь день —<br>на одной карточке.',
         'lede': 'Taskward — спокойный список дел для iPhone и Mac. Каждый список — бумажная '
                 'карточка на твоём столе.',
-        'cta': 'Попробовать бету в TestFlight',
-        'small': 'Бесплатно и без аккаунта. Скоро в App Store.',
+        'cta': 'Скоро в App Store',
+        'small': 'Для iPhone и Mac. Без аккаунта и рекламы.',
         'then': 'Вытяни карточку из подставки — она ляжет на стол. Работай прямо на ней.',
         'today': 'Сегодня', 'upcoming': 'Планы', 'anytime': 'В любое время', 'someday': 'Когда-нибудь',
         'date': '27.10.26',
@@ -422,7 +421,7 @@ def landing(lang):
 <div class="hero-words">
 <h1 class="written">{''.join(f'<span class="pen" style="--i:{i}">{line}</span>' for i, line in enumerate(t['h1'].split('<br>')))}</h1>
 <p class="lede">{t['lede']}</p>
-<a class="button" href="{BETA}">{icon('add')}{t['cta']}</a>
+<span class="button soon"><svg class="icon" viewBox="0 0 17 20" aria-hidden="true"><path fill="currentColor" d="M14.07 10.63c-.02-2.33 1.9-3.45 1.99-3.51-1.08-1.58-2.77-1.8-3.37-1.82-1.43-.15-2.8.84-3.53.84-.73 0-1.85-.82-3.05-.8-1.57.03-3.02.92-3.83 2.33-1.63 2.83-.42 7.02 1.17 9.32.78 1.12 1.71 2.38 2.93 2.34 1.18-.05 1.62-.76 3.05-.76 1.42 0 1.82.76 3.06.74 1.27-.03 2.07-1.14 2.84-2.27.9-1.31 1.27-2.58 1.29-2.64-.03-.01-2.47-.95-2.49-3.77zM11.77 3.79c.65-.79 1.09-1.88.97-2.97-.94.04-2.07.62-2.74 1.41-.6.7-1.13 1.81-.99 2.88 1.05.08 2.11-.53 2.76-1.32z"/></svg>{t['cta']}</span>
 <p class="small">{t['small']}</p>
 </div>
 <div class="scene" aria-hidden="true">
@@ -510,7 +509,7 @@ def landing(lang):
 <div class="tile t-knight" id="knight">
 <h3>{t['gtd_h']}</h3><p class="cap">{t['gtd_say']}</p>
 <ol class="gtd">{gtd}</ol>
-<div class="gtd-foot">{icon('knight', 'icon big')}<p>{t['gtd_knight']}</p><a class="button" href="{BETA}">{icon('add')}{t['cta']}</a></div>
+<div class="gtd-foot">{icon('knight', 'icon big')}<p>{t['gtd_knight']}</p><span class="button soon"><svg class="icon" viewBox="0 0 17 20" aria-hidden="true"><path fill="currentColor" d="M14.07 10.63c-.02-2.33 1.9-3.45 1.99-3.51-1.08-1.58-2.77-1.8-3.37-1.82-1.43-.15-2.8.84-3.53.84-.73 0-1.85-.82-3.05-.8-1.57.03-3.02.92-3.83 2.33-1.63 2.83-.42 7.02 1.17 9.32.78 1.12 1.71 2.38 2.93 2.34 1.18-.05 1.62-.76 3.05-.76 1.42 0 1.82.76 3.06.74 1.27-.03 2.07-1.14 2.84-2.27.9-1.31 1.27-2.58 1.29-2.64-.03-.01-2.47-.95-2.49-3.77zM11.77 3.79c.65-.79 1.09-1.88.97-2.97-.94.04-2.07.62-2.74 1.41-.6.7-1.13 1.81-.99 2.88 1.05.08 2.11-.53 2.76-1.32z"/></svg>{t['cta']}</span></div>
 </div>
 
 </div></section>
@@ -598,8 +597,6 @@ Taskward. If they fall out of step, open the three dots on home and choose Sync 
 Tap the highlighted words if you meant them as words.</p>
 <h2>How do I see my calendar next to my tasks?</h2>
 <p>In Settings, turn on calendar events and allow Taskward to read your calendars.</p>
-<h2>How do I join the beta?</h2>
-<p>Open <a href="{beta}">the TestFlight invitation</a> on your iPhone or Mac.</p>
 <h2>How do I delete everything?</h2>
 <p>See <a href="../privacy/">the privacy policy</a>: what to delete in the app, and in iCloud.</p>
 '''),
@@ -614,8 +611,6 @@ Tap the highlighted words if you meant them as words.</p>
 Нажмите на подсвеченные слова, если имели в виду просто слова.</p>
 <h2>Как увидеть календарь рядом с задачами?</h2>
 <p>В Настройках включите события календаря и разрешите Taskward читать календари.</p>
-<h2>Как попасть в бету?</h2>
-<p>Откройте <a href="{beta}">приглашение в TestFlight</a> на iPhone или Маке.</p>
 <h2>Как удалить всё?</h2>
 <p>Смотрите <a href="../privacy/">политику конфиденциальности</a>: что удалить в приложении и в iCloud.</p>
 '''),
@@ -627,7 +622,7 @@ def doc(lang, kind, pages):
     title, body = pages[lang]
     depth = '../' if lang == 'en' else '../../'
     home = depth if lang == 'en' else depth + 'ru/'
-    body = body.replace('{mail}', MAIL).replace('{beta}', BETA)
+    body = body.replace('{mail}', MAIL)
     updated = (f'<p class="updated">{"Last updated" if lang == "en" else "Обновлено"}: '
                f'{UPDATED[lang]}</p>') if kind == 'privacy' else ''
     t2 = dict(t)
