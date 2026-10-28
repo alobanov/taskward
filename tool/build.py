@@ -426,7 +426,9 @@ def landing(lang):
 <p class="small">{t['small']}</p>
 </div>
 <div class="scene" aria-hidden="true">
-<img class="phone" src="{base}img/{lang}-phone.webp" alt="" width="669" height="1581" fetchpriority="high">
+<div class="phone"><div class="screen"><img src="{base}img/{lang}-home.webp" alt="" width="786" height="1708" fetchpriority="high">
+<div class="bar"><b>9:41</b><svg viewBox="0 0 52 12"><g fill="#f4f1e8"><rect x="0" y="8" width="3" height="4" rx="1"/><rect x="4.5" y="6" width="3" height="6" rx="1"/><rect x="9" y="3.5" width="3" height="8.5" rx="1"/><rect x="13.5" y="1" width="3" height="11" rx="1"/><rect x="36.5" y="1.5" width="13" height="9" rx="2.5" fill="none" stroke="#f4f1e8" stroke-opacity=".5"/><rect x="38" y="3" width="10" height="6" rx="1.3"/></g></svg></div></div>
+<div class="glass"></div></div>
 <div class="float paper chip smart" style="--r:-4deg;top:14%;left:-6%"><span class="ring"></span>{t['float']['smart'][0]}<mark>{t['float']['smart'][1]}</mark></div>
 <div class="float paper chip when" style="--r:3deg;top:31%;right:-4%;animation-delay:-2s">{icon('today')}{t['float']['when']}{icon('reminderFilled')}09:00</div>
 <div class="float paper chip progress" style="--r:2deg;bottom:30%;left:-9%;animation-delay:-4s"><svg viewBox="0 0 30 30" class="sig"><circle class="ring" cx="15" cy="15" r="11"/><path class="solid" d="M15 4a11 11 0 0 0 0 22z"/></svg>{t['float']['progress']}</div>

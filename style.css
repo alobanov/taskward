@@ -124,12 +124,24 @@ a { color: inherit; }
   animation: shade 7s ease-in-out infinite;
 }
 @keyframes shade { 50% { transform: scale(0.9); opacity: 0.75; } }
-/* The phone: a photograph of one, the app's home on its glass, floating over the desk. */
+/* The phone as the store's pictures hold it: face on, its black glass edge and a thin
+   titanium rim, a little turned on the desk, floating; the light across its glass. */
 .phone {
-  position: relative; z-index: 2; width: min(300px, 66vw); height: auto;
-  animation: hover 7s ease-in-out infinite;
-  filter: drop-shadow(0 30px 30px rgba(20, 28, 30, 0.28)) drop-shadow(0 6px 8px rgba(20, 28, 30, 0.14));
+  position: relative; width: min(268px, 64vw); aspect-ratio: 1470 / 3000; z-index: 2;
+  rotate: 4deg; animation: hover 7s ease-in-out infinite;
+  filter: drop-shadow(0 34px 34px rgba(20, 28, 30, 0.32)) drop-shadow(0 8px 10px rgba(20, 28, 30, 0.16));
 }
+.phone::after { content: ''; position: absolute; inset: 0; background: url(img/bezel_black.webp) center / 100% 100% no-repeat; pointer-events: none; z-index: 4; }
+.screen, .glass {
+  position: absolute; left: 5.1%; top: 2.2%; width: 89.8%; height: 95.6%;
+  -webkit-mask: url(img/screen_mask.png) center / 100% 100% no-repeat; mask: url(img/screen_mask.png) center / 100% 100% no-repeat;
+}
+.screen { overflow: hidden; background: #4a5040; }
+.screen img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: top; }
+.screen .bar { position: absolute; top: 0; left: 0; right: 0; height: 5.6%; display: flex; align-items: center; justify-content: space-between; padding: 0 10% 0 12%; font: 600 11px/1 -apple-system, system-ui, sans-serif; color: #f4f1e8; z-index: 2; }
+.screen .bar svg { height: 0.95em; width: auto; }
+.glass { z-index: 5; pointer-events: none;
+  background: linear-gradient(125deg, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0.1) 30%, rgba(255, 255, 255, 0) 45%, rgba(255, 255, 255, 0) 72%, rgba(255, 255, 255, 0.14) 100%); }
 @keyframes hover { 50% { translate: 0 -12px; } }
 .float { position: absolute; z-index: 3; animation: bob 6s ease-in-out infinite; will-change: transform; margin: 0; }
 @keyframes bob { 0%, 100% { transform: translateY(0) rotate(var(--r, 0deg)); } 50% { transform: translateY(-11px) rotate(var(--r, 0deg)); } }
