@@ -126,23 +126,38 @@ a { color: inherit; }
 @keyframes shade { 50% { transform: scale(0.9); opacity: 0.75; } }
 .phone {
   position: relative; width: min(270px, 62vw); aspect-ratio: 1470 / 3000; z-index: 2;
-  transform-style: preserve-3d; transform: rotateX(12deg) rotateY(-22deg) rotateZ(5deg);
+  transform-style: preserve-3d; transform: rotateX(10deg) rotateY(-28deg) rotateZ(6deg);
   animation: hover 7s ease-in-out infinite;
 }
-.phone::after { content: ''; position: absolute; inset: 0; background: url(img/bezel_black.webp) center / 100% 100% no-repeat; pointer-events: none; z-index: 4; }
+/* The phone's thickness: its body cut over and over a pixel deeper each time, so the
+   titanium edge shows round its rounded corners as it turns; the buttons stand out of it. */
+.phone .slab {
+  position: absolute; inset: 0.67% 2.04%; border-radius: 18.4% / 8.1%;
+  transform: translateZ(calc(var(--z) * -1.1px));
+  background: linear-gradient(180deg, #e9eaec 0%, #b9bcc1 18%, #f4f5f6 32%, #9da0a6 55%, #d9dbde 72%, #8b8e94 100%);
+}
+.phone .slab:first-child { background: #c3c5c9; box-shadow: 0 30px 50px -10px rgba(20, 28, 30, 0.45); }
+.phone .slab::before, .phone .slab::after {
+  content: ''; position: absolute; width: 3.2%; border-radius: 2px; background: inherit;
+}
+.phone .slab::before { left: -1.6%; top: 17%; height: 7%; box-shadow: 0 calc(var(--h, 1) * 0px) 0 transparent; }
+.phone .slab::after { right: -1.6%; top: 24%; height: 11%; }
+/* The front: the bezel, at the top of the slab. */
+.phone .face { position: absolute; inset: 0; background: url(img/bezel_black.webp) center / 100% 100% no-repeat; z-index: 4; transform: translateZ(0.5px); pointer-events: none; }
+.phone::after { content: none; }
 .screen, .glass {
   position: absolute; left: 5.1%; top: 2.2%; width: 89.8%; height: 95.6%;
   -webkit-mask: url(img/screen_mask.png) center / 100% 100% no-repeat; mask: url(img/screen_mask.png) center / 100% 100% no-repeat;
 }
-.screen { overflow: hidden; background: #4a5040; }
+.screen { overflow: hidden; background: #4a5040; transform: translateZ(0.25px); }
 .screen img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: top; }
 .screen .bar { position: absolute; top: 0; left: 0; right: 0; height: 5.6%; display: flex; align-items: center; justify-content: space-between; padding: 0 10% 0 12%; font: 600 11px/1 -apple-system, system-ui, sans-serif; color: #f4f1e8; z-index: 2; }
 .screen .bar svg { height: 0.95em; width: auto; }
-.glass { z-index: 5; pointer-events: none; transform: translateZ(0.5px);
+.glass { z-index: 5; pointer-events: none; transform: translateZ(1px);
   background: linear-gradient(125deg, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0.1) 30%, rgba(255, 255, 255, 0) 45%, rgba(255, 255, 255, 0) 72%, rgba(255, 255, 255, 0.14) 100%); }
 @keyframes hover {
-  0%, 100% { transform: rotateX(12deg) rotateY(-22deg) rotateZ(5deg) translateY(0); }
-  50% { transform: rotateX(10deg) rotateY(-18deg) rotateZ(4deg) translateY(-10px); }
+  0%, 100% { transform: rotateX(10deg) rotateY(-28deg) rotateZ(6deg) translateY(0); }
+  50% { transform: rotateX(8deg) rotateY(-22deg) rotateZ(5deg) translateY(-12px); }
 }
 .float { position: absolute; z-index: 3; animation: bob 6s ease-in-out infinite; will-change: transform; margin: 0; }
 @keyframes bob { 0%, 100% { transform: translateY(0) rotate(var(--r, 0deg)); } 50% { transform: translateY(-11px) rotate(var(--r, 0deg)); } }
