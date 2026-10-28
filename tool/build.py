@@ -431,7 +431,7 @@ def landing(lang):
 <div class="glass"></div></div>
 <div class="float paper chip smart" style="--r:-4deg;top:14%;left:-6%"><span class="ring"></span>{t['float']['smart'][0]}<mark>{t['float']['smart'][1]}</mark></div>
 <div class="float paper chip when" style="--r:3deg;top:31%;right:-4%;animation-delay:-2s">{icon('today')}{t['float']['when']}{icon('reminderFilled')}09:00</div>
-<div class="float paper chip" style="--r:2deg;bottom:30%;left:-9%;animation-delay:-4s"><svg viewBox="0 0 30 30" class="sig"><circle class="ring" cx="15" cy="15" r="11"/><path class="solid" d="M15 4a11 11 0 0 0 0 22z"/></svg>{t['float']['progress']}</div>
+<div class="float paper chip progress" style="--r:2deg;bottom:30%;left:-9%;animation-delay:-4s"><svg viewBox="0 0 30 30" class="sig"><circle class="ring" cx="15" cy="15" r="11"/><path class="solid" d="M15 4a11 11 0 0 0 0 22z"/></svg>{t['float']['progress']}</div>
 <div class="float tag" style="--r:-6deg;bottom:16%;right:-2%;animation-delay:-3s">{t['float']['tag']}</div>
 <span class="float doodle star" style="--r:12deg;top:4%;right:8%;animation-delay:-1s">{icon('favoriteFilled')}</span>
 <span class="float doodle flag" style="--r:-10deg;bottom:6%;left:10%;animation-delay:-5s">{icon('flagFilled')}</span>

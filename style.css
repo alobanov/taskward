@@ -411,6 +411,11 @@ footer .by { margin-left: auto; }
   .float.chip { font-size: 14px; padding: 6px 10px; }
   .float.knight .icon { width: 60px; height: 60px; }
   .scribble { display: none; }
+  .float.smart { left: 1% !important; top: 6% !important; }
+  .float.when { right: 0 !important; }
+  .float.progress { left: 0 !important; }
+  .float.tag { right: 2% !important; }
+  .float.knight { right: 4% !important; }
   footer .wrap { flex-direction: column; align-items: flex-start; gap: 8px; }
   footer .by { margin-left: 0; }
   .doc { padding: 26px 20px; }
