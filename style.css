@@ -115,18 +115,53 @@ a { color: inherit; }
 @keyframes write { to { clip-path: inset(-10% -2% -20% 0); } }
 .hero-words .lede { font-size: 19px; color: var(--on-desk-soft); max-width: 32ch; margin: 0 0 24px; }
 .hero-words .small { font-size: 15px; color: var(--on-desk-soft); margin: 16px 0 0; }
-.fan { position: relative; height: min(62vh, 520px); }
-.fan img {
-  position: absolute; top: 50%; left: 50%; height: 94%; width: auto;
-  border-radius: 20px; box-shadow: var(--lift);
-  translate: -50% -50%;
-  transition: transform 0.6s cubic-bezier(.22, 1, .36, 1);
+/* The phone held up over the desk, the app on it, and bits of the app floating round it:
+   a day read off a title, When at a card's foot, a signal, a tag, the knight. */
+.scene { position: relative; display: grid; place-items: center; min-height: 540px; perspective: 1600px; }
+.scene::before {
+  content: ''; position: absolute; left: 24%; right: 22%; bottom: 0; height: 7%; border-radius: 50%;
+  background: radial-gradient(closest-side, rgba(20, 28, 30, 0.4), rgba(20, 28, 30, 0)); filter: blur(4px);
+  animation: shade 7s ease-in-out infinite;
 }
-.fan .side { height: 80%; filter: saturate(0.92); }
-.fan .left { transform: translateX(-62%) rotate(-7deg); }
-.fan .right { transform: translateX(62%) rotate(6deg); }
-.fan:hover .left { transform: translateX(-72%) rotate(-9deg); }
-.fan:hover .right { transform: translateX(72%) rotate(8deg); }
+@keyframes shade { 50% { transform: scale(0.9); opacity: 0.75; } }
+.phone {
+  position: relative; width: min(270px, 62vw); aspect-ratio: 1470 / 3000; z-index: 2;
+  transform-style: preserve-3d; transform: rotateX(12deg) rotateY(-22deg) rotateZ(5deg);
+  animation: hover 7s ease-in-out infinite;
+}
+.phone::after { content: ''; position: absolute; inset: 0; background: url(img/bezel_black.webp) center / 100% 100% no-repeat; pointer-events: none; z-index: 4; }
+.screen, .glass {
+  position: absolute; left: 5.1%; top: 2.2%; width: 89.8%; height: 95.6%;
+  -webkit-mask: url(img/screen_mask.png) center / 100% 100% no-repeat; mask: url(img/screen_mask.png) center / 100% 100% no-repeat;
+}
+.screen { overflow: hidden; background: #4a5040; }
+.screen img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: top; }
+.screen .bar { position: absolute; top: 0; left: 0; right: 0; height: 5.6%; display: flex; align-items: center; justify-content: space-between; padding: 0 10% 0 12%; font: 600 11px/1 -apple-system, system-ui, sans-serif; color: #f4f1e8; z-index: 2; }
+.screen .bar svg { height: 0.95em; width: auto; }
+.glass { z-index: 5; pointer-events: none; transform: translateZ(0.5px);
+  background: linear-gradient(125deg, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0.1) 30%, rgba(255, 255, 255, 0) 45%, rgba(255, 255, 255, 0) 72%, rgba(255, 255, 255, 0.14) 100%); }
+@keyframes hover {
+  0%, 100% { transform: rotateX(12deg) rotateY(-22deg) rotateZ(5deg) translateY(0); }
+  50% { transform: rotateX(10deg) rotateY(-18deg) rotateZ(4deg) translateY(-10px); }
+}
+.float { position: absolute; z-index: 3; animation: bob 6s ease-in-out infinite; will-change: transform; margin: 0; }
+@keyframes bob { 0%, 100% { transform: translateY(0) rotate(var(--r, 0deg)); } 50% { transform: translateY(-11px) rotate(var(--r, 0deg)); } }
+.float.chip { display: flex; align-items: center; gap: 7px; padding: 8px 13px; border-radius: 14px; font-size: 16px; white-space: nowrap; }
+.float.chip .icon { width: 16px; height: 16px; }
+.float.chip mark { background: var(--marker); color: inherit; border-radius: 4px; box-shadow: 0 0 0 2px var(--marker); }
+.float.chip .ring { width: 15px; height: 15px; border: 1.5px solid var(--pencil); border-radius: 50%; margin-right: 2px; }
+.float.chip .sig { width: 18px; height: 18px; color: var(--ink); }
+.float.chip .sig .ring { fill: none; stroke: currentColor; stroke-width: 1.8; border: 0; }
+.float.chip .sig .solid { fill: currentColor; }
+.float.tag { font-size: 14px; padding: 4px 12px; border-radius: 999px; background: #e9e6dd; color: var(--ink); box-shadow: var(--shadow); }
+.float.doodle { display: grid; place-items: center; width: 50px; height: 50px; border-radius: 50%; background: #fff; box-shadow: var(--shadow); }
+.float.doodle .icon { width: 26px; height: 26px; }
+.float.star .icon { color: var(--seal); }
+.float.flag .icon { color: var(--seal); }
+.float.knight .icon { width: 86px; height: 86px; color: #2c3436;
+  filter: drop-shadow(3px 0 0 #fff) drop-shadow(-3px 0 0 #fff) drop-shadow(0 3px 0 #fff) drop-shadow(0 -3px 0 #fff) drop-shadow(0 8px 10px rgba(20, 28, 30, 0.25)); }
+.scribble { position: absolute; z-index: 5; top: 50%; right: -16%; display: flex; gap: 4px; margin: 0; font-size: 19px; line-height: 1.05; color: var(--blue); rotate: -4deg; pointer-events: none; white-space: nowrap; }
+.scribble svg { flex: none; width: 44px; height: 30px; fill: none; stroke: currentColor; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; transform: rotate(-10deg); }
 
 /* Rows, as the app writes them: a circle, the title, its small print in pencil under it. */
 .rows { list-style: none; margin: 14px 0 0; padding: 0; }
@@ -167,7 +202,7 @@ section.part { padding: 20px 0; }
     "try try ticket"
     "signals lists more"
     "mac mac yours"
-    "kept knight knight";
+    "knight knight kept";
   align-items: start;
 }
 .t-try { grid-area: try; } .t-ticket { grid-area: ticket; } .t-signals { grid-area: signals; }
@@ -327,9 +362,16 @@ section.part { padding: 20px 0; }
 .kept p { margin: 10px 0 0; font-size: 15px; }
 .kept a { color: var(--blue); }
 
-.t-knight { display: grid; grid-template-columns: auto 1fr; gap: 20px; align-items: center; align-self: center; }
-.t-knight .icon.big { width: 96px; height: 96px; color: var(--on-desk); }
-.t-knight .cap { margin-bottom: 14px; }
+
+/* Getting Things Done, its five steps in order. */
+.gtd { list-style: none; counter-reset: step; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; }
+.gtd li { counter-increment: step; padding: 12px 12px 14px; border-radius: 16px; background: rgba(255, 255, 255, 0.4); box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.06); }
+.gtd li::before { content: counter(step); display: grid; place-items: center; width: 24px; height: 24px; border-radius: 50%; border: 1.5px solid currentColor; font-size: 14px; margin-bottom: 6px; }
+.gtd b { display: block; font-weight: 400; font-size: 18px; }
+.gtd span { display: block; font-size: 14px; color: var(--on-desk-soft); line-height: 1.35; margin-top: 2px; }
+.gtd-foot { display: flex; align-items: center; gap: 14px; margin-top: 16px; flex-wrap: wrap; }
+.gtd-foot .icon.big { width: 56px; height: 56px; color: var(--on-desk); }
+.gtd-foot p { margin: 0; flex: 1 1 240px; font-size: 15px; color: var(--on-desk-soft); }
 
 footer { padding: 20px 0 32px; border-top: 1px solid rgba(0, 0, 0, 0.08); margin-top: 36px; color: var(--on-desk-soft); font-size: 15px; }
 footer .wrap { display: flex; flex-wrap: wrap; gap: 14px 28px; align-items: center; }
@@ -347,7 +389,7 @@ footer .by { margin-left: auto; }
 
 @media (max-width: 900px) {
   .hero-in { grid-template-columns: 1fr; padding: 4px 0 8px; gap: 20px; }
-  .fan { height: 420px; }
+  .scene { min-height: 500px; }
   .board {
     grid-template-columns: 1fr 1fr; gap: 32px 20px;
     grid-template-areas: "try try" "ticket signals" "lists more" "mac mac" "yours kept" "knight knight";
@@ -356,24 +398,26 @@ footer .by { margin-left: auto; }
 @media (max-width: 620px) {
   .hero-words h1 { font-size: 34px; }
   .hero-words .lede { font-size: 17px; margin-bottom: 18px; }
-  .fan { height: 360px; }
-  .fan img { border-radius: 14px; }
-  .fan .left { transform: translateX(-56%) rotate(-6deg); }
-  .fan .right { transform: translateX(56%) rotate(5deg); }
   .shelf img { width: 190px; border-radius: 13px; }
   .board { grid-template-columns: 1fr; gap: 30px; grid-template-areas: "try" "ticket" "signals" "lists" "more" "mac" "yours" "kept" "knight"; }
   .desk3 { grid-template-columns: 1fr; gap: 10px; }
   .mini { min-height: 0; }
   .newcard .mirror, .newcard .title { font-size: 18px; }
-  .t-knight { grid-template-columns: 64px 1fr; gap: 14px; align-items: start; }
-  .t-knight .icon.big { width: 64px; height: 64px; }
-  .t-knight .button { white-space: nowrap; font-size: 16px; padding: 10px 16px; }
+  .gtd { grid-template-columns: 1fr; gap: 8px; }
+  .gtd li { display: grid; grid-template-columns: 30px 1fr; column-gap: 8px; padding: 10px 12px; }
+  .gtd li::before { grid-row: span 2; margin: 0; }
+  .gtd-foot .button { white-space: nowrap; font-size: 16px; padding: 10px 16px; }
+  .scene { min-height: 440px; }
+  .float.chip { font-size: 14px; padding: 6px 10px; }
+  .float.knight .icon { width: 60px; height: 60px; }
+  .scribble { display: none; }
   footer .wrap { flex-direction: column; align-items: flex-start; gap: 8px; }
   footer .by { margin-left: 0; }
   .doc { padding: 26px 20px; }
   .doc h1 { font-size: 30px; }
 }
 @media (prefers-reduced-motion: reduce) {
+  .phone, .float, .scene::before { animation: none; }
   .written .pen { animation: none; clip-path: none; }
   html { scroll-behavior: auto; }
   * { transition-duration: 0.01ms !important; }

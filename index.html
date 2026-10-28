@@ -21,13 +21,13 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Pangolin&amp;subset=cyrillic&amp;display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=c535f97a">
+<link rel="stylesheet" href="style.css?v=d2a7169c">
 <style>:root { --grain: url(img/grain.webp); }</style>
 <script>try { const d = localStorage.getItem('taskward-desk'), i = localStorage.getItem('taskward-ink');
 if (d && d !== 'default') document.documentElement.dataset.desk = d;
 if (i && i !== 'default') document.documentElement.dataset.ink = i; } catch (_) {}</script>
-<script src="when.js?v=c535f97a" defer></script>
-<script src="app.js?v=c535f97a" defer></script>
+<script src="when.js?v=d2a7169c" defer></script>
+<script src="app.js?v=d2a7169c" defer></script>
 </head>
 <body>
 <header class="wrap top">
@@ -42,10 +42,18 @@ if (i && i !== 'default') document.documentElement.dataset.ink = i; } catch (_) 
 <a class="button" href="https://testflight.apple.com/join/h82fp1R4"><svg class="icon" aria-hidden="true"><use href="img/icons.svg#add"/></svg>Join the beta on TestFlight</a>
 <p class="small">Free, no account. Coming to the App Store soon.</p>
 </div>
-<div class="fan">
-<img class="side left" src="img/en-iphone-3.webp" alt="" width="760" height="1651">
-<img class="side right" src="img/en-iphone-4.webp" alt="" width="760" height="1651">
-<img class="front" src="img/en-iphone-1.webp" alt="Taskward on iPhone" width="760" height="1651" fetchpriority="high">
+<div class="scene" aria-hidden="true">
+<div class="phone"><div class="screen"><img src="img/en-home.webp" alt="" width="786" height="1708" fetchpriority="high">
+<div class="bar"><b>9:41</b><svg viewBox="0 0 52 12"><g fill="#f4f1e8"><rect x="0" y="8" width="3" height="4" rx="1"/><rect x="4.5" y="6" width="3" height="6" rx="1"/><rect x="9" y="3.5" width="3" height="8.5" rx="1"/><rect x="13.5" y="1" width="3" height="11" rx="1"/><rect x="36.5" y="1.5" width="13" height="9" rx="2.5" fill="none" stroke="#f4f1e8" stroke-opacity=".5"/><rect x="38" y="3" width="10" height="6" rx="1.3"/></g></svg></div></div>
+<div class="glass"></div></div>
+<div class="float paper chip smart" style="--r:-4deg;top:14%;left:-6%"><span class="ring"></span>Gym <mark>tomorrow at 9</mark></div>
+<div class="float paper chip when" style="--r:3deg;top:31%;right:-4%;animation-delay:-2s"><svg class="icon" aria-hidden="true"><use href="img/icons.svg#today"/></svg>Tomorrow<svg class="icon" aria-hidden="true"><use href="img/icons.svg#reminderFilled"/></svg>09:00</div>
+<div class="float paper chip" style="--r:2deg;bottom:30%;left:-9%;animation-delay:-4s"><svg viewBox="0 0 30 30" class="sig"><circle class="ring" cx="15" cy="15" r="11"/><path class="solid" d="M15 4a11 11 0 0 0 0 22z"/></svg>In progress</div>
+<div class="float tag" style="--r:-6deg;bottom:16%;right:-2%;animation-delay:-3s">Armoury</div>
+<span class="float doodle star" style="--r:12deg;top:4%;right:8%;animation-delay:-1s"><svg class="icon" aria-hidden="true"><use href="img/icons.svg#favoriteFilled"/></svg></span>
+<span class="float doodle flag" style="--r:-10deg;bottom:6%;left:10%;animation-delay:-5s"><svg class="icon" aria-hidden="true"><use href="img/icons.svg#flagFilled"/></svg></span>
+<span class="float knight" style="--r:-8deg;bottom:-2%;right:12%;animation-delay:-2.5s"><svg class="icon" aria-hidden="true"><use href="img/icons.svg#knight"/></svg></span>
+<p class="scribble"><svg viewBox="0 0 60 40"><path d="M56 30 C 44 36, 22 34, 10 16"/><path d="M6 25 L 9 14 L 19 17"/></svg>the real app</p>
 </div>
 </div></section>
 
@@ -117,9 +125,9 @@ if (i && i !== 'default') document.documentElement.dataset.ink = i; } catch (_) 
 </div>
 
 <div class="tile t-knight" id="knight">
-<svg class="icon big" aria-hidden="true"><use href="img/icons.svg#knight"/></svg>
-<div><h3>New to getting things done?</h3><p class="cap">A little knight shows you how to sort an inbox on first launch.</p>
-<a class="button" href="https://testflight.apple.com/join/h82fp1R4"><svg class="icon" aria-hidden="true"><use href="img/icons.svg#add"/></svg>Join the beta on TestFlight</a></div>
+<h3>Built on Getting Things Done</h3><p class="cap">David Allen’s method for a clear head: get everything out of it and into a trusted place, then decide, one thing at a time. Taskward’s lists are its steps.</p>
+<ol class="gtd"><li><b>Capture</b><span>Everything goes into the Inbox, as it comes.</span></li><li><b>Clarify</b><span>What is it? Do it now, give it a day, put it off, or keep it as a note.</span></li><li><b>Organise</b><span>Today, Upcoming, Anytime, Someday, projects and areas.</span></li><li><b>Reflect</b><span>Look Someday through now and then; the Logbook keeps what’s done.</span></li><li><b>Engage</b><span>Work from one card: Today.</span></li></ol>
+<div class="gtd-foot"><svg class="icon big" aria-hidden="true"><use href="img/icons.svg#knight"/></svg><p>On first launch a little knight walks you through it with a pile of errands.</p><a class="button" href="https://testflight.apple.com/join/h82fp1R4"><svg class="icon" aria-hidden="true"><use href="img/icons.svg#add"/></svg>Join the beta on TestFlight</a></div>
 </div>
 
 </div></section>

@@ -63,6 +63,16 @@ T = {
                        'into pencil, out of your way.',
         'signals_note': 'Mark',
         'signals': ['Done', 'In progress', 'Delegated', 'Meeting', 'Important', 'Waiting'],
+        'float': {'smart': ('Gym ', 'tomorrow at 9'), 'when': 'Tomorrow', 'progress': 'In progress',
+                  'tag': 'Armoury', 'note': 'the real app'},
+        'gtd_h': 'Built on Getting Things Done',
+        'gtd_say': 'David Allen’s method for a clear head: get everything out of it and into a trusted place, then decide, one thing at a time. Taskward’s lists are its steps.',
+        'gtd': [('Capture', 'Everything goes into the Inbox, as it comes.'),
+                ('Clarify', 'What is it? Do it now, give it a day, put it off, or keep it as a note.'),
+                ('Organise', 'Today, Upcoming, Anytime, Someday, projects and areas.'),
+                ('Reflect', 'Look Someday through now and then; the Logbook keeps what’s done.'),
+                ('Engage', 'Work from one card: Today.')],
+        'gtd_knight': 'On first launch a little knight walks you through it with a pile of errands.',
         'cap': {
             'shots': 'The real app',
             'try': 'Type a task with a day in it and press Return.',
@@ -171,6 +181,16 @@ T = {
                        'Поручённое и ожидание уходят в карандаш, чтобы не мешать.',
         'signals_note': 'Отметить',
         'signals': ['Выполнено', 'В работе', 'Поручено', 'Встреча', 'Важно', 'Жду ответа'],
+        'float': {'smart': ('Тренировка ', 'завтра в 9'), 'when': 'Завтра', 'progress': 'В работе',
+                  'tag': 'Оружейная', 'note': 'настоящее приложение'},
+        'gtd_h': 'По методу GTD',
+        'gtd_say': 'Метод Дэвида Аллена для ясной головы: выгрузить из неё всё в надёжное место и решать по одному делу за раз. Списки Taskward — это его шаги.',
+        'gtd': [('Собрать', 'Всё, что приходит в голову, — во входящие, сразу.'),
+                ('Разобрать', 'Что это? Сделать сейчас, назначить день, отложить или оставить заметкой.'),
+                ('Разложить', 'Сегодня, Планы, В любое время, Когда-нибудь, проекты и области.'),
+                ('Пересмотреть', 'Иногда пролистывать «Когда-нибудь»; сделанное хранит журнал.'),
+                ('Делать', 'Работать с одной карточки — «Сегодня».')],
+        'gtd_knight': 'При первом запуске маленький рыцарь проведёт по методу на ворохе поручений.',
         'cap': {
             'shots': 'Настоящее приложение',
             'try': 'Напиши задачу с днём и нажми ввод.',
@@ -392,6 +412,7 @@ def landing(lang):
         f'<div class="paper {paper} strip m-{mark}" style="--i:{i}">{icon(mark)}<span>{name}</span></div>'
         for i, (mark, name, paper, _) in enumerate(reversed(t['lists']))
     )
+    gtd = ''.join(f'<li><b>{name}</b><span>{say}</span></li>' for name, say in t['gtd'])
     sample_rows = ''.join(row(t, title, '', done) for title, _, done in t['tasks'][:3])
     pre = 'ru/' if lang == 'ru' else ''
     page = head(lang, t['title'], t['desc'], '', base) + f'''<body>
@@ -404,10 +425,18 @@ def landing(lang):
 <a class="button" href="{BETA}">{icon('add')}{t['cta']}</a>
 <p class="small">{t['small']}</p>
 </div>
-<div class="fan">
-<img class="side left" src="{base}img/{lang}-iphone-3.webp" alt="" width="760" height="1651">
-<img class="side right" src="{base}img/{lang}-iphone-4.webp" alt="" width="760" height="1651">
-<img class="front" src="{base}img/{lang}-iphone-1.webp" alt="{t['shots_alt']}" width="760" height="1651" fetchpriority="high">
+<div class="scene" aria-hidden="true">
+<div class="phone"><div class="screen"><img src="{base}img/{lang}-home.webp" alt="" width="786" height="1708" fetchpriority="high">
+<div class="bar"><b>9:41</b><svg viewBox="0 0 52 12"><g fill="#f4f1e8"><rect x="0" y="8" width="3" height="4" rx="1"/><rect x="4.5" y="6" width="3" height="6" rx="1"/><rect x="9" y="3.5" width="3" height="8.5" rx="1"/><rect x="13.5" y="1" width="3" height="11" rx="1"/><rect x="36.5" y="1.5" width="13" height="9" rx="2.5" fill="none" stroke="#f4f1e8" stroke-opacity=".5"/><rect x="38" y="3" width="10" height="6" rx="1.3"/></g></svg></div></div>
+<div class="glass"></div></div>
+<div class="float paper chip smart" style="--r:-4deg;top:14%;left:-6%"><span class="ring"></span>{t['float']['smart'][0]}<mark>{t['float']['smart'][1]}</mark></div>
+<div class="float paper chip when" style="--r:3deg;top:31%;right:-4%;animation-delay:-2s">{icon('today')}{t['float']['when']}{icon('reminderFilled')}09:00</div>
+<div class="float paper chip" style="--r:2deg;bottom:30%;left:-9%;animation-delay:-4s"><svg viewBox="0 0 30 30" class="sig"><circle class="ring" cx="15" cy="15" r="11"/><path class="solid" d="M15 4a11 11 0 0 0 0 22z"/></svg>{t['float']['progress']}</div>
+<div class="float tag" style="--r:-6deg;bottom:16%;right:-2%;animation-delay:-3s">{t['float']['tag']}</div>
+<span class="float doodle star" style="--r:12deg;top:4%;right:8%;animation-delay:-1s">{icon('favoriteFilled')}</span>
+<span class="float doodle flag" style="--r:-10deg;bottom:6%;left:10%;animation-delay:-5s">{icon('flagFilled')}</span>
+<span class="float knight" style="--r:-8deg;bottom:-2%;right:12%;animation-delay:-2.5s">{icon('knight')}</span>
+<p class="scribble"><svg viewBox="0 0 60 40"><path d="M56 30 C 44 36, 22 34, 10 16"/><path d="M6 25 L 9 14 L 19 17"/></svg>{t['float']['note']}</p>
 </div>
 </div></section>
 
@@ -479,9 +508,9 @@ def landing(lang):
 </div>
 
 <div class="tile t-knight" id="knight">
-{icon('knight', 'icon big')}
-<div><h3>{t['knight_h']}</h3><p class="cap">{t['knight_say']}</p>
-<a class="button" href="{BETA}">{icon('add')}{t['cta']}</a></div>
+<h3>{t['gtd_h']}</h3><p class="cap">{t['gtd_say']}</p>
+<ol class="gtd">{gtd}</ol>
+<div class="gtd-foot">{icon('knight', 'icon big')}<p>{t['gtd_knight']}</p><a class="button" href="{BETA}">{icon('add')}{t['cta']}</a></div>
 </div>
 
 </div></section>
