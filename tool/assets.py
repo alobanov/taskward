@@ -16,7 +16,7 @@ def webp(src, dst, width=None, quality=82):
 webp(APP / 'assets/textures/paper_light.png', 'grain.webp', 384, 70)
 webp(APP / 'assets/textures/paper_dark.png', 'grain-dark.webp', 384, 70)
 webp(APP / 'assets/textures/oak.jpg', 'oak.webp', 1400, 78)
-icon = Image.open(APP / 'tool/app_icon/cards.png').convert('RGB')
+icon = Image.open(APP / 'tool/app_icon/notebook.png').convert('RGB')
 icon.resize((512, 512), Image.LANCZOS).save(IMG / 'icon.png', optimize=True)
 icon.resize((180, 180), Image.LANCZOS).save(IMG / 'apple-touch-icon.png', optimize=True)
 icon.resize((64, 64), Image.LANCZOS).save(IMG / 'favicon.png', optimize=True)
