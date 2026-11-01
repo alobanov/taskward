@@ -58,6 +58,9 @@ body {
   background-attachment: fixed;
 }
 .hero-in > * { min-width: 0; }
+/* The app's icon large enough to read over the headline; the header's is then left out. */
+.hero-icon { width: 112px; height: 112px; border-radius: 25px; box-shadow: var(--lift); margin: 0 0 22px; rotate: -2deg; }
+body:has(.hero-icon) .brand img { display: none; }
 h1, h2 { overflow-wrap: break-word; }
 img { max-width: 100%; display: block; }
 a { color: inherit; }
@@ -454,7 +457,11 @@ section.part { padding: 20px 0; }
 .shelf::-webkit-scrollbar { display: none; }
 .shelf img { height: auto; width: 236px; border-radius: 16px; box-shadow: var(--shadow); scroll-snap-align: start; flex: none; }
 .shelf img:nth-child(odd) { rotate: -0.6deg; } .shelf img:nth-child(even) { rotate: 0.5deg; }
-@media (min-width: 1200px) { .shelf { justify-content: safe center; } .shelf img { width: 220px; } }
+/* On a wide window all eight stand in one row, centred, each giving way to fit it. */
+@media (min-width: 1280px) {
+  .shelf { justify-content: center; padding-inline: 24px; overflow-x: clip; }
+  .shelf img { width: auto; flex: 0 1 236px; min-width: 0; }
+}
 
 /* Make it yours: the desks and inks, picked here as in Appearance. */
 .swatches { display: flex; gap: 10px; flex-wrap: wrap; }
@@ -525,6 +532,7 @@ footer .by { margin-left: auto; }
 }
 @media (max-width: 620px) {
   .hero-words h1 { font-size: 34px; }
+  .hero-icon { width: 76px; height: 76px; border-radius: 17px; margin-bottom: 14px; }
   .hero-words .lede { font-size: 17px; margin-bottom: 18px; }
   .shelf img { width: 190px; border-radius: 13px; }
   .cards3 { grid-template-columns: 1fr; gap: 12px; }

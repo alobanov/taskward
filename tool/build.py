@@ -567,6 +567,7 @@ def landing(lang):
 <main>
 <section class="hero"><div class="wrap hero-in">
 <div class="hero-words">
+<img class="hero-icon" src="{base}img/icon.png" alt="Taskward" width="112" height="112">
 <h1 class="written">{''.join(f'<span class="pen" style="--i:{i}">{line}</span>' for i, line in enumerate(t['h1'].split('<br>'))).replace('<u>', '<span class="under">').replace('</u>', UNDER + '</span>')}</h1>
 <p class="lede"><b>{t['lede'][0]}</b> {t['lede'][1]}</p>
 <span class="button soon"><svg class="icon" viewBox="0 0 17 20" aria-hidden="true"><path fill="currentColor" d="M14.07 10.63c-.02-2.33 1.9-3.45 1.99-3.51-1.08-1.58-2.77-1.8-3.37-1.82-1.43-.15-2.8.84-3.53.84-.73 0-1.85-.82-3.05-.8-1.57.03-3.02.92-3.83 2.33-1.63 2.83-.42 7.02 1.17 9.32.78 1.12 1.71 2.38 2.93 2.34 1.18-.05 1.62-.76 3.05-.76 1.42 0 1.82.76 3.06.74 1.27-.03 2.07-1.14 2.84-2.27.9-1.31 1.27-2.58 1.29-2.64-.03-.01-2.47-.95-2.49-3.77zM11.77 3.79c.65-.79 1.09-1.88.97-2.97-.94.04-2.07.62-2.74 1.41-.6.7-1.13 1.81-.99 2.88 1.05.08 2.11-.53 2.76-1.32z"/></svg>{t['cta']}</span>
