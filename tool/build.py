@@ -168,7 +168,7 @@ T = {
         'inks': [('default', 'Graphite', '#45454f'), ('blue', 'Blue', '#2b3ac9'),
                  ('black', 'Black', '#141417'), ('espresso', 'Espresso', '#3a201c')],
         'kept_h': 'Nothing of yours leaves your hands',
-        'kept': ['No account to make.', 'No ads, no tracking, no usage analytics.',
+        'kept': ['No account to make.', 'No ads, no tracking. Anonymous usage statistics you can turn off.',
                  'Your tasks live on your devices and in your own iCloud, which we can’t read.'],
         'kept_link': 'Read the privacy policy',
         'knight_h': 'New to getting things done?',
@@ -319,7 +319,7 @@ T = {
         'inks': [('default', 'Графит', '#45454f'), ('blue', 'Синие', '#2b3ac9'),
                  ('black', 'Чёрные', '#141417'), ('espresso', 'Эспрессо', '#3a201c')],
         'kept_h': 'Твоё остаётся у тебя',
-        'kept': ['Не нужно заводить аккаунт.', 'Ни рекламы, ни слежки, ни аналитики использования.',
+        'kept': ['Не нужно заводить аккаунт.', 'Ни рекламы, ни слежки. Анонимная статистика, которую можно выключить.',
                  'Задачи живут на твоих устройствах и в твоём iCloud — мы их не видим.'],
         'kept_link': 'Политика конфиденциальности',
         'knight_h': 'Впервые слышишь про GTD?',
@@ -698,9 +698,10 @@ PRIVACY = {
 <p>Taskward is a to-do list for iPhone and Mac made by Aleksei Lobanov. This policy says what
 happens to what you write in it. In short: nothing you write reaches us.</p>
 <h2>What we collect</h2>
-<p>Nothing of what you write. Taskward has no account, no ads, no tracking and no analytics of how
-you use it. The one thing that leaves your device for someone other than Apple is what is needed
-to sell Taskward Pro: see Purchases below. Its App Store privacy label says the same.</p>
+<p>Nothing of what you write. Taskward has no account, no ads and no tracking. Two things leave
+your device for someone other than Apple: what is needed to sell Taskward Pro, and usage statistics
+and crash reports, which you can turn off. Both are described below, and its App Store privacy label
+says the same.</p>
 <h2>Where your tasks are kept</h2>
 <p>Your lists, tasks, notes, tags and settings are kept in a database on your device. If iCloud
 is on for Taskward, they are also kept in your own iCloud account, in its private database, so
@@ -722,14 +723,30 @@ Apple: which plan, when, at what price, in which country, and whether it renews.
 anything else you wrote is ever sent. As with any service on the internet, its servers see the
 network address a request comes from. RevenueCat handles this on our behalf, and it is needed for
 Pro to work, so it cannot be turned off.</p>
+<h2>Usage statistics and crash reports</h2>
+<p>To see what is used and what breaks, Taskward sends usage statistics to
+<a href="https://mixpanel.com/legal/privacy-policy/">Mixpanel</a> and crash reports to
+<a href="https://firebase.google.com/support/privacy">Google Firebase Crashlytics</a>. This is on
+unless you turn it off: Settings, Help improve Taskward. After that nothing more is sent.</p>
+<p>Usage statistics say what was done, for example that a task was added or a list opened, a
+purchase and its plan and price, and how the app is set up: its look, its language, the plan held.
+With them go the app’s version, your device’s model and system, and the country of your App Store
+account. Crash reports say what kind of error it was, where in the app, and on what device and
+system. Both come under a random identifier made for the installation, not for you. No task, note,
+tag, project name or search is ever sent.</p>
+<p>The country and city may be worked out from the network address a request comes from. We ask
+for this not to happen, but it can, for example when something sent before the app last closed goes
+out as it starts. Your exact location is never collected.</p>
 <h2>Where the data goes</h2>
 <p>RevenueCat is a company in the United States, so purchase records may be processed there. It
 works under the European Commission’s standard contractual clauses, which bind it to protect them
 as they would be protected in the EU. Purchase records are needed to give you the Pro you paid
 for, so they are processed to perform that purchase.</p>
-<h2>Crashes</h2>
-
-<p>If you have chosen to share analytics with Apple, Apple may send us anonymous crash reports
+<p>Usage statistics are kept by Mixpanel in the European Union. Crash reports are processed by
+Google, in the United States among other places, under the same clauses. Both are processed for
+our legitimate interest in keeping the app working and knowing what to improve, and you can object
+at any time with the switch in Settings.</p>
+<p>If you have chosen to share analytics with Apple, Apple may also send us anonymous crash reports
 for the app. They contain no tasks or other things you have written.</p>
 <h2>Deleting your data</h2>
 <p>Delete a task, a list or everything in the app and it is gone from your device and your
@@ -739,7 +756,8 @@ open Settings, tap your name, then iCloud, Manage Storage, Taskward, and delete 
 <p>Depending on where you live, including under the EU and UK GDPR, you have the right to ask what
 data about you is held, to have it corrected or deleted, to restrict or object to its use, and to
 receive a copy of it. Write to the address below. As purchase records carry no name or email, we
-may not be able to tell which of them is yours. A subscription is stopped in your Apple Account’s
+may not be able to tell which of them is yours. The same goes for statistics and crash reports,
+which carry only the installation’s random identifier. A subscription is stopped in your Apple Account’s
 settings.</p>
 <h2>Children</h2>
 <p>Taskward is not directed at children. It collects nothing that identifies anyone, children
@@ -753,9 +771,10 @@ included.</p>
 <p>Taskward — список дел для iPhone и Mac, его сделал Алексей Лобанов. Здесь написано, что
 происходит с тем, что вы в нём пишете. Коротко: ничего из этого к нам не попадает.</p>
 <h2>Что мы собираем</h2>
-<p>Ничего из того, что вы пишете. В Taskward нет аккаунта, рекламы, слежки и аналитики того, как вы
-им пользуетесь. Единственное, что уходит с устройства кому-то, кроме Apple, нужно для продажи
-Taskward Pro: об этом ниже, в разделе «Покупки». Метка приватности в App Store говорит то же самое.</p>
+<p>Ничего из того, что вы пишете. В Taskward нет аккаунта, рекламы и слежки. С устройства кому-то,
+кроме Apple, уходят две вещи: то, что нужно для продажи Taskward Pro, и статистика использования с
+отчётами о сбоях, которые можно выключить. Обе описаны ниже, метка приватности в App Store говорит
+то же самое.</p>
 <h2>Где хранятся задачи</h2>
 <p>Списки, задачи, заметки, теги и настройки хранятся в базе данных на вашем устройстве. Если для
 Taskward включён iCloud, они хранятся и в вашем личном iCloud, в его закрытой базе, чтобы
@@ -777,15 +796,31 @@ iPhone и Mac совпадали. Эта база принадлежит ваш�
 что вы написали, никогда не отправляются. Как и любой сервис в интернете, его серверы видят сетевой
 адрес, с которого пришёл запрос. RevenueCat обрабатывает это по нашему поручению; без этого Pro не
 работает, поэтому отключить это нельзя.</p>
+<h2>Статистика и отчёты о сбоях</h2>
+<p>Чтобы видеть, чем пользуются и что ломается, Taskward отправляет статистику использования в
+<a href="https://mixpanel.com/legal/privacy-policy/">Mixpanel</a> и отчёты о сбоях в
+<a href="https://firebase.google.com/support/privacy">Google Firebase Crashlytics</a>. Это включено,
+пока вы не выключите: Настройки, «Помогать улучшать Taskward». После этого больше ничего не
+отправляется.</p>
+<p>В статистике указано, что было сделано, например что добавлена задача или открыт список, покупка,
+её план и цена, и как настроено приложение: оформление, язык, купленный план. Вместе с этим уходят
+версия приложения, модель устройства и система, а также страна вашего аккаунта App Store. В отчёте о
+сбое указано, что это за ошибка, в каком месте приложения и на каком устройстве и системе. И то и
+другое идёт под случайным идентификатором, созданным для установки, а не для вас. Задачи, заметки,
+теги, названия проектов и поисковые запросы не отправляются никогда.</p>
+<p>Страна и город могут определяться по сетевому адресу, с которого пришёл запрос. Мы просим этого
+не делать, но так может случиться, например когда то, что не успело уйти до закрытия приложения,
+отправляется при следующем запуске. Точное местоположение не собирается.</p>
 <h2>Куда попадают данные</h2>
 <p>RevenueCat — компания из США, поэтому данные о покупках могут обрабатываться там. Она работает по
 стандартным договорным условиям Европейской комиссии, которые обязывают её защищать данные так же,
 как в ЕС. Данные о покупках нужны, чтобы вы получили оплаченный Pro, поэтому они обрабатываются для
 исполнения этой покупки.</p>
-<h2>Сбои</h2>
-
-<p>Если вы разрешили делиться аналитикой с Apple, Apple может присылать нам обезличенные отчёты о
-сбоях приложения. В них нет задач и ничего из написанного вами.</p>
+<p>Статистику хранит Mixpanel в Европейском союзе. Отчёты о сбоях обрабатывает Google, в том числе в
+США, на тех же условиях. И то и другое обрабатывается в нашем законном интересе: чтобы приложение
+работало и было понятно, что улучшать. Возразить можно в любой момент переключателем в настройках.</p>
+<p>Если вы разрешили делиться аналитикой с Apple, Apple может также присылать нам обезличенные
+отчёты о сбоях приложения. В них нет задач и ничего из написанного вами.</p>
 <h2>Удаление данных</h2>
 <p>Удалите задачу, список или всё в приложении — и это исчезнет с устройства и из iCloud. Удаление
 приложения стирает то, что оно хранило на устройстве. Чтобы удалить данные из iCloud, откройте
@@ -794,7 +829,8 @@ iPhone и Mac совпадали. Эта база принадлежит ваш�
 <p>В зависимости от того, где вы живёте, в том числе по GDPR в ЕС и Великобритании, вы вправе узнать,
 какие данные о вас хранятся, исправить или удалить их, ограничить их использование или возразить
 против него и получить их копию. Напишите на адрес ниже. В данных о покупках нет имени и почты,
-поэтому мы можем не суметь определить, какие из них ваши. Подписка отменяется в настройках аккаунта
+поэтому мы можем не суметь определить, какие из них ваши. То же со статистикой и отчётами о сбоях:
+в них только случайный идентификатор установки. Подписка отменяется в настройках аккаунта
 Apple.</p>
 <h2>Дети</h2>
 <p>Taskward не предназначен для детей. Он не собирает ничего, что позволяет определить человека, в
