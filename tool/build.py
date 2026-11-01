@@ -12,7 +12,7 @@ URL = 'https://alobanov.github.io/taskward/'
 MAIL = 'katleta5000@gmail.com'
 import hashlib
 VERSION = hashlib.md5((SITE / 'style.css').read_bytes() + (SITE / 'app.js').read_bytes() + (SITE / 'when.js').read_bytes()).hexdigest()[:8]
-UPDATED = {'en': 'October 27, 2026', 'ru': '27 октября 2026'}
+UPDATED = {'en': 'November 1, 2026', 'ru': '1 ноября 2026'}
 
 T = {
     'en': {
@@ -168,7 +168,7 @@ T = {
         'inks': [('default', 'Graphite', '#45454f'), ('blue', 'Blue', '#2b3ac9'),
                  ('black', 'Black', '#141417'), ('espresso', 'Espresso', '#3a201c')],
         'kept_h': 'Nothing of yours leaves your hands',
-        'kept': ['No account to make.', 'No ads, no tracking, no analytics.',
+        'kept': ['No account to make.', 'No ads, no tracking, no usage analytics.',
                  'Your tasks live on your devices and in your own iCloud, which we can’t read.'],
         'kept_link': 'Read the privacy policy',
         'knight_h': 'New to getting things done?',
@@ -319,7 +319,7 @@ T = {
         'inks': [('default', 'Графит', '#45454f'), ('blue', 'Синие', '#2b3ac9'),
                  ('black', 'Чёрные', '#141417'), ('espresso', 'Эспрессо', '#3a201c')],
         'kept_h': 'Твоё остаётся у тебя',
-        'kept': ['Не нужно заводить аккаунт.', 'Ни рекламы, ни слежки, ни аналитики.',
+        'kept': ['Не нужно заводить аккаунт.', 'Ни рекламы, ни слежки, ни аналитики использования.',
                  'Задачи живут на твоих устройствах и в твоём iCloud — мы их не видим.'],
         'kept_link': 'Политика конфиденциальности',
         'knight_h': 'Впервые слышишь про GTD?',
@@ -698,8 +698,9 @@ PRIVACY = {
 <p>Taskward is a to-do list for iPhone and Mac made by Aleksei Lobanov. This policy says what
 happens to what you write in it. In short: nothing you write reaches us.</p>
 <h2>What we collect</h2>
-<p>Nothing. Taskward has no account, no ads, no analytics and no tracking, and it sends nothing
-to us or to anyone else. Its App Store privacy label is “Data Not Collected”.</p>
+<p>Nothing of what you write. Taskward has no account, no ads, no tracking and no analytics of how
+you use it. The one thing that leaves your device for someone other than Apple is what is needed
+to sell Taskward Pro: see Purchases below. Its App Store privacy label says the same.</p>
 <h2>Where your tasks are kept</h2>
 <p>Your lists, tasks, notes, tags and settings are kept in a database on your device. If iCloud
 is on for Taskward, they are also kept in your own iCloud account, in its private database, so
@@ -710,15 +711,39 @@ read or change it. Apple keeps it under the
 <p>If you let it, Taskward reads the events of your calendars to show them next to your
 day’s tasks. They are read on your device and are never copied anywhere. Reminders you set are
 scheduled as notifications by your device itself.</p>
+<h2>Purchases</h2>
+<p>Taskward Pro is sold through the App Store. Apple handles the payment: we never see your card,
+your name or your Apple Account.</p>
+<p>To know whether Pro is yours and to give it back on a new device, Taskward uses
+<a href="https://www.revenuecat.com/privacy/">RevenueCat</a>. Each time it starts, the app asks
+RevenueCat what you hold, under a random identifier made for the installation, not for you, so this
+happens whether or not you ever buy anything. If you buy, RevenueCat receives the receipt from
+Apple: which plan, when, at what price, in which country, and whether it renews. No task or
+anything else you wrote is ever sent. As with any service on the internet, its servers see the
+network address a request comes from. RevenueCat handles this on our behalf, and it is needed for
+Pro to work, so it cannot be turned off.</p>
+<h2>Where the data goes</h2>
+<p>RevenueCat is a company in the United States, so purchase records may be processed there. It
+works under the European Commission’s standard contractual clauses, which bind it to protect them
+as they would be protected in the EU. Purchase records are needed to give you the Pro you paid
+for, so they are processed to perform that purchase.</p>
 <h2>Crashes</h2>
+
 <p>If you have chosen to share analytics with Apple, Apple may send us anonymous crash reports
 for the app. They contain no tasks or other things you have written.</p>
 <h2>Deleting your data</h2>
 <p>Delete a task, a list or everything in the app and it is gone from your device and your
 iCloud. Deleting the app removes what it kept on the device. To remove what it kept in iCloud,
 open Settings, tap your name, then iCloud, Manage Storage, Taskward, and delete its data.</p>
+<h2>Your rights</h2>
+<p>Depending on where you live, including under the EU and UK GDPR, you have the right to ask what
+data about you is held, to have it corrected or deleted, to restrict or object to its use, and to
+receive a copy of it. Write to the address below. As purchase records carry no name or email, we
+may not be able to tell which of them is yours. A subscription is stopped in your Apple Account’s
+settings.</p>
 <h2>Children</h2>
-<p>Taskward collects nothing from anyone, children included.</p>
+<p>Taskward is not directed at children. It collects nothing that identifies anyone, children
+included.</p>
 <h2>Changes</h2>
 <p>If this policy changes, the new one is published here with its date.</p>
 <h2>Contact</h2>
@@ -728,8 +753,9 @@ open Settings, tap your name, then iCloud, Manage Storage, Taskward, and delete 
 <p>Taskward — список дел для iPhone и Mac, его сделал Алексей Лобанов. Здесь написано, что
 происходит с тем, что вы в нём пишете. Коротко: ничего из этого к нам не попадает.</p>
 <h2>Что мы собираем</h2>
-<p>Ничего. В Taskward нет аккаунта, рекламы, аналитики и слежки, и оно ничего не отправляет ни
-нам, ни кому-либо ещё. Метка приватности в App Store — «Данные не собираются».</p>
+<p>Ничего из того, что вы пишете. В Taskward нет аккаунта, рекламы, слежки и аналитики того, как вы
+им пользуетесь. Единственное, что уходит с устройства кому-то, кроме Apple, нужно для продажи
+Taskward Pro: об этом ниже, в разделе «Покупки». Метка приватности в App Store говорит то же самое.</p>
 <h2>Где хранятся задачи</h2>
 <p>Списки, задачи, заметки, теги и настройки хранятся в базе данных на вашем устройстве. Если для
 Taskward включён iCloud, они хранятся и в вашем личном iCloud, в его закрытой базе, чтобы
@@ -740,15 +766,39 @@ iPhone и Mac совпадали. Эта база принадлежит ваш�
 <p>Если вы разрешите, Taskward читает события ваших календарей, чтобы показать их рядом с
 задачами дня. Они читаются на устройстве и никуда не копируются. Напоминания назначает
 уведомлениями само устройство.</p>
+<h2>Покупки</h2>
+<p>Taskward Pro продаётся через App Store. Оплатой занимается Apple: мы не видим ни вашу карту, ни
+имя, ни аккаунт Apple.</p>
+<p>Чтобы знать, есть ли у вас Pro, и вернуть его на новом устройстве, Taskward использует
+<a href="https://www.revenuecat.com/privacy/">RevenueCat</a>. При каждом запуске приложение спрашивает
+у RevenueCat, что у вас куплено, под случайным идентификатором, созданным для установки, а не для
+вас, поэтому это происходит, даже если вы ничего не покупаете. Если вы покупаете, RevenueCat получает
+чек от Apple: какой тариф, когда, по какой цене, в какой стране и продлевается ли он. Задачи и всё,
+что вы написали, никогда не отправляются. Как и любой сервис в интернете, его серверы видят сетевой
+адрес, с которого пришёл запрос. RevenueCat обрабатывает это по нашему поручению; без этого Pro не
+работает, поэтому отключить это нельзя.</p>
+<h2>Куда попадают данные</h2>
+<p>RevenueCat — компания из США, поэтому данные о покупках могут обрабатываться там. Она работает по
+стандартным договорным условиям Европейской комиссии, которые обязывают её защищать данные так же,
+как в ЕС. Данные о покупках нужны, чтобы вы получили оплаченный Pro, поэтому они обрабатываются для
+исполнения этой покупки.</p>
 <h2>Сбои</h2>
+
 <p>Если вы разрешили делиться аналитикой с Apple, Apple может присылать нам обезличенные отчёты о
 сбоях приложения. В них нет задач и ничего из написанного вами.</p>
 <h2>Удаление данных</h2>
 <p>Удалите задачу, список или всё в приложении — и это исчезнет с устройства и из iCloud. Удаление
 приложения стирает то, что оно хранило на устройстве. Чтобы удалить данные из iCloud, откройте
 Настройки, нажмите своё имя, затем iCloud, «Управление хранилищем», Taskward и удалите данные.</p>
+<h2>Ваши права</h2>
+<p>В зависимости от того, где вы живёте, в том числе по GDPR в ЕС и Великобритании, вы вправе узнать,
+какие данные о вас хранятся, исправить или удалить их, ограничить их использование или возразить
+против него и получить их копию. Напишите на адрес ниже. В данных о покупках нет имени и почты,
+поэтому мы можем не суметь определить, какие из них ваши. Подписка отменяется в настройках аккаунта
+Apple.</p>
 <h2>Дети</h2>
-<p>Taskward ни у кого ничего не собирает, в том числе у детей.</p>
+<p>Taskward не предназначен для детей. Он не собирает ничего, что позволяет определить человека, в
+том числе ребёнка.</p>
 <h2>Изменения</h2>
 <p>Если политика изменится, новая версия появится здесь с датой.</p>
 <h2>Связь</h2>
