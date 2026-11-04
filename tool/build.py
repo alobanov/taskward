@@ -12,7 +12,7 @@ URL = 'https://alobanov.github.io/taskward/'
 MAIL = 'katleta5000@gmail.com'
 import hashlib
 VERSION = hashlib.md5((SITE / 'style.css').read_bytes() + (SITE / 'app.js').read_bytes() + (SITE / 'when.js').read_bytes()).hexdigest()[:8]
-UPDATED = {'en': 'November 1, 2026', 'ru': '1 ноября 2026'}
+UPDATED = {'en': 'November 4, 2026', 'ru': '4 ноября 2026'}
 
 T = {
     'en': {
@@ -751,6 +751,13 @@ read or change it. Apple keeps it under the
 <p>If you let it, Taskward reads the events of your calendars to show them next to your
 day’s tasks. They are read on your device and are never copied anywhere. Reminders you set are
 scheduled as notifications by your device itself.</p>
+<p>You can also make calendar events in Taskward: a new one from the plus, or a task put in your
+Calendar. On an iPhone this opens the system’s own event editor, which runs apart from Taskward:
+the event is saved only if you save it there, and Taskward is given no access to your calendars
+for it. On a Mac, Taskward asks for access to your calendars, saves the event to your default
+calendar and opens it in the Calendar; Undo takes it out again. An event made so is kept by your
+calendar like any other and synced by that calendar’s own account, such as iCloud. Taskward keeps
+no copy of it and sends it nowhere.</p>
 <h2>Purchases</h2>
 <p>Taskward Pro is sold through the App Store. Apple handles the payment: we never see your card,
 your name or your Apple Account.</p>
@@ -824,6 +831,13 @@ iPhone и Mac совпадали. Эта база принадлежит ваш�
 <p>Если вы разрешите, Taskward читает события ваших календарей, чтобы показать их рядом с
 задачами дня. Они читаются на устройстве и никуда не копируются. Напоминания назначает
 уведомлениями само устройство.</p>
+<p>В Taskward можно и создавать события календаря: новое с плюса или из задачи, отправленной в
+Календарь. На iPhone для этого открывается системный редактор событий, который работает отдельно
+от Taskward: событие сохраняется, только если вы сохраните его там, и доступа к календарям Taskward
+для этого не получает. На Mac Taskward просит доступ к календарям, сохраняет событие в календарь
+по умолчанию и открывает его в Календаре; «Отменить» его удаляет. Созданное так событие хранится в
+вашем календаре, как любое другое, и синхронизируется его собственной учётной записью, например
+iCloud. Taskward не хранит его копию и никуда его не отправляет.</p>
 <h2>Покупки</h2>
 <p>Taskward Pro продаётся через App Store. Оплатой занимается Apple: мы не видим ни вашу карту, ни
 имя, ни аккаунт Apple.</p>
