@@ -140,7 +140,13 @@ a { color: inherit; }
 .rig { position: relative; width: min(268px, 64vw); aspect-ratio: 1470 / 3000; animation: hover 7s ease-in-out infinite; }
 .phone {
   position: absolute; inset: 0; z-index: 2; rotate: 4deg;
-  filter: drop-shadow(0 34px 34px rgba(20, 28, 30, 0.32)) drop-shadow(0 8px 10px rgba(20, 28, 30, 0.16));
+}
+/* Its shadow, cast by its body's rounded shape: a drop-shadow filter on a phone turned and
+   floating is cut to a box in Safari, its edges showing on the desk. */
+.phone::before {
+  content: ''; position: absolute; inset: 0.47% 1.1% 0.53%; border-radius: 17.5% / 8.6%;
+  box-shadow: 0 34px 34px rgba(20, 28, 30, 0.32), 0 8px 10px rgba(20, 28, 30, 0.16);
+  pointer-events: none;
 }
 .phone::after { content: ''; position: absolute; inset: 0; background: url(img/bezel_black.webp) center / 100% 100% no-repeat; pointer-events: none; z-index: 4; }
 .screen, .glass {
@@ -281,7 +287,7 @@ section.part { padding: 20px 0; }
 
 /* And a little more: three small cards in a row. */
 .trio { display: block; text-align: center; }
-.cards3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 24px; text-align: left; }
+.cards3 { display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; gap: 20px; margin: 24px auto 0; max-width: 720px; text-align: left; }
 .cards3 .small { padding: 16px 20px 18px; }
 .cards3 .small:nth-child(1) { rotate: -0.8deg; } .cards3 .small:nth-child(2) { rotate: 0.6deg; } .cards3 .small:nth-child(3) { rotate: -0.4deg; }
 .cards3 .head { display: flex; align-items: center; gap: 8px; font-size: 21px; }
@@ -289,6 +295,41 @@ section.part { padding: 20px 0; }
 .cards3 > .small > p { margin: 4px 0 0; font-size: 15px; color: var(--pencil); }
 .cards3 .small { display: flex; flex-direction: column; }
 .trio .lead { font-size: 18px; color: var(--on-desk-soft); margin: 0; }
+
+/* The calendar as the app lays it out: a month on a card, six weeks from the week's first
+   day, the weekend shaded, the next months' days in pencil, today's in red, the day picked
+   ringed by the pen, under each day a dot for each calendar with an event and one for its
+   tasks; under a dashed tear line, the day picked: its events, then its tasks. */
+.month { max-width: 420px; padding: 18px 18px 20px; rotate: -0.8deg; }
+.month-head { display: flex; align-items: baseline; gap: 8px; padding: 0 6px 8px; }
+.month-head b { font-weight: 400; font-size: 28px; }
+.month-head span { font-size: 18px; color: var(--pencil); }
+.month .days { display: grid; grid-template-columns: repeat(7, 1fr); }
+.month .wd { text-align: center; font-size: 13px; color: var(--pencil); padding-bottom: 4px; }
+.month .wd.we, .month .d.we { background: rgba(69, 69, 79, 0.045); }
+.month .d { position: relative; height: 46px; padding: 6px 0 0; border: 0; background: none; font: inherit; font-size: 17px; color: var(--ink); cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 3px; -webkit-tap-highlight-color: transparent; }
+.month .d.out { color: var(--pencil); }
+.month .d.now { color: var(--seal); }
+.month .d .n { width: 30px; height: 26px; line-height: 26px; border-radius: 50%; text-align: center; transition: box-shadow 0.2s ease-out; }
+.month .d.picked .n { box-shadow: inset 0 0 0 1.6px var(--ink); }
+.month .d:active .n { background: var(--rule); }
+.month .dots { display: flex; gap: 3px; height: 5px; }
+.month .dots i { width: 5px; height: 5px; border-radius: 50%; background: var(--ink); }
+.month .dots i.idle { background: var(--pencil); }
+.month .tear { margin: 12px 4px 14px; border-top: 1.6px dashed var(--rule); }
+.month .day { padding: 0 6px; transition: opacity 0.16s ease-out; }
+.month .day.gone { opacity: 0; }
+.month .day h4 { font-weight: 400; font-size: 21px; margin: 0 0 6px; }
+.month .day ul { list-style: none; margin: 0; padding: 0; min-height: 104px; }
+.month .day li { display: flex; align-items: center; gap: 10px; padding: 5px 0; font-size: 15px; white-space: nowrap; overflow: hidden; }
+.month .day li > span:last-child { overflow: hidden; text-overflow: ellipsis; }
+.month .day .dot { flex: none; width: 9px; height: 9px; border-radius: 50%; margin: 0 2px; }
+.month .day .at { flex: none; color: var(--pencil); font-size: 14px; min-width: 40px; }
+.month .day .o { flex: none; width: 13px; height: 13px; border: 1.4px solid var(--pencil); border-radius: 50%; }
+.month .day .done .o { background: var(--ink); border-color: var(--ink); }
+.month .day .done > span:last-child { text-decoration: line-through; color: var(--pencil); }
+.month .day .none { color: var(--pencil); }
+.feature .say p.aside { margin-top: 14px; font-size: 15px; }
 
 /* Each card's little scene: what it looks like in the app. */
 .demo { margin-top: 16px; flex: 1; display: flex; flex-direction: column; justify-content: flex-end; }
@@ -307,9 +348,6 @@ section.part { padding: 20px 0; }
 .find .caret { width: 1.5px; height: 16px; margin-left: -6px; background: var(--blue); animation: blink 1.1s steps(1) infinite; }
 @keyframes blink { 50% { opacity: 0; } }
 /* Calendar: the events as Today heads its card with them. */
-.cal p { gap: 8px; }
-.cal .dot { flex: none; width: 8px; height: 8px; border-radius: 50%; }
-.cal .at { color: var(--pencil); font-size: 13px; width: 38px; flex: none; }
 
 .macs { display: grid; padding: 4% 6% 2% 0; }
 .macs img { position: relative; grid-area: 1 / 1; width: 100%; height: auto; border-radius: 12px; box-shadow: var(--lift); }
@@ -535,7 +573,7 @@ footer .by { margin-left: auto; }
   .hero-icon { width: 76px; height: 76px; border-radius: 17px; margin-bottom: 14px; }
   .hero-words .lede { font-size: 17px; margin-bottom: 18px; }
   .shelf img { width: 190px; border-radius: 13px; }
-  .cards3 { grid-template-columns: 1fr; gap: 12px; }
+  .cards3 { grid-auto-flow: row; gap: 12px; }
   .deck { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px 10px; }
   .lcard:nth-child(3n + 2) { translate: none; }
   .lcard:nth-child(even) { translate: 0 8px; }
