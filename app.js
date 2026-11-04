@@ -141,4 +141,96 @@
   };
   pick('desk', 'desk', 'taskward-desk');
   pick('inkpick', 'ink', 'taskward-ink');
+
+  // The calendar: this month on a card, its days marked by the demo's events and tasks, put
+  // by how far each is from today; a day tapped is ringed, and what it holds is shown under
+  // the tear line — the old faded out, then the new in.
+  const month = document.querySelector('.month');
+  if (month) {
+    const { days, empty } = JSON.parse(month.dataset.cal);
+    const lang = month.dataset.lang;
+    const first = lang === 'ru' ? 1 : 0;
+    const day0 = (d) => new Date(d.getFullYear(), d.getMonth(), d.getDate());
+    const today = day0(new Date());
+    const key = (d) => `${d.getFullYear()}-${d.getMonth()}-${d.getDate()}`;
+    const plus = (d, n) => new Date(d.getFullYear(), d.getMonth(), d.getDate() + n);
+    const held = new Map(days.map(([off, ev, tasks]) => [key(plus(today, off)), { ev, tasks }]));
+    const cap = (w) => w.charAt(0).toUpperCase() + w.slice(1);
+    const el = (tag, cls, text) => {
+      const e = document.createElement(tag);
+      if (cls) e.className = cls;
+      if (text != null) e.textContent = text;
+      return e;
+    };
+    const head = month.querySelector('.month-head');
+    head.querySelector('b').textContent = cap(new Intl.DateTimeFormat(lang, { month: 'long' }).format(today));
+    head.querySelector('span').textContent = String(today.getFullYear());
+    const grid = month.querySelector('.days');
+    const start = new Date(today.getFullYear(), today.getMonth(), 1);
+    const back = (start.getDay() - first + 7) % 7;
+    const weekday = new Intl.DateTimeFormat(lang, { weekday: 'short' });
+    const weekend = (d) => d.getDay() === 0 || d.getDay() === 6;
+    for (let i = 0; i < 7; i++) {
+      const d = plus(start, i - back);
+      grid.append(el('div', 'wd' + (weekend(d) ? ' we' : ''), cap(weekday.format(d).replace('.', ''))));
+    }
+    const dayView = month.querySelector('.day');
+    const named = new Intl.DateTimeFormat(lang, { weekday: 'long', month: 'long', day: 'numeric' });
+    let picked = null;
+    const show = (d) => {
+      const it = held.get(key(d)) || { ev: [], tasks: [] };
+      dayView.querySelector('h4').textContent = cap(named.format(d));
+      const list = dayView.querySelector('ul');
+      list.replaceChildren();
+      it.ev.forEach(([at, title, c]) => {
+        const li = el('li');
+        const dot = el('span', 'dot');
+        dot.style.background = c;
+        li.append(dot, el('span', 'at', at), el('span', null, title));
+        list.append(li);
+      });
+      it.tasks.forEach(([title, done]) => {
+        const li = el('li', done ? 'done' : null);
+        li.append(el('span', 'o'), el('span', null, title));
+        list.append(li);
+      });
+      if (!it.ev.length && !it.tasks.length) list.append(el('li', 'none', empty));
+    };
+    const pickDay = (cell, d) => {
+      if (picked === cell) return;
+      picked?.classList.remove('picked');
+      picked?.setAttribute('aria-selected', 'false');
+      cell.classList.add('picked');
+      cell.setAttribute('aria-selected', 'true');
+      const opening = picked === null;
+      picked = cell;
+      if (opening || still.matches) return show(d);
+      dayView.classList.add('gone');
+      setTimeout(() => { show(d); dayView.classList.remove('gone'); }, 160);
+    };
+    for (let i = 0; i < 42; i++) {
+      const d = plus(start, i - back);
+      const cell = el('button', 'd');
+      cell.type = 'button';
+      cell.setAttribute('role', 'gridcell');
+      cell.setAttribute('aria-label', named.format(d));
+      if (d.getMonth() !== today.getMonth()) cell.classList.add('out');
+      if (weekend(d)) cell.classList.add('we');
+      if (+d === +today) cell.classList.add('now');
+      const dots = el('span', 'dots');
+      const it = held.get(key(d));
+      if (it) {
+        [...new Set(it.ev.map((e) => e[2]))].slice(0, it.tasks.length ? 2 : 3).forEach((c) => {
+          const dot = el('i');
+          dot.style.background = c;
+          dots.append(dot);
+        });
+        if (it.tasks.length) dots.append(el('i', it.tasks.some((t) => !t[1]) ? null : 'idle'));
+      }
+      cell.append(el('span', 'n', String(d.getDate())), dots);
+      cell.addEventListener('click', () => pickDay(cell, d));
+      grid.append(cell);
+      if (+d === +today) pickDay(cell, d);
+    }
+  }
 })();

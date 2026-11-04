@@ -21,13 +21,13 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Pangolin&amp;subset=cyrillic&amp;display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=2bf191c4">
+<link rel="stylesheet" href="style.css?v=4121edbd">
 <style>:root { --grain: url(img/grain.webp); }</style>
 <script>try { const d = localStorage.getItem('taskward-desk'), i = localStorage.getItem('taskward-ink');
 if (d && d !== 'default') document.documentElement.dataset.desk = d;
 if (i && i !== 'default') document.documentElement.dataset.ink = i; } catch (_) {}</script>
-<script src="when.js?v=2bf191c4" defer></script>
-<script src="app.js?v=2bf191c4" defer></script>
+<script src="when.js?v=4121edbd" defer></script>
+<script src="app.js?v=4121edbd" defer></script>
 </head>
 <body>
 <header class="wrap top">
@@ -120,9 +120,19 @@ if (i && i !== 'default') document.documentElement.dataset.ink = i; } catch (_) 
 <div class="deck"><div class="paper white lcard" style="--r:-1.4deg;--marker:#4AA8F0;--pen:#487ba8"><div class="head"><svg class="icon" aria-hidden="true"><use href="img/icons.svg#export"/></svg>Inbox</div><div class="hint"><b>Catch it all here</b><span>Whatever comes to mind. Sort it once a day.</span></div></div><div class="paper cream lcard" style="--r:0.9deg;--marker:#FF6B5E;--pen:#ab5a57"><div class="head"><svg class="icon" aria-hidden="true"><use href="img/icons.svg#today"/></svg>Upcoming</div><div class="hint"><b>What has a day of its own</b><span>Dated tasks wait here and come up in Today on their day.</span></div></div><div class="paper cream lcard" style="--r:-0.6deg;--marker:#3FB27F;--pen:#428169"><div class="head"><svg class="icon" aria-hidden="true"><use href="img/icons.svg#list"/></svg>Anytime</div><div class="hint"><b>Next steps</b><span>When Today is done, take the next one from here.</span></div></div><div class="paper kraft lcard" style="--r:1.2deg;--marker:#FFA23A;--pen:#a85900"><div class="head"><svg class="icon" aria-hidden="true"><use href="img/icons.svg#archive"/></svg>Someday</div><div class="hint"><b>Dreams and later</b><span>What you’d like to do, just not now. Look in once a week.</span></div></div><div class="paper white lcard" style="--r:-1.0deg;--marker:#8B6CF0;--pen:#6c5aa8"><div class="head"><svg class="icon" aria-hidden="true"><use href="img/icons.svg#project"/></svg>Projects</div><div class="hint"><b>Projects and areas</b><span>A project is a goal of several steps; an area, a part of life: work, home, health.</span></div></div><div class="paper white lcard" style="--r:0.7deg;--marker:#F6C945;--pen:#a68e4a"><div class="head"><svg class="icon" aria-hidden="true"><use href="img/icons.svg#notebook"/></svg>Notes</div><div class="hint"><b>Not a to-do, just written down</b><span>Thoughts worth keeping, out of your to-dos. A note becomes a task once it is one.</span></div></div></div>
 </article>
 
+<article class="feature flip" id="calendar">
+<div class="say"><h2>A month on a card</h2><p>Tap Today’s date and the month opens on a card: under each day a dot for each calendar with an event, and one for its to-dos. Pick a day, and under the tear line are its events, then its tasks. The plus writes a calendar event as well as a task, and a task goes into your Calendar from its page.</p><p class="aside">Your calendars are read on the device, never copied.</p></div>
+<div class="show"><div class="paper month" data-lang="en" data-cal="{&quot;days&quot;: [[-2, [[&quot;09:00&quot;, &quot;Market day&quot;, &quot;#3fbf5a&quot;]], [[&quot;Oil the saddle&quot;, true]]], [0, [[&quot;07:30&quot;, &quot;Morning ride&quot;, &quot;#7cc9f2&quot;], [&quot;10:30&quot;, &quot;Council at the keep&quot;, &quot;#f5a03c&quot;], [&quot;19:00&quot;, &quot;Supper with Masha&quot;, &quot;#3aa0e8&quot;]], [[&quot;Sharpen the sword&quot;, true], [&quot;Pay the rent&quot;, false]]], [1, [[&quot;13:00&quot;, &quot;Joust heats&quot;, &quot;#b65ce0&quot;]], [[&quot;Call the smith about the shield&quot;, false]]], [2, [], [[&quot;Plan the ride to the coast&quot;, false]]], [4, [[&quot;&quot;, &quot;Feast of St Luke&quot;, &quot;#3fbf5a&quot;]], []], [6, [[&quot;18:00&quot;, &quot;Tourney feast&quot;, &quot;#f5a03c&quot;], [&quot;20:00&quot;, &quot;Night watch&quot;, &quot;#3aa0e8&quot;]], []], [9, [], [[&quot;Visit the far north&quot;, false]]]], &quot;empty&quot;: &quot;Nothing on this day&quot;}">
+<div class="month-head"><b></b><span></span></div>
+<div class="days" role="grid"></div>
+<div class="tear" aria-hidden="true"></div>
+<div class="day" aria-live="polite"><h4></h4><ul></ul></div>
+</div></div>
+</article>
+
 <article class="feature trio">
 <h2>And a little more</h2><p class="lead">Small things that make a calm day calmer.</p>
-<div class="cards3"><div class="paper white small"><div class="head"><svg class="icon" aria-hidden="true"><use href="img/icons.svg#paperLines"/></svg>Zen</div><p>A card edge to edge when a day needs all of you.</p><div class="demo zen"><div class="screen-mini"><p><span class="o"></span><span>Sharpen the sword</span></p><p><span class="o"></span><span>Call the smith</span></p><p><span class="o"></span><span>Pay the rent</span></p><p><span class="o"></span></p></div></div></div><div class="paper cream small"><div class="head"><svg class="icon" aria-hidden="true"><use href="img/icons.svg#search"/></svg>Quick Find</div><p>Draw Today down, or ⌘F on a Mac.</p><div class="demo find"><div class="field"><svg class="icon" aria-hidden="true"><use href="img/icons.svg#search"/></svg>sadd<span class="caret"></span></div><p><span class="o"></span><span>Oil the <mark>sadd</mark>le</span></p><p><span class="o"></span><span>Mend the <mark>sadd</mark>le bags</span></p></div></div><div class="paper kraft small"><div class="head"><svg class="icon" aria-hidden="true"><use href="img/icons.svg#today"/></svg>Calendar</div><p>Your calendars’ events in Today and Upcoming, beside your to-dos. Only read, never changed.</p><div class="demo cal"><p><span class="dot" style="background:#7cc9f2"></span><span class="at">07:30</span><span>Morning ride</span></p><p><span class="dot" style="background:#f5a03c"></span><span class="at">10:30</span><span>Council at the keep</span></p><p><span class="dot" style="background:#3aa0e8"></span><span class="at">19:00</span><span>Supper with Masha</span></p></div></div></div>
+<div class="cards3"><div class="paper white small"><div class="head"><svg class="icon" aria-hidden="true"><use href="img/icons.svg#paperLines"/></svg>Zen</div><p>A card edge to edge when a day needs all of you.</p><div class="demo zen"><div class="screen-mini"><p><span class="o"></span><span>Sharpen the sword</span></p><p><span class="o"></span><span>Call the smith</span></p><p><span class="o"></span><span>Pay the rent</span></p><p><span class="o"></span></p></div></div></div><div class="paper cream small"><div class="head"><svg class="icon" aria-hidden="true"><use href="img/icons.svg#search"/></svg>Quick Find</div><p>Draw Today down, or ⌘F on a Mac.</p><div class="demo find"><div class="field"><svg class="icon" aria-hidden="true"><use href="img/icons.svg#search"/></svg>sadd<span class="caret"></span></div><p><span class="o"></span><span>Oil the <mark>sadd</mark>le</span></p><p><span class="o"></span><span>Mend the <mark>sadd</mark>le bags</span></p></div></div></div>
 </article>
 
 <article class="feature" id="mac">

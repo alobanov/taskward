@@ -138,17 +138,33 @@ T = {
         'more': [
             ('paperLines', 'Zen', 'A card edge to edge when a day needs all of you.'),
             ('search', 'Quick Find', 'Draw Today down, or ⌘F on a Mac.'),
-            ('today', 'Calendar', 'Your calendars’ events in Today and Upcoming, beside your to-dos. Only read, never changed.'),
         ],
         'more_say': 'Small things that make a calm day calmer.',
         # What each card shows: Zen's tasks, the word typed into Quick Find and what it finds,
-        # the day's events (time, title, its calendar's colour) as Today lists them.
         'more_demo': {
             'zen': ['Sharpen the sword', 'Call the smith', 'Pay the rent'],
             'find': ('sadd', ['Oil the <mark>sadd</mark>le', 'Mend the <mark>sadd</mark>le bags']),
-            'cal': [('07:30', 'Morning ride', '#7cc9f2'), ('10:30', 'Council at the keep', '#f5a03c'),
-                    ('19:00', 'Supper with Masha', '#3aa0e8')],
         },
+        'cal_h': 'A month on a card',
+        'cal_say': 'Tap Today’s date and the month opens on a card: under each day a dot for '
+                   'each calendar with an event, and one for its to-dos. Pick a day, and under '
+                   'the tear line are its events, then its tasks. The plus writes a calendar '
+                   'event as well as a task, and a task goes into your Calendar from its page.',
+        'cal_note': 'Your calendars are read on the device, never copied.',
+        'cal_empty': 'Nothing on this day',
+        # The demo's days, by how far each is from today: its events (time, or none for all
+        # day; title; its calendar's colour) and its tasks (title, done).
+        'cal_days': [
+            (-2, [('09:00', 'Market day', '#3fbf5a')], [('Oil the saddle', True)]),
+            (0, [('07:30', 'Morning ride', '#7cc9f2'), ('10:30', 'Council at the keep', '#f5a03c'),
+                 ('19:00', 'Supper with Masha', '#3aa0e8')],
+             [('Sharpen the sword', True), ('Pay the rent', False)]),
+            (1, [('13:00', 'Joust heats', '#b65ce0')], [('Call the smith about the shield', False)]),
+            (2, [], [('Plan the ride to the coast', False)]),
+            (4, [('', 'Feast of St Luke', '#3fbf5a')], []),
+            (6, [('18:00', 'Tourney feast', '#f5a03c'), ('20:00', 'Night watch', '#3aa0e8')], []),
+            (9, [], [('Visit the far north', False)]),
+        ],
         'zen_h': 'One card, the whole screen',
         'zen_say': 'When a day needs all of you, open its card edge to edge: no bar, no desk, '
                    'nothing else. Draw it down and it is back on the desk.',
@@ -292,15 +308,30 @@ T = {
         'more': [
             ('paperLines', 'Дзен', 'Карточка на весь экран, когда нужно сосредоточиться.'),
             ('search', 'Быстрый поиск', 'Потяни «Сегодня» вниз или нажми ⌘F на Маке.'),
-            ('today', 'Календарь', 'События твоих календарей — в «Сегодня» и «Планах», рядом с задачами. Только читаются, ничего не меняется.'),
         ],
         'more_say': 'Мелочи, от которых спокойный день становится ещё спокойнее.',
         'more_demo': {
             'zen': ['Наточить меч', 'Позвонить кузнецу', 'Заплатить за жильё'],
             'find': ('седл', ['Смазать <mark>седл</mark>о', 'Починить <mark>седл</mark>ьные сумки']),
-            'cal': [('07:30', 'Утренняя прогулка верхом', '#7cc9f2'), ('10:30', 'Совет в замке', '#f5a03c'),
-                    ('19:00', 'Ужин с Машей', '#3aa0e8')],
         },
+        'cal_h': 'Месяц на карточке',
+        'cal_say': 'Нажми на дату в «Сегодня», и месяц откроется на карточке: под днём точка '
+                   'за каждый календарь с событием и одна за задачи. Выбери день, и под линией '
+                   'отрыва будут его события, а за ними задачи. Плюс создаёт не только задачу, '
+                   'но и событие календаря, а задачу можно отправить в Календарь с её страницы.',
+        'cal_note': 'Календари читаются на устройстве и никуда не копируются.',
+        'cal_empty': 'На этот день ничего',
+        'cal_days': [
+            (-2, [('09:00', 'Ярмарка', '#3fbf5a')], [('Смазать седло', True)]),
+            (0, [('07:30', 'Утренняя прогулка верхом', '#7cc9f2'), ('10:30', 'Совет в замке', '#f5a03c'),
+                 ('19:00', 'Ужин с Машей', '#3aa0e8')],
+             [('Наточить меч', True), ('Заплатить за жильё', False)]),
+            (1, [('13:00', 'Отборочные поединки', '#b65ce0')], [('Позвонить кузнецу насчёт щита', False)]),
+            (2, [], [('Спланировать поездку к морю', False)]),
+            (4, [('', 'День святого Луки', '#3fbf5a')], []),
+            (6, [('18:00', 'Пир после турнира', '#f5a03c'), ('20:00', 'Ночной дозор', '#3aa0e8')], []),
+            (9, [], [('Съездить на дальний север', False)]),
+        ],
         'zen_h': 'Одна карточка на весь экран',
         'zen_say': 'Когда день требует всего внимания, разверни его карточку от края до края: '
                    'без панели, без стола, без лишнего. Потяни вниз — и она снова на столе.',
@@ -530,14 +561,12 @@ def landing(lang):
         # Quick Find: its field with a word typed, a caret blinking after it, and what it finds.
         f'<div class="demo find"><div class="field">{icon("search")}{demo["find"][0]}<span class="caret"></span></div>'
         + ''.join(f'<p>{ring}<span>{x}</span></p>' for x in demo['find'][1]) + '</div>',
-        # Calendar: the day's events by their calendars' dots, a task of the day under them.
-        '<div class="demo cal">'
-        + ''.join(f'<p><span class="dot" style="background:{c}"></span><span class="at">{at}</span><span>{x}</span></p>' for at, x, c in demo['cal'])
-        + '</div>',
     ]
+    cal = json.dumps({'days': t['cal_days'], 'empty': t['cal_empty']},
+                     ensure_ascii=False).replace('"', '&quot;')
     more = ''.join(
         f'<div class="paper {paper} small"><div class="head">{icon(mark)}{name}</div><p>{say}</p>{d}</div>'
-        for (mark, name, say), paper, d in zip(t['more'], ['white', 'cream', 'kraft'], demos)
+        for (mark, name, say), paper, d in zip(t['more'], ['white', 'cream'], demos)
     )
     try_words = json.dumps({
         'base': t['try_base'], 'evening': t['evening_word'], 'when': t['when_word'],
@@ -648,6 +677,16 @@ def landing(lang):
 <article class="feature wide" id="lists">
 <div class="say"><h2>{t['lists_h']}</h2><p>{t['lists_say']}</p></div>
 <div class="deck">{lists}</div>
+</article>
+
+<article class="feature flip" id="calendar">
+<div class="say"><h2>{t['cal_h']}</h2><p>{t['cal_say']}</p><p class="aside">{t['cal_note']}</p></div>
+<div class="show"><div class="paper month" data-lang="{lang}" data-cal="{cal}">
+<div class="month-head"><b></b><span></span></div>
+<div class="days" role="grid"></div>
+<div class="tear" aria-hidden="true"></div>
+<div class="day" aria-live="polite"><h4></h4><ul></ul></div>
+</div></div>
 </article>
 
 <article class="feature trio">
