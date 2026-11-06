@@ -193,8 +193,8 @@ a { color: inherit; }
 .float.chip .sig { width: 18px; height: 18px; color: var(--ink); }
 .float.chip .sig .ring { fill: none; stroke: currentColor; stroke-width: 1.8; border: 0; }
 .float.chip .sig .solid { fill: currentColor; }
-.float.tag { font-size: 14px; padding: 4px 12px; border-radius: 999px; background: #e9e6dd; color: var(--ink); box-shadow: var(--shadow); }
-.float.doodle { display: grid; place-items: center; width: 50px; height: 50px; border-radius: 50%; background: #fff; box-shadow: var(--shadow); }
+.float.tag { font-size: 14px; padding: 4px 12px; border-radius: 999px; background: var(--grey); color: var(--ink); box-shadow: var(--shadow); }
+.float.doodle { display: grid; place-items: center; width: 50px; height: 50px; border-radius: 50%; background: var(--white); box-shadow: var(--shadow); }
 .float.doodle .icon { width: 26px; height: 26px; }
 .float.star .icon { color: var(--seal); }
 .float.flag .icon { color: var(--seal); }
@@ -279,7 +279,7 @@ section.part { padding: 20px 0; }
 /* Markdown, its marks in pencil and what they mark in its look. */
 .mk { color: var(--pencil); }
 .md { display: flex; flex-wrap: wrap; gap: 8px; list-style: none; margin: 16px 0 0; padding: 0; max-width: 40ch; }
-.md li { padding: 4px 12px; border-radius: 10px; font-size: 16px; color: var(--ink); background: rgba(255, 255, 255, 0.55); box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.06); }
+.md li { padding: 4px 12px; border-radius: 10px; font-size: 16px; color: var(--ink); background: color-mix(in srgb, var(--white) 55%, transparent); box-shadow: inset 0 0 0 1px var(--rule); }
 .md b, .ticket .notes b { font-weight: 400; -webkit-text-stroke: 0.5px currentColor; }
 .md b.h { font-size: 19px; }
 .md mark, .ticket .notes mark { background: var(--marker); color: inherit; border-radius: 3px; padding: 0 2px; }
@@ -339,11 +339,11 @@ section.part { padding: 20px 0; }
 .demo .o { flex: none; width: 12px; height: 12px; border: 1.4px solid var(--pencil); border-radius: 50%; }
 .demo mark { background: var(--marker); color: inherit; border-radius: 3px; padding: 0 1px; }
 /* Zen: a phone's screen holding only the card, edge to edge. */
-.zen .screen-mini { align-self: center; width: 150px; padding: 12px 12px 4px; border-radius: 16px; background: #fdfdfb; border: 5px solid #2b2c33; box-shadow: 0 8px 16px -8px rgba(0, 0, 0, 0.4); }
+.zen .screen-mini { align-self: center; width: 150px; padding: 12px 12px 4px; border-radius: 16px; background: var(--white); border: 5px solid #2b2c33; box-shadow: 0 8px 16px -8px rgba(0, 0, 0, 0.4); }
 .zen .screen-mini p { font-size: 11px; padding: 4px 0; gap: 6px; }
 .zen .screen-mini .o { width: 9px; height: 9px; }
 /* Quick Find: the field, a word in it and the caret after it. */
-.find .field { display: flex; align-items: center; gap: 8px; padding: 7px 10px; margin-bottom: 4px; border-radius: 10px; background: rgba(255, 255, 255, 0.75); font-size: 15px; color: var(--ink); box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.06); }
+.find .field { display: flex; align-items: center; gap: 8px; padding: 7px 10px; margin-bottom: 4px; border-radius: 10px; background: color-mix(in srgb, var(--white) 75%, transparent); font-size: 15px; color: var(--ink); box-shadow: inset 0 0 0 1px var(--rule); }
 .find .field .icon { width: 15px; height: 15px; color: var(--pencil); }
 .find .caret { width: 1.5px; height: 16px; margin-left: -6px; background: var(--blue); animation: blink 1.1s steps(1) infinite; }
 @keyframes blink { 50% { opacity: 0; } }
@@ -396,7 +396,7 @@ section.part { padding: 20px 0; }
    askew — Mark it, Complete large, the signals in two columns, Signals… at its foot. */
 .taped {
   position: relative; max-width: 400px; padding: 26px 30px 18px; rotate: -1.2deg; color: var(--ink);
-  border-radius: 22px; background-color: #fbfaf7;
+  border-radius: 22px; background-color: var(--white);
   background-image: radial-gradient(circle, rgba(69, 69, 79, 0.16) 1.1px, transparent 1.6px);
   background-size: 22px 22px; background-position: 6px 6px;
   box-shadow: 0 12px 24px rgba(0, 0, 0, 0.11);
@@ -442,10 +442,10 @@ section.part { padding: 20px 0; }
 .examples { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0 0; }
 .example {
   font: inherit; font-size: 15px; cursor: pointer; border: 0; color: var(--on-desk);
-  padding: 4px 12px; border-radius: 999px; background: rgba(255, 255, 255, 0.35);
+  padding: 4px 12px; border-radius: 999px; background: color-mix(in srgb, var(--white) 35%, transparent);
   box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.08);
 }
-.example:hover { background: rgba(255, 255, 255, 0.55); }
+.example:hover { background: color-mix(in srgb, var(--white) 55%, transparent); }
 .desk3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 18px; align-items: start; }
 .mini { padding: 12px 14px 8px; min-height: 150px; transition: box-shadow 0.4s ease, transform 0.4s cubic-bezier(.22, 1, .36, 1); }
 .mini:nth-child(1) { rotate: -0.8deg; } .mini:nth-child(2) { rotate: 0.6deg; } .mini:nth-child(3) { rotate: -0.4deg; }
@@ -566,6 +566,25 @@ section.part { padding: 20px 0; }
 .blot { width: 34px; height: 34px; border-radius: 50%; border: 0; cursor: pointer; background: var(--c); box-shadow: var(--shadow); }
 .named { font-size: 15px; color: var(--on-desk-soft); margin: 10px 0 0; }
 
+/* Light or dark, and the app's palettes: each a swatch cut across, its light card and its dark
+   desk, an ink dot and a seal dot on it. */
+.themes { display: inline-flex; gap: 4px; padding: 4px; margin-top: 20px; border-radius: 999px; background: var(--white); box-shadow: var(--shadow); }
+.themepick {
+  display: inline-flex; align-items: center; gap: 6px; border: 0; cursor: pointer;
+  padding: 6px 14px; border-radius: 999px; background: none; color: var(--ink); font: inherit; font-size: 16px;
+}
+.themepick .icon { width: 18px; height: 18px; }
+.themepick[aria-pressed="true"] { background: var(--ink); color: var(--white); }
+.swatches.palettes { margin-top: 14px; max-width: 310px; }
+.palette {
+  position: relative; width: 34px; height: 34px; border-radius: 50%; border: 0; cursor: pointer;
+  background: linear-gradient(135deg, var(--l) 0 50%, var(--d) 50% 100%); box-shadow: var(--shadow);
+}
+.palette::before, .palette::after { content: ''; position: absolute; width: 7px; height: 7px; border-radius: 50%; }
+.palette::before { left: 8px; top: 8px; background: var(--i); }
+.palette::after { right: 8px; bottom: 8px; background: var(--s); }
+.palette[aria-pressed="true"] { outline: 2px solid var(--on-desk); outline-offset: 3px; }
+
 /* Nothing of yours leaves your hands. */
 .kept { padding: 18px 20px; }
 .kept h3 { display: flex; align-items: center; gap: 10px; font-size: 21px; margin-bottom: 6px; }
@@ -578,7 +597,7 @@ section.part { padding: 20px 0; }
 
 /* Getting Things Done, its five steps in order. */
 .gtd { list-style: none; counter-reset: step; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; }
-.gtd li { counter-increment: step; padding: 12px 12px 14px; border-radius: 16px; background: rgba(255, 255, 255, 0.4); box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.06); }
+.gtd li { counter-increment: step; padding: 12px 12px 14px; border-radius: 16px; background: color-mix(in srgb, var(--white) 40%, transparent); box-shadow: inset 0 0 0 1px var(--rule); }
 .gtd li::before { content: counter(step); display: grid; place-items: center; width: 24px; height: 24px; border-radius: 50%; border: 1.5px solid currentColor; font-size: 14px; margin-bottom: 6px; }
 .gtd b { display: block; font-weight: 400; font-size: 18px; }
 .gtd span { display: block; font-size: 14px; color: var(--on-desk-soft); line-height: 1.35; margin-top: 2px; }

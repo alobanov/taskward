@@ -136,11 +136,19 @@
     buttons.forEach((b) => b.addEventListener('click', () => {
       choose(b.dataset[group]);
       keep(key, b.dataset[group]);
+      picked(group);
     }));
     choose(kept(key) || 'default');
+    return (value) => { choose(value); keep(key, value); };
+  };
+  // A desk or an ink is Analog's: picked, the palette is Analog again, as in the app.
+  const picked = (group) => {
+    if (group === 'desk' || group === 'inkpick') palette('default');
   };
   pick('desk', 'desk', 'taskward-desk');
   pick('inkpick', 'ink', 'taskward-ink');
+  const palette = pick('palettepick', 'palette', 'taskward-palette');
+  pick('themepick', 'theme', 'taskward-theme');
 
   // The calendar: this month on a card, its days marked by the demo's events and tasks, put
   // by how far each is from today; a day tapped is ringed, and what it holds is shown under

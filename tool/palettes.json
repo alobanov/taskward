@@ -1,0 +1,424 @@
+{
+ "palettes": {
+  "analog": [
+   {
+    "desk": "FFB4C2C3",
+    "white": "FFF4F5F6",
+    "cream": "FFF5EBD7",
+    "kraft": "FFD9CDB6",
+    "grey": "FFE4E3DF",
+    "ink": "FF45454F",
+    "seal": "FFC8463D",
+    "dusk": "FF7E68CF",
+    "highlight": "6BF6C945"
+   },
+   {
+    "desk": "FF1D2426",
+    "white": "FF2A2B30",
+    "cream": "FF332E25",
+    "kraft": "FF3B3429",
+    "grey": "FF252525",
+    "ink": "FFF4F4F6",
+    "seal": "FFC8463D",
+    "dusk": "FFA592EC",
+    "highlight": "59F6C945"
+   }
+  ],
+  "mono": [
+   {
+    "desk": "FFF9FAFB",
+    "paper": "FFF9FAFB",
+    "white": "FFFFFFFF",
+    "cream": "FFFFFFFF",
+    "kraft": "FFFFFFFF",
+    "grey": "FFFFFFFF",
+    "ink": "FF121418",
+    "pencil": "FF818389",
+    "rule": 0.08,
+    "card": "FFFFFFFF",
+    "seal": "FFC8463D",
+    "dusk": "FF7E68CF",
+    "earth": "FF9A5B1E",
+    "link": "FF4F86C6",
+    "highlight": "6BF6C945"
+   },
+   {
+    "desk": "FF212121",
+    "paper": "FF212121",
+    "white": "FF303030",
+    "cream": "FF303030",
+    "kraft": "FF303030",
+    "grey": "FF303030",
+    "ink": "FFE5E5E5",
+    "pencil": "FF838383",
+    "rule": 0.1,
+    "card": "FF303030",
+    "seal": "FFC8463D",
+    "dusk": "FFA592EC",
+    "earth": "FFFFA23A",
+    "link": "FF86B4E6",
+    "highlight": "59F6C945"
+   }
+  ],
+  "black": [
+   {
+    "desk": "FFE6E6E6",
+    "paper": "FFFFFFFF",
+    "white": "FFFFFFFF",
+    "cream": "FFFAFAFA",
+    "kraft": "FFF4F4F4",
+    "grey": "FFF2F2F2",
+    "ink": "FF000000",
+    "seal": "FFD7261E",
+    "dusk": "FF6F55D6",
+    "earth": "FF9A5B1E",
+    "link": "FF2F6FC0",
+    "highlight": "6BF6C945"
+   },
+   {
+    "desk": "FF000000",
+    "paper": "FF000000",
+    "white": "FF121212",
+    "cream": "FF161616",
+    "kraft": "FF1B1B1B",
+    "grey": "FF0E0E0E",
+    "ink": "FFF2F2F2",
+    "seal": "FFFF5A4F",
+    "dusk": "FFA592EC",
+    "earth": "FFFFA23A",
+    "link": "FF86B4E6",
+    "highlight": "59F6C945"
+   }
+  ],
+  "fjord": [
+   {
+    "desk": "FFC3CCDA",
+    "paper": "FFECEFF4",
+    "white": "FFF5F7FA",
+    "cream": "FFECEFF4",
+    "kraft": "FFE2E7EF",
+    "grey": "FFE4E6EA",
+    "ink": "FF2E3440",
+    "seal": "FFBF4E5A",
+    "dusk": "FF8E6A9C",
+    "earth": "FFB0664D",
+    "link": "FF4C72A0",
+    "highlight": "66EBCB8B"
+   },
+   {
+    "desk": "FF1C2028",
+    "paper": "FF242933",
+    "white": "FF2E3440",
+    "cream": "FF343B49",
+    "kraft": "FF3B4252",
+    "grey": "FF2A2E36",
+    "ink": "FFE5E9F0",
+    "seal": "FFEC8690",
+    "dusk": "FFB48EAD",
+    "earth": "FFD08770",
+    "link": "FF88C0D0"
+   }
+  ],
+  "rosehip": [
+   {
+    "desk": "FFE2D3C8",
+    "paper": "FFFAF4ED",
+    "white": "FFFFFAF3",
+    "cream": "FFFAF4ED",
+    "kraft": "FFF2E9E1",
+    "grey": "FFF0EBE8",
+    "ink": "FF443F66",
+    "seal": "FFB4506D",
+    "dusk": "FF8569A3",
+    "earth": "FFB8673A",
+    "link": "FF286983",
+    "highlight": "4DEA9D34"
+   },
+   {
+    "desk": "FF13111C",
+    "paper": "FF191724",
+    "white": "FF1F1D2E",
+    "cream": "FF26233A",
+    "kraft": "FF2B2740",
+    "grey": "FF1D1B27",
+    "ink": "FFE0DEF4",
+    "seal": "FFEB6F92",
+    "dusk": "FFC4A7E7",
+    "earth": "FFF6C177",
+    "link": "FF9CCFD8"
+   }
+  ],
+  "campfire": [
+   {
+    "desk": "FFC98B6B",
+    "paper": "FFF7F1E8",
+    "white": "FFFBF7F0",
+    "cream": "FFF5ECDF",
+    "kraft": "FFEBDBC4",
+    "grey": "FFEEEAE4",
+    "ink": "FF2E2724",
+    "seal": "FFC62E1E",
+    "dusk": "FF8F3F71",
+    "earth": "FFB4510F",
+    "link": "FF2C6E7F",
+    "highlight": "55FABD2F"
+   },
+   {
+    "desk": "FF1A1C1D",
+    "paper": "FF1D2021",
+    "white": "FF282828",
+    "cream": "FF32302F",
+    "kraft": "FF3C3836",
+    "grey": "FF262524",
+    "ink": "FFEBDBB2",
+    "seal": "FFFF6450",
+    "dusk": "FFD3869B",
+    "earth": "FFFE8019",
+    "link": "FF83A598"
+   }
+  ],
+  "lagoon": [
+   {
+    "desk": "FFDDD3B4",
+    "paper": "FFFBF4E0",
+    "white": "FFFDF6E3",
+    "cream": "FFF6EED6",
+    "kraft": "FFEEE8D5",
+    "grey": "FFF0EDE4",
+    "ink": "FF073642",
+    "seal": "FFDC322F",
+    "dusk": "FF6C71C4",
+    "earth": "FFCB4B16",
+    "link": "FF1F74B3",
+    "highlight": "4DB58900"
+   },
+   {
+    "desk": "FF001C25",
+    "paper": "FF00222C",
+    "white": "FF002B36",
+    "cream": "FF05323E",
+    "kraft": "FF0A3A47",
+    "grey": "FF032630",
+    "ink": "FFEEE8D5",
+    "seal": "FFF0544F",
+    "dusk": "FF9497E0",
+    "earth": "FFE0662F",
+    "link": "FF4AA3E0"
+   }
+  ],
+  "midnight": [
+   {
+    "desk": "FFC1C6DA",
+    "paper": "FFE6E7ED",
+    "white": "FFEFF0F5",
+    "cream": "FFE4E6EE",
+    "kraft": "FFDCDDEA",
+    "grey": "FFE5E5E9",
+    "ink": "FF343B58",
+    "seal": "FFB0384F",
+    "dusk": "FF7847BD",
+    "earth": "FFA35A1F",
+    "link": "FF2E5FB8",
+    "highlight": "55E0AF68"
+   },
+   {
+    "desk": "FF111219",
+    "paper": "FF16161E",
+    "white": "FF1E2030",
+    "cream": "FF222538",
+    "kraft": "FF282C42",
+    "grey": "FF1B1C25",
+    "ink": "FFC0CAF5",
+    "seal": "FFF7768E",
+    "dusk": "FFBB9AF7",
+    "earth": "FFFF9E64",
+    "link": "FF7AA2F7"
+   }
+  ],
+  "marshmallow": [
+   {
+    "desk": "FFDCC8D6",
+    "paper": "FFEFF1F5",
+    "white": "FFF5F6F9",
+    "cream": "FFEDEAF3",
+    "kraft": "FFF1E6EA",
+    "grey": "FFE8E9EE",
+    "ink": "FF3E4159",
+    "seal": "FFD20F39",
+    "dusk": "FF8839EF",
+    "earth": "FFC24E08",
+    "link": "FF1E66F5",
+    "highlight": "4DDF8E1D"
+   },
+   {
+    "desk": "FF11111B",
+    "paper": "FF181825",
+    "white": "FF1E1E2E",
+    "cream": "FF24253A",
+    "kraft": "FF2B2A3E",
+    "grey": "FF1C1C28",
+    "ink": "FFCDD6F4",
+    "seal": "FFF38BA8",
+    "dusk": "FFCBA6F7",
+    "earth": "FFFAB387",
+    "link": "FF89B4FA"
+   }
+  ],
+  "forest": [
+   {
+    "desk": "FFBCC6A6",
+    "paper": "FFF8F3DF",
+    "white": "FFFDF8E6",
+    "cream": "FFF4F0D9",
+    "kraft": "FFEAE4CA",
+    "grey": "FFEEECE2",
+    "ink": "FF364247",
+    "seal": "FFCC3F3A",
+    "dusk": "FFB55597",
+    "earth": "FFB35710",
+    "link": "FF2F7FAD",
+    "highlight": "4DDFA000"
+   },
+   {
+    "desk": "FF1C2124",
+    "paper": "FF232A2E",
+    "white": "FF2D353B",
+    "cream": "FF343F44",
+    "kraft": "FF3D484D",
+    "grey": "FF283035",
+    "ink": "FFEFE7D2",
+    "seal": "FFF28C8E",
+    "dusk": "FFD699B6",
+    "earth": "FFE69875",
+    "link": "FF7FBBB3"
+   }
+  ],
+  "library": [
+   {
+    "desk": "FF7A5548",
+    "paper": "FFF3EBDD",
+    "white": "FFF7F0E4",
+    "cream": "FFEFE3CC",
+    "kraft": "FFE2D0B0",
+    "grey": "FFE7E1D8",
+    "ink": "FF3B2A24",
+    "seal": "FFA63A2B",
+    "dusk": "FF6E4F86",
+    "earth": "FF8C5A2B",
+    "link": "FF3E6A8A",
+    "highlight": "55E2B84C"
+   },
+   {
+    "desk": "FF241816",
+    "paper": "FF2C201D",
+    "white": "FF3A2B27",
+    "cream": "FF42322C",
+    "kraft": "FF4A3A2F",
+    "grey": "FF332926",
+    "ink": "FFEADBC8",
+    "seal": "FFEE8270",
+    "dusk": "FFB79AD2",
+    "earth": "FFE3A15A",
+    "link": "FF8FB4D0"
+   }
+  ],
+  "cobalt": [
+   {
+    "desk": "FF3A6595",
+    "paper": "FFEEF3F8",
+    "white": "FFF6F9FC",
+    "cream": "FFEAF1F7",
+    "kraft": "FFDEE8F1",
+    "grey": "FFE6E9ED",
+    "ink": "FF0D2B45",
+    "seal": "FFD7385E",
+    "dusk": "FF7B4FD0",
+    "earth": "FF946010",
+    "link": "FF1F6FC5",
+    "highlight": "55FFC600"
+   },
+   {
+    "desk": "FF0B1C2E",
+    "paper": "FF122738",
+    "white": "FF193549",
+    "cream": "FF1D3C53",
+    "kraft": "FF22445C",
+    "grey": "FF162B3B",
+    "ink": "FFF0F4F8",
+    "seal": "FFFF628C",
+    "dusk": "FFE38CFF",
+    "earth": "FFFFC600",
+    "link": "FF6CC4FF"
+   }
+  ],
+  "velvet": [
+   {
+    "desk": "FFCBC3E3",
+    "paper": "FFFBF8EF",
+    "white": "FFFFFCF2",
+    "cream": "FFF6F1E3",
+    "kraft": "FFF0E8D8",
+    "grey": "FFEEECE8",
+    "ink": "FF1F1F2B",
+    "seal": "FFCB3A2A",
+    "dusk": "FF644AC9",
+    "earth": "FFA34D14",
+    "link": "FF036A96",
+    "highlight": "55E3D33B"
+   },
+   {
+    "desk": "FF1B1C25",
+    "paper": "FF21222C",
+    "white": "FF282A36",
+    "cream": "FF2F3140",
+    "kraft": "FF363848",
+    "grey": "FF24252F",
+    "ink": "FFF8F8F2",
+    "seal": "FFFF5555",
+    "dusk": "FFBD93F9",
+    "earth": "FFFFB86C",
+    "link": "FF8BE9FD"
+   }
+  ]
+ },
+ "names": {
+  "en": {
+   "palettes": {
+    "analog": "Analog",
+    "mono": "Monochrome",
+    "black": "Black",
+    "fjord": "Fjord",
+    "rosehip": "Rosehip",
+    "campfire": "Campfire",
+    "lagoon": "Lagoon",
+    "midnight": "Midnight",
+    "marshmallow": "Marshmallow",
+    "forest": "Forest",
+    "library": "Library",
+    "cobalt": "Cobalt",
+    "velvet": "Velvet"
+   },
+   "light": "In the light",
+   "dark": "In the dark"
+  },
+  "ru": {
+   "palettes": {
+    "analog": "Аналог",
+    "mono": "Монохром",
+    "black": "Чёрный",
+    "fjord": "Фьорд",
+    "rosehip": "Шиповник",
+    "campfire": "Костёр",
+    "lagoon": "Лагуна",
+    "midnight": "Полночь",
+    "marshmallow": "Зефир",
+    "forest": "Лес",
+    "library": "Библиотека",
+    "cobalt": "Кобальт",
+    "velvet": "Бархат"
+   },
+   "light": "На свету",
+   "dark": "В темноте"
+  }
+ }
+}

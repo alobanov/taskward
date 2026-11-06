@@ -11,7 +11,72 @@ SITE = Path(__file__).resolve().parent.parent
 URL = 'https://alobanov.github.io/taskward/'
 MAIL = 'katleta5000@gmail.com'
 import hashlib
-VERSION = hashlib.md5((SITE / 'style.css').read_bytes() + (SITE / 'app.js').read_bytes() + (SITE / 'when.js').read_bytes()).hexdigest()[:8]
+
+
+# The app's palettes (tool/palettes.json, taken by tool/palettes.py), each in the light and
+# the dark, as the page's colours: palettes.css, the page's own variables set over by the one
+# picked, and in the dark by its dark half. Analog is the page as it is, its desks and inks;
+# its dark, the app's dark cards on the desk picked gone dark.
+PALETTES = json.loads((SITE / 'tool' / 'palettes.json').read_text())
+
+
+def _css(argb, alpha=None):
+    a = int(argb[:2], 16) / 255 if alpha is None else alpha
+    r, g, b = (int(argb[i:i + 2], 16) for i in (2, 4, 6))
+    return f'#{argb[2:].lower()}' if a >= 0.999 else f'rgba({r}, {g}, {b}, {a:.2f})'
+
+
+def _lum(argb):
+    def ch(i):
+        c = int(argb[i:i + 2], 16) / 255
+        return c / 12.92 if c <= 0.03928 else ((c + 0.055) / 1.055) ** 2.4
+    return 0.2126 * ch(2) + 0.7152 * ch(4) + 0.0722 * ch(6)
+
+
+def _contrast(a, b):
+    la, lb = sorted((_lum(a), _lum(b)), reverse=True)
+    return (la + 0.05) / (lb + 0.05)
+
+
+def _vars(sc, dark):
+    ink = sc['ink']
+    # The words on the desk: the ink where it reads there, else a light or a dark one.
+    on = ink if _contrast(ink, sc['desk']) >= 4.5 else max(
+        ['FFF1F0EC', 'FF2C3436'], key=lambda c: _contrast(c, sc['desk']))
+    out = {
+        'desk': _css(sc['desk']), 'white': _css(sc['white']), 'cream': _css(sc['cream']),
+        'kraft': _css(sc['kraft']), 'grey': _css(sc['grey']), 'ink': _css(ink),
+        'pencil': _css(sc['pencil']) if 'pencil' in sc else _css(ink, 0.6 if dark else 0.55),
+        'rule': _css(ink, sc.get('rule', 0.16 if dark else 0.14)),
+        'seal': _css(sc['seal']), 'dusk': _css(sc['dusk']),
+        'on-desk': _css(on), 'on-desk-soft': _css(on, 0.74), 'note': _css(on),
+        'desk-rule': _css(on, 0.16),
+    }
+    if 'highlight' in sc:
+        out['marker'] = _css(sc['highlight'])
+    return '; '.join(f'--{k}: {v}' for k, v in out.items()) + (
+        '; color-scheme: dark' if dark else '; color-scheme: light')
+
+
+def palettes_css():
+    rules = ['/* Written by tool/build.py from tool/palettes.json: the app\'s palettes, one to one. */']
+    light, dark = PALETTES['palettes']['analog']
+    rules.append(f':root[data-theme="dark"]:not([data-palette]) {{ {_vars(dark, True)} }}')
+    # Analog's dark on each desk as the app darkens it (polk_theme.dart: _deskDark).
+    for desk, colour in [('olive', 'FF23271E'), ('walnut', 'FF251D17'), ('charcoal', 'FF000000'),
+                         ('paper', 'FF16171C'), ('mono', 'FF16171C')]:
+        rules.append(f':root[data-theme="dark"][data-desk="{desk}"]:not([data-palette]) '
+                     f'{{ {_vars({**dark, "desk": colour}, True)} }}')
+    for name, (lt, dk) in PALETTES['palettes'].items():
+        if name == 'analog':
+            continue
+        rules.append(f':root[data-palette="{name}"] {{ {_vars(lt, False)} }}')
+        rules.append(f':root[data-palette="{name}"][data-theme="dark"] {{ {_vars(dk, True)} }}')
+    return '\n'.join(rules) + '\n'
+
+
+(SITE / 'palettes.css').write_text(palettes_css())
+VERSION = hashlib.md5((SITE / 'style.css').read_bytes() + (SITE / 'palettes.css').read_bytes() + (SITE / 'app.js').read_bytes() + (SITE / 'when.js').read_bytes()).hexdigest()[:8]
 UPDATED = {'en': 'November 4, 2026', 'ru': '4 ноября 2026'}
 
 T = {
@@ -220,8 +285,9 @@ T = {
         'shots_alt': 'Taskward on iPhone',
         'mac_alt': 'Taskward on a Mac',
         'yours_h': 'Your desk, your ink',
-        'yours_say': 'Pick the desk the cards lie on, the ink you write in, how a done task is '
-                     'struck through, and smooth or toothy paper. Try a desk here:',
+        'yours_say': 'Light or dark, and a palette made whole for each — or the desk the cards lie '
+                     'on and the ink you write in; then how a done task is struck through, and '
+                     'smooth or toothy paper. Try them on this page:',
         'desk_h': 'Desk', 'ink_h': 'Ink',
         'desks': [('default', 'Sage', '#b4c2c3'), ('olive', 'Olive', '#4a5040'),
                   ('walnut', 'Walnut', '#5b4636'), ('charcoal', 'Charcoal', '#2f2f2d'),
@@ -430,8 +496,9 @@ T = {
         'shots_alt': 'Taskward на iPhone',
         'mac_alt': 'Taskward на Маке',
         'yours_h': 'Твой стол, твои чернила',
-        'yours_say': 'Выбери стол, на котором лежат карточки, цвет чернил, как зачёркивается '
-                     'сделанное, и гладкую или фактурную бумагу. Попробуй стол прямо здесь:',
+        'yours_say': 'Светлая или тёмная тема и целая палитра для каждой — или стол, на котором '
+                     'лежат карточки, и цвет чернил; а ещё как зачёркивается сделанное и гладкая или '
+                     'фактурная бумага. Попробуй прямо на этой странице:',
         'desk_h': 'Стол', 'ink_h': 'Чернила',
         'desks': [('default', 'Шалфей', '#b4c2c3'), ('olive', 'Олива', '#4a5040'),
                   ('walnut', 'Орех', '#5b4636'), ('charcoal', 'Уголь', '#2f2f2d'),
@@ -533,10 +600,11 @@ def head(lang, title, desc, path, base):
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Pangolin&amp;subset=cyrillic&amp;display=swap" rel="stylesheet">
 <link rel="stylesheet" href="{base}style.css?v={VERSION}">
+<link rel="stylesheet" href="{base}palettes.css?v={VERSION}">
 <style>:root {{ --grain: url({base}img/grain.webp); }}</style>
-<script>try {{ const d = localStorage.getItem('taskward-desk'), i = localStorage.getItem('taskward-ink');
-if (d && d !== 'default') document.documentElement.dataset.desk = d;
-if (i && i !== 'default') document.documentElement.dataset.ink = i; }} catch (_) {{}}</script>
+<script>try {{ const r = document.documentElement.dataset;
+for (const [k, a] of [['desk', 'desk'], ['ink', 'ink'], ['palette', 'palette'], ['theme', 'theme']]) {{
+const v = localStorage.getItem('taskward-' + k); if (v && v !== 'default') r[a] = v; }} }} catch (_) {{}}</script>
 <script src="{base}when.js?v={VERSION}" defer></script>
 <script src="{base}app.js?v={VERSION}" defer></script>
 </head>
@@ -641,6 +709,17 @@ def landing(lang):
         for k, n, c in t['inks']
     )
     kept = ''.join(f'<li>{line}</li>' for line in t['kept'])
+    pn = PALETTES['names'][lang]
+    palettes = ''.join(
+        f'<button class="palette" data-palettepick="{"default" if k == "analog" else k}" '
+        f'aria-label="{pn["palettes"][k]}" aria-pressed="false" '
+        f'style="--l:{_css(lt["white"])};--d:{_css(dk["desk"])};--i:{_css(lt["ink"])};--s:{_css(lt["seal"])}"></button>'
+        for k, (lt, dk) in PALETTES['palettes'].items()
+    )
+    themes = ''.join(
+        f'<button class="themepick" data-themepick="{k}" aria-pressed="false" aria-label="{w}">{icon(i)}<span>{w}</span></button>'
+        for k, w, i in [('default', pn['light'], 'lightTheme'), ('dark', pn['dark'], 'darkTheme')]
+    )
     demo = t['more_demo']
     ring = '<span class="o"></span>'
     demos = [
@@ -841,6 +920,9 @@ def landing(lang):
 
 <article class="feature pair">
 <div class="say" id="yours"><h2>{t['yours_h']}</h2><p>{t['yours_say']}</p>
+<div class="themes">{themes}</div>
+<div class="swatches palettes">{palettes}</div>
+<p class="named"><span data-for="palettepick" aria-live="polite"></span></p>
 <div class="swatches">{desks}</div>
 <div class="swatches inks">{inks}</div>
 <p class="named"><span data-for="desk" aria-live="polite"></span> · <span data-for="inkpick" aria-live="polite"></span></p>

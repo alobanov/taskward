@@ -21,13 +21,14 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Pangolin&amp;subset=cyrillic&amp;display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../style.css?v=ab3b31c8">
+<link rel="stylesheet" href="../style.css?v=93920a41">
+<link rel="stylesheet" href="../palettes.css?v=93920a41">
 <style>:root { --grain: url(../img/grain.webp); }</style>
-<script>try { const d = localStorage.getItem('taskward-desk'), i = localStorage.getItem('taskward-ink');
-if (d && d !== 'default') document.documentElement.dataset.desk = d;
-if (i && i !== 'default') document.documentElement.dataset.ink = i; } catch (_) {}</script>
-<script src="../when.js?v=ab3b31c8" defer></script>
-<script src="../app.js?v=ab3b31c8" defer></script>
+<script>try { const r = document.documentElement.dataset;
+for (const [k, a] of [['desk', 'desk'], ['ink', 'ink'], ['palette', 'palette'], ['theme', 'theme']]) {
+const v = localStorage.getItem('taskward-' + k); if (v && v !== 'default') r[a] = v; } } catch (_) {}</script>
+<script src="../when.js?v=93920a41" defer></script>
+<script src="../app.js?v=93920a41" defer></script>
 </head>
 <body>
 <header class="wrap top">
@@ -160,7 +161,10 @@ if (i && i !== 'default') document.documentElement.dataset.ink = i; } catch (_) 
 </article>
 
 <article class="feature pair">
-<div class="say" id="yours"><h2>Твой стол, твои чернила</h2><p>Выбери стол, на котором лежат карточки, цвет чернил, как зачёркивается сделанное, и гладкую или фактурную бумагу. Попробуй стол прямо здесь:</p>
+<div class="say" id="yours"><h2>Твой стол, твои чернила</h2><p>Светлая или тёмная тема и целая палитра для каждой — или стол, на котором лежат карточки, и цвет чернил; а ещё как зачёркивается сделанное и гладкая или фактурная бумага. Попробуй прямо на этой странице:</p>
+<div class="themes"><button class="themepick" data-themepick="default" aria-pressed="false" aria-label="На свету"><svg class="icon" aria-hidden="true"><use href="../img/icons.svg#lightTheme"/></svg><span>На свету</span></button><button class="themepick" data-themepick="dark" aria-pressed="false" aria-label="В темноте"><svg class="icon" aria-hidden="true"><use href="../img/icons.svg#darkTheme"/></svg><span>В темноте</span></button></div>
+<div class="swatches palettes"><button class="palette" data-palettepick="default" aria-label="Аналог" aria-pressed="false" style="--l:#f4f5f6;--d:#1d2426;--i:#45454f;--s:#c8463d"></button><button class="palette" data-palettepick="mono" aria-label="Монохром" aria-pressed="false" style="--l:#ffffff;--d:#212121;--i:#121418;--s:#c8463d"></button><button class="palette" data-palettepick="black" aria-label="Чёрный" aria-pressed="false" style="--l:#ffffff;--d:#000000;--i:#000000;--s:#d7261e"></button><button class="palette" data-palettepick="fjord" aria-label="Фьорд" aria-pressed="false" style="--l:#f5f7fa;--d:#1c2028;--i:#2e3440;--s:#bf4e5a"></button><button class="palette" data-palettepick="rosehip" aria-label="Шиповник" aria-pressed="false" style="--l:#fffaf3;--d:#13111c;--i:#443f66;--s:#b4506d"></button><button class="palette" data-palettepick="campfire" aria-label="Костёр" aria-pressed="false" style="--l:#fbf7f0;--d:#1a1c1d;--i:#2e2724;--s:#c62e1e"></button><button class="palette" data-palettepick="lagoon" aria-label="Лагуна" aria-pressed="false" style="--l:#fdf6e3;--d:#001c25;--i:#073642;--s:#dc322f"></button><button class="palette" data-palettepick="midnight" aria-label="Полночь" aria-pressed="false" style="--l:#eff0f5;--d:#111219;--i:#343b58;--s:#b0384f"></button><button class="palette" data-palettepick="marshmallow" aria-label="Зефир" aria-pressed="false" style="--l:#f5f6f9;--d:#11111b;--i:#3e4159;--s:#d20f39"></button><button class="palette" data-palettepick="forest" aria-label="Лес" aria-pressed="false" style="--l:#fdf8e6;--d:#1c2124;--i:#364247;--s:#cc3f3a"></button><button class="palette" data-palettepick="library" aria-label="Библиотека" aria-pressed="false" style="--l:#f7f0e4;--d:#241816;--i:#3b2a24;--s:#a63a2b"></button><button class="palette" data-palettepick="cobalt" aria-label="Кобальт" aria-pressed="false" style="--l:#f6f9fc;--d:#0b1c2e;--i:#0d2b45;--s:#d7385e"></button><button class="palette" data-palettepick="velvet" aria-label="Бархат" aria-pressed="false" style="--l:#fffcf2;--d:#1b1c25;--i:#1f1f2b;--s:#cb3a2a"></button></div>
+<p class="named"><span data-for="palettepick" aria-live="polite"></span></p>
 <div class="swatches"><button class="swatch" style="--c:#b4c2c3" data-desk="default" aria-label="Шалфей" aria-pressed="false"></button><button class="swatch" style="--c:#4a5040" data-desk="olive" aria-label="Олива" aria-pressed="false"></button><button class="swatch" style="--c:#5b4636" data-desk="walnut" aria-label="Орех" aria-pressed="false"></button><button class="swatch" style="--c:#2f2f2d" data-desk="charcoal" aria-label="Уголь" aria-pressed="false"></button><button class="swatch" style="--c:#e9e5da" data-desk="paper" aria-label="Бумага" aria-pressed="false"></button><button class="swatch" style="--c:#f2f3f5" data-desk="mono" aria-label="Монохром" aria-pressed="false"></button></div>
 <div class="swatches inks"><button class="blot" style="--c:#45454f" data-inkpick="default" aria-label="Графит" aria-pressed="false"></button><button class="blot" style="--c:#2b3ac9" data-inkpick="blue" aria-label="Синие" aria-pressed="false"></button><button class="blot" style="--c:#141417" data-inkpick="black" aria-label="Чёрные" aria-pressed="false"></button><button class="blot" style="--c:#3a201c" data-inkpick="espresso" aria-label="Эспрессо" aria-pressed="false"></button></div>
 <p class="named"><span data-for="desk" aria-live="polite"></span> · <span data-for="inkpick" aria-live="polite"></span></p>
