@@ -496,6 +496,56 @@ section.part { padding: 20px 0; }
 .shelf img { height: auto; width: 236px; border-radius: 16px; box-shadow: var(--shadow); scroll-snap-align: start; flex: none; }
 .shelf img:nth-child(odd) { rotate: -0.6deg; } .shelf img:nth-child(even) { rotate: 0.5deg; }
 /* On a wide window all eight stand in one row, centred, each giving way to fit it. */
+/* The calendar's Day, as the app lays it out: times in a gutter, the events washed in their
+   calendars' colours, the time free between them on a line of its own, now across in pencil. */
+.dayplan { max-width: 440px; padding: 18px 18px 16px 10px; rotate: 0.6deg; }
+.dayplan h4 { font-weight: 400; font-size: 26px; color: var(--seal); margin: 0 0 12px 12px; }
+.dp-row, .dp-free, .dp-now { display: grid; grid-template-columns: 54px minmax(0, 1fr); gap: 8px; align-items: start; }
+.dp-row { margin: 3px 0; }
+.dayplan .t { text-align: right; font-size: 15px; color: var(--pencil); padding-top: 6px; }
+.dayplan .blk {
+  border-radius: 9px; padding: 6px 10px 6px; min-width: 0;
+  background: color-mix(in srgb, var(--c) 30%, transparent);
+}
+.dayplan .blk b { display: block; font-weight: 400; font-size: 18px; line-height: 1.15; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.dayplan .blk i { display: block; font-style: normal; font-size: 14px; color: var(--pencil); }
+.dayplan .blk.over b { color: var(--pencil); }
+.dayplan .blk.over { background: color-mix(in srgb, var(--c) 18%, transparent); }
+.dayplan .blk.task { display: flex; align-items: center; gap: 8px; background: none; border: 1px solid var(--rule); }
+.dayplan .blk.task .o { flex: none; width: 17px; height: 17px; border: 1.6px solid var(--pencil); border-radius: 50%; }
+.dayplan .crowd { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 4px; }
+.dayplan .crowd .blk b { font-size: 16px; white-space: normal; }
+.dayplan .blk.more { display: grid; place-items: center; background: none; border: 1px solid var(--rule); font-size: 19px; }
+.dp-free { min-height: 34px; align-items: center; color: var(--pencil); font-size: 17px; grid-template-columns: 54px 8px minmax(0, 1fr); }
+.dp-free .t { padding-top: 0; }
+.dp-free .dots { align-self: stretch; border-left: 2px dotted var(--rule); margin-left: 3px; }
+.dp-now { align-items: center; margin: 2px 0; }
+.dp-now .t { padding: 0; font-size: 13px; }
+.dp-now .line { position: relative; height: 1px; background: color-mix(in srgb, var(--pencil) 50%, transparent); }
+.dp-now .line::before { content: ''; position: absolute; left: -3px; top: -2.5px; width: 6px; height: 6px; border-radius: 50%; background: var(--pencil); }
+
+/* The Notes card: headings on strips of tape, a dash before each note, and down its edge the
+   outline — a pen dash for each heading, the one read under longer, its name on a slip. */
+.notesdemo { position: relative; max-width: 420px; padding: 18px 46px 18px 20px; rotate: -0.7deg; }
+.notesdemo .head { display: flex; align-items: center; gap: 10px; font-size: 30px; margin-bottom: 6px; }
+.notesdemo .head .icon { width: 26px; height: 26px; }
+.notesdemo .tapehead {
+  display: inline-block; margin: 16px 0 4px -10px; padding: 3px 16px 4px; font-size: 20px;
+  background: rgba(242, 217, 120, 0.75); rotate: -1deg;
+  clip-path: polygon(2% 0, 98% 4%, 100% 50%, 97% 100%, 1% 96%, 0 50%);
+}
+.notesdemo .n { display: flex; gap: 14px; align-items: flex-start; font-size: 18px; padding: 7px 0; border-bottom: 1px solid var(--rule); margin: 0; }
+.notesdemo .dash { flex: none; width: 12px; height: 2px; margin-top: 12px; background: var(--ink); border-radius: 1px; }
+.notesdemo .diary b { display: block; font-weight: 400; }
+.notesdemo .diary span:not(.dash) { display: block; font-size: 15px; color: var(--pencil); text-decoration: line-through; }
+.notesdemo .outline { position: absolute; right: 12px; top: 42%; display: flex; flex-direction: column; align-items: flex-end; gap: 9px; }
+.notesdemo .outline > span:not(.slip) { width: 9px; height: 2px; border-radius: 1px; background: var(--pencil); opacity: 0.6; }
+.notesdemo .outline > span.lit { width: 15px; background: var(--ink); opacity: 1; }
+.notesdemo .slip {
+  position: absolute; right: 26px; top: 26px; padding: 4px 12px; font-size: 17px; white-space: nowrap;
+  background: var(--white); border: 1px solid var(--rule); border-radius: 10px;
+}
+
 @media (min-width: 1280px) {
   .shelf { justify-content: center; padding-inline: 24px; overflow-x: clip; }
   .shelf img { width: auto; flex: 0 1 236px; min-width: 0; }

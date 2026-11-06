@@ -21,13 +21,13 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Pangolin&amp;subset=cyrillic&amp;display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=4121edbd">
+<link rel="stylesheet" href="style.css?v=ab3b31c8">
 <style>:root { --grain: url(img/grain.webp); }</style>
 <script>try { const d = localStorage.getItem('taskward-desk'), i = localStorage.getItem('taskward-ink');
 if (d && d !== 'default') document.documentElement.dataset.desk = d;
 if (i && i !== 'default') document.documentElement.dataset.ink = i; } catch (_) {}</script>
-<script src="when.js?v=4121edbd" defer></script>
-<script src="app.js?v=4121edbd" defer></script>
+<script src="when.js?v=ab3b31c8" defer></script>
+<script src="app.js?v=ab3b31c8" defer></script>
 </head>
 <body>
 <header class="wrap top">
@@ -121,12 +121,27 @@ if (i && i !== 'default') document.documentElement.dataset.ink = i; } catch (_) 
 </article>
 
 <article class="feature flip" id="calendar">
-<div class="say"><h2>A month on a card</h2><p>Tap Today’s date and the month opens on a card: under each day a dot for each calendar with an event, and one for its to-dos. Pick a day, and under the tear line are its events, then its tasks. The plus writes a calendar event as well as a task, and a task goes into your Calendar from its page.</p><p class="aside">Your calendars are read on the device, never copied.</p></div>
+<div class="say"><h2>A month on a card</h2><p>Tap Today’s date and the calendar opens on a card — a month, a week or a day. Under each day a dot for each calendar with an event, and one for its to-dos. Pick a day, and under the tear line are its events, then its tasks. The plus writes a calendar event as well as a task, and a task goes into your Calendar from its page.</p><p class="aside">Your calendars are read on the device, never copied.</p></div>
 <div class="show"><div class="paper month" data-lang="en" data-cal="{&quot;days&quot;: [[-2, [[&quot;09:00&quot;, &quot;Market day&quot;, &quot;#3fbf5a&quot;]], [[&quot;Oil the saddle&quot;, true]]], [0, [[&quot;07:30&quot;, &quot;Morning ride&quot;, &quot;#7cc9f2&quot;], [&quot;10:30&quot;, &quot;Council at the keep&quot;, &quot;#f5a03c&quot;], [&quot;19:00&quot;, &quot;Supper with Masha&quot;, &quot;#3aa0e8&quot;]], [[&quot;Sharpen the sword&quot;, true], [&quot;Pay the rent&quot;, false]]], [1, [[&quot;13:00&quot;, &quot;Joust heats&quot;, &quot;#b65ce0&quot;]], [[&quot;Call the smith about the shield&quot;, false]]], [2, [], [[&quot;Plan the ride to the coast&quot;, false]]], [4, [[&quot;&quot;, &quot;Feast of St Luke&quot;, &quot;#3fbf5a&quot;]], []], [6, [[&quot;18:00&quot;, &quot;Tourney feast&quot;, &quot;#f5a03c&quot;], [&quot;20:00&quot;, &quot;Night watch&quot;, &quot;#3aa0e8&quot;]], []], [9, [], [[&quot;Visit the far north&quot;, false]]]], &quot;empty&quot;: &quot;Nothing on this day&quot;}">
 <div class="month-head"><b></b><span></span></div>
 <div class="days" role="grid"></div>
 <div class="tear" aria-hidden="true"></div>
 <div class="day" aria-live="polite"><h4></h4><ul></ul></div>
+</div></div>
+</article>
+
+<article class="feature" id="day">
+<div class="say"><h2>Your day, by the clock</h2><p>Switch the calendar to Day and the day lies out by the clock: your events and the tasks with a time, as long as they last, side by side where they overlap. The time between them takes a line of its own and says how long it truly is, so the whole day fits on one screen. Now runs across today; what is over turns to pencil.</p><p class="aside">Four things at once? Two show, the rest wait under a +2 until you tap it.</p></div>
+<div class="show"><div class="paper dayplan"><h4>Monday, 19 October</h4><div class="dp-row"><span class="t">07:30</span><div class="blk over" style="--c:#7cc9f2"><b>Morning ride</b><i>07:30–08:30 · 1 h</i></div></div><div class="dp-now"><span class="t">now</span><span class="line"></span></div><div class="dp-free"><span class="t"></span><span class="dots"></span><span>49 min left free</span></div><div class="dp-row"><span class="t">10:30</span><div class="blk" style="--c:#f5a03c"><b>Council at the keep</b><i>10:30–11:30 · 1 h</i></div></div><div class="dp-free"><span class="t">11:30</span><span class="dots"></span><span>2 h 30 min free</span></div><div class="dp-row"><span class="t">14:00</span><div class="crowd"><div class="blk" style="--c:#b65ce0"><b>Archery practice</b></div><div class="blk" style="--c:#7cc9f2"><b>Letters</b></div><div class="blk more">+2</div></div></div><div class="dp-free"><span class="t">15:00</span><span class="dots"></span><span>3 h 30 min free</span></div><div class="dp-row"><span class="t">18:30</span><div class="blk task"><span class="o"></span><b>Call the smith about the shield</b></div></div><div class="dp-row"><span class="t">19:00</span><div class="blk" style="--c:#3aa0e8"><b>Supper with Masha</b><i>19:00–21:00 · 2 h</i></div></div></div></div>
+</article>
+
+<article class="feature flip" id="notes">
+<div class="say"><h2>Notes that keep themselves in order</h2><p>Notes live on a card of their own, under headings taped across it. Down its edge, a pen dash for every heading: draw your finger along them and the card goes from one to the next, or hold them and pick one by name. On a Mac they open under the mouse, as in Notion.</p>
+<h3>A note in one move</h3><p>Hold the Notes mark on home’s bar, pick New Note on the app’s icon or in Control Center, or press ⇧⌘N on a Mac. A blank note, at once.</p>
+<h3>A diary that writes itself</h3><p>Turn on Diary of the day, and every day gone leaves a note of what you got done, tucked under its own heading at the foot of the card.</p></div>
+<div class="show"><div class="paper notesdemo"><div class="head"><svg class="icon" aria-hidden="true"><use href="img/icons.svg#notebook"/></svg>Notes</div>
+<p class="n"><span class="dash"></span>What the smith said</p><p class="n"><span class="dash"></span>Names for the horse</p><p class="tapehead">Songs</p><p class="n"><span class="dash"></span>Verses for the feast</p><p class="n"><span class="dash"></span>A ballad of the sea</p><p class="tapehead">Ideas</p><p class="n"><span class="dash"></span>A sundial for the yard</p><p class="tapehead">Diary</p><div class="n diary"><span class="dash"></span><div><b>Sunday, 18 October</b><span>☑ Oil the hinges</span><span>☑ Reply to Masha</span><span>☑ Pack the saddle</span></div></div>
+<div class="outline" aria-hidden="true"><span class=""></span><span class="lit"></span><span class=""></span><span class="slip">Ideas</span></div>
 </div></div>
 </article>
 

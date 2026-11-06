@@ -146,11 +146,56 @@ T = {
             'find': ('sadd', ['Oil the <mark>sadd</mark>le', 'Mend the <mark>sadd</mark>le bags']),
         },
         'cal_h': 'A month on a card',
-        'cal_say': 'Tap Today’s date and the month opens on a card: under each day a dot for '
+        'cal_say': 'Tap Today’s date and the calendar opens on a card — a month, a week or a day. '
+                   'Under each day a dot for '
                    'each calendar with an event, and one for its to-dos. Pick a day, and under '
                    'the tear line are its events, then its tasks. The plus writes a calendar '
                    'event as well as a task, and a task goes into your Calendar from its page.',
         'cal_note': 'Your calendars are read on the device, never copied.',
+        'day_h': 'Your day, by the clock',
+        'day_say': 'Switch the calendar to Day and the day lies out by the clock: your events and '
+                   'the tasks with a time, as long as they last, side by side where they overlap. '
+                   'The time between them takes a line of its own and says how long it truly is, '
+                   'so the whole day fits on one screen. Now runs across today; what is over turns '
+                   'to pencil.',
+        'day_note': 'Four things at once? Two show, the rest wait under a +2 until you tap it.',
+        # The Day demo: its title, then its rows — an event (time, title, end, length, colour,
+        # over), now, free time (from, words), a task (time, title), a crowd (two events, +N).
+        'day_demo': {
+            'title': 'Monday, 19 October',
+            'rows': [
+                ('event', '07:30', 'Morning ride', '08:30', '1 h', '#7cc9f2', True),
+                ('now', 'now'),
+                ('free', '', '49 min left free'),
+                ('event', '10:30', 'Council at the keep', '11:30', '1 h', '#f5a03c', False),
+                ('free', '11:30', '2 h 30 min free'),
+                ('crowd', '14:00', [('Archery practice', '#b65ce0'), ('Letters', '#7cc9f2')], '+2'),
+                ('free', '15:00', '3 h 30 min free'),
+                ('task', '18:30', 'Call the smith about the shield'),
+                ('event', '19:00', 'Supper with Masha', '21:00', '2 h', '#3aa0e8', False),
+            ],
+        },
+        'notes_h': 'Notes that keep themselves in order',
+        'notes_say': 'Notes live on a card of their own, under headings taped across it. Down its '
+                     'edge, a pen dash for every heading: draw your finger along them and the card '
+                     'goes from one to the next, or hold them and pick one by name. On a Mac they '
+                     'open under the mouse, as in Notion.',
+        'notes_quick_h': 'A note in one move',
+        'notes_quick': 'Hold the Notes mark on home’s bar, pick New Note on the app’s icon or in '
+                       'Control Center, or press ⇧⌘N on a Mac. A blank note, at once.',
+        'notes_diary_h': 'A diary that writes itself',
+        'notes_diary': 'Turn on Diary of the day, and every day gone leaves a note of what you got '
+                       'done, tucked under its own heading at the foot of the card.',
+        'notes_demo': {
+            'title': 'Notes',
+            'parts': [
+                (None, ['What the smith said', 'Names for the horse']),
+                ('Songs', ['Verses for the feast', 'A ballad of the sea']),
+                ('Ideas', ['A sundial for the yard']),
+            ],
+            'diary': ('Diary', 'Sunday, 18 October', ['Oil the hinges', 'Reply to Masha', 'Pack the saddle']),
+            'slip': 'Ideas',
+        },
         'cal_empty': 'Nothing on this day',
         # The demo's days, by how far each is from today: its events (time, or none for all
         # day; title; its calendar's colour) and its tasks (title, done).
@@ -315,11 +360,55 @@ T = {
             'find': ('седл', ['Смазать <mark>седл</mark>о', 'Починить <mark>седл</mark>ьные сумки']),
         },
         'cal_h': 'Месяц на карточке',
-        'cal_say': 'Нажми на дату в «Сегодня», и месяц откроется на карточке: под днём точка '
+        'cal_say': 'Нажми на дату в «Сегодня», и календарь откроется на карточке — месяцем, '
+                   'неделей или днём. Под днём точка '
                    'за каждый календарь с событием и одна за задачи. Выбери день, и под линией '
                    'отрыва будут его события, а за ними задачи. Плюс создаёт не только задачу, '
                    'но и событие календаря, а задачу можно отправить в Календарь с её страницы.',
         'cal_note': 'Календари читаются на устройстве и никуда не копируются.',
+        'day_h': 'День по часам',
+        'day_say': 'Переключи календарь на «День», и он разложится по часам: события и задачи со '
+                   'временем, столько, сколько длятся, а пересекающиеся встают рядом. Время между '
+                   'ними занимает свою строку и говорит, сколько его на самом деле, так что весь '
+                   'день помещается на один экран. Через сегодня проходит линия «сейчас», прошедшее '
+                   'выцветает в карандаш.',
+        'day_note': 'Четыре дела в одно время? Видно два, остальные ждут под «+2», пока не нажмёшь.',
+        'day_demo': {
+            'title': 'Понедельник, 19 октября',
+            'rows': [
+                ('event', '07:30', 'Прогулка верхом', '08:30', '1 ч', '#7cc9f2', True),
+                ('now', 'сейчас'),
+                ('free', '', 'ещё 49 мин свободно'),
+                ('event', '10:30', 'Совет в замке', '11:30', '1 ч', '#f5a03c', False),
+                ('free', '11:30', 'свободно 2 ч 30 мин'),
+                ('crowd', '14:00', [('Тренировка лучников', '#b65ce0'), ('Письма', '#7cc9f2')], '+2'),
+                ('free', '15:00', 'свободно 3 ч 30 мин'),
+                ('task', '18:30', 'Позвонить кузнецу насчёт щита'),
+                ('event', '19:00', 'Ужин с Машей', '21:00', '2 ч', '#3aa0e8', False),
+            ],
+        },
+        'notes_h': 'Заметки, в которых не теряешься',
+        'notes_say': 'У заметок своя карточка, с разделами на полосках скотча. Вдоль её края — '
+                     'штрих пером на каждый раздел: проведи по ним пальцем, и карточка перелистнётся '
+                     'от раздела к разделу, или задержи палец и выбери раздел по имени. На Маке они '
+                     'раскрываются под мышью, как в Notion.',
+        'notes_quick_h': 'Заметка в одно движение',
+        'notes_quick': 'Удержи значок заметок на нижней панели, выбери «Новая заметка» на иконке '
+                       'приложения или в Пункте управления, или нажми ⇧⌘N на Маке. Пустая заметка — '
+                       'сразу.',
+        'notes_diary_h': 'Дневник, который пишется сам',
+        'notes_diary': 'Включи «Дневник дня», и каждый прошедший день оставит заметку о том, что '
+                       'ты успел, под своим разделом внизу карточки.',
+        'notes_demo': {
+            'title': 'Заметки',
+            'parts': [
+                (None, ['Что сказал кузнец', 'Имена для коня']),
+                ('Песни', ['Стихи к пиру', 'Баллада о море']),
+                ('Идеи', ['Солнечные часы во двор']),
+            ],
+            'diary': ('Дневник', 'Воскресенье, 18 октября', ['Смазать петли', 'Ответить Маше', 'Собрать седло']),
+            'slip': 'Идеи',
+        },
         'cal_empty': 'На этот день ничего',
         'cal_days': [
             (-2, [('09:00', 'Ярмарка', '#3fbf5a')], [('Смазать седло', True)]),
@@ -591,6 +680,38 @@ def landing(lang):
     gtd = ''.join(f'<li><b>{name}</b><span>{say}</span></li>' for name, say in t['gtd'])
     sample_rows = ''.join(row(t, title, '', done) for title, _, done in t['tasks'][:3])
     pre = 'ru/' if lang == 'ru' else ''
+    dd = t['day_demo']
+
+    def plan_row(r):
+        kind = r[0]
+        if kind == 'event':
+            _, at, title, till, length, colour, over = r
+            return (f'<div class="dp-row"><span class="t">{at}</span><div class="blk{" over" if over else ""}" '
+                    f'style="--c:{colour}"><b>{title}</b><i>{at}–{till} · {length}</i></div></div>')
+        if kind == 'now':
+            return f'<div class="dp-now"><span class="t">{r[1]}</span><span class="line"></span></div>'
+        if kind == 'free':
+            return f'<div class="dp-free"><span class="t">{r[1]}</span><span class="dots"></span><span>{r[2]}</span></div>'
+        if kind == 'task':
+            return (f'<div class="dp-row"><span class="t">{r[1]}</span><div class="blk task">'
+                    f'<span class="o"></span><b>{r[2]}</b></div></div>')
+        _, at, pair, more = r
+        return (f'<div class="dp-row"><span class="t">{at}</span><div class="crowd">'
+                + ''.join(f'<div class="blk" style="--c:{c}"><b>{x}</b></div>' for x, c in pair)
+                + f'<div class="blk more">{more}</div></div></div>')
+    dayplan = ''.join(plan_row(r) for r in dd['rows'])
+    nd = t['notes_demo']
+    note_parts = ''.join(
+        (f'<p class="tapehead">{h}</p>' if h else '')
+        + ''.join(f'<p class="n"><span class="dash"></span>{x}</p>' for x in notes_list)
+        for h, notes_list in nd['parts']
+    )
+    dh, dtitle, ddone = nd['diary']
+    diary = (f'<p class="tapehead">{dh}</p><div class="n diary"><span class="dash"></span><div>'
+             f'<b>{dtitle}</b>' + ''.join(f'<span>☑ {x}</span>' for x in ddone) + '</div></div>')
+    # A dash for each heading on the card, the one on the slip in ink.
+    heads = [h for h, _ in nd['parts'] if h] + [dh]
+    outline = ''.join(f'<span class="{"lit" if h == nd["slip"] else ""}"></span>' for h in heads)
     page = head(lang, t['title'], t['desc'], '', base) + f'''<body>
 {bar(t, base, lang, home)}
 <main>
@@ -686,6 +807,21 @@ def landing(lang):
 <div class="days" role="grid"></div>
 <div class="tear" aria-hidden="true"></div>
 <div class="day" aria-live="polite"><h4></h4><ul></ul></div>
+</div></div>
+</article>
+
+<article class="feature" id="day">
+<div class="say"><h2>{t['day_h']}</h2><p>{t['day_say']}</p><p class="aside">{t['day_note']}</p></div>
+<div class="show"><div class="paper dayplan"><h4>{dd['title']}</h4>{dayplan}</div></div>
+</article>
+
+<article class="feature flip" id="notes">
+<div class="say"><h2>{t['notes_h']}</h2><p>{t['notes_say']}</p>
+<h3>{t['notes_quick_h']}</h3><p>{t['notes_quick']}</p>
+<h3>{t['notes_diary_h']}</h3><p>{t['notes_diary']}</p></div>
+<div class="show"><div class="paper notesdemo"><div class="head">{icon('notebook')}{nd['title']}</div>
+{note_parts}{diary}
+<div class="outline" aria-hidden="true">{outline}<span class="slip">{nd['slip']}</span></div>
 </div></div>
 </article>
 

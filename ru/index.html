@@ -21,13 +21,13 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Pangolin&amp;subset=cyrillic&amp;display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../style.css?v=4121edbd">
+<link rel="stylesheet" href="../style.css?v=ab3b31c8">
 <style>:root { --grain: url(../img/grain.webp); }</style>
 <script>try { const d = localStorage.getItem('taskward-desk'), i = localStorage.getItem('taskward-ink');
 if (d && d !== 'default') document.documentElement.dataset.desk = d;
 if (i && i !== 'default') document.documentElement.dataset.ink = i; } catch (_) {}</script>
-<script src="../when.js?v=4121edbd" defer></script>
-<script src="../app.js?v=4121edbd" defer></script>
+<script src="../when.js?v=ab3b31c8" defer></script>
+<script src="../app.js?v=ab3b31c8" defer></script>
 </head>
 <body>
 <header class="wrap top">
@@ -121,12 +121,27 @@ if (i && i !== 'default') document.documentElement.dataset.ink = i; } catch (_) 
 </article>
 
 <article class="feature flip" id="calendar">
-<div class="say"><h2>Месяц на карточке</h2><p>Нажми на дату в «Сегодня», и месяц откроется на карточке: под днём точка за каждый календарь с событием и одна за задачи. Выбери день, и под линией отрыва будут его события, а за ними задачи. Плюс создаёт не только задачу, но и событие календаря, а задачу можно отправить в Календарь с её страницы.</p><p class="aside">Календари читаются на устройстве и никуда не копируются.</p></div>
+<div class="say"><h2>Месяц на карточке</h2><p>Нажми на дату в «Сегодня», и календарь откроется на карточке — месяцем, неделей или днём. Под днём точка за каждый календарь с событием и одна за задачи. Выбери день, и под линией отрыва будут его события, а за ними задачи. Плюс создаёт не только задачу, но и событие календаря, а задачу можно отправить в Календарь с её страницы.</p><p class="aside">Календари читаются на устройстве и никуда не копируются.</p></div>
 <div class="show"><div class="paper month" data-lang="ru" data-cal="{&quot;days&quot;: [[-2, [[&quot;09:00&quot;, &quot;Ярмарка&quot;, &quot;#3fbf5a&quot;]], [[&quot;Смазать седло&quot;, true]]], [0, [[&quot;07:30&quot;, &quot;Утренняя прогулка верхом&quot;, &quot;#7cc9f2&quot;], [&quot;10:30&quot;, &quot;Совет в замке&quot;, &quot;#f5a03c&quot;], [&quot;19:00&quot;, &quot;Ужин с Машей&quot;, &quot;#3aa0e8&quot;]], [[&quot;Наточить меч&quot;, true], [&quot;Заплатить за жильё&quot;, false]]], [1, [[&quot;13:00&quot;, &quot;Отборочные поединки&quot;, &quot;#b65ce0&quot;]], [[&quot;Позвонить кузнецу насчёт щита&quot;, false]]], [2, [], [[&quot;Спланировать поездку к морю&quot;, false]]], [4, [[&quot;&quot;, &quot;День святого Луки&quot;, &quot;#3fbf5a&quot;]], []], [6, [[&quot;18:00&quot;, &quot;Пир после турнира&quot;, &quot;#f5a03c&quot;], [&quot;20:00&quot;, &quot;Ночной дозор&quot;, &quot;#3aa0e8&quot;]], []], [9, [], [[&quot;Съездить на дальний север&quot;, false]]]], &quot;empty&quot;: &quot;На этот день ничего&quot;}">
 <div class="month-head"><b></b><span></span></div>
 <div class="days" role="grid"></div>
 <div class="tear" aria-hidden="true"></div>
 <div class="day" aria-live="polite"><h4></h4><ul></ul></div>
+</div></div>
+</article>
+
+<article class="feature" id="day">
+<div class="say"><h2>День по часам</h2><p>Переключи календарь на «День», и он разложится по часам: события и задачи со временем, столько, сколько длятся, а пересекающиеся встают рядом. Время между ними занимает свою строку и говорит, сколько его на самом деле, так что весь день помещается на один экран. Через сегодня проходит линия «сейчас», прошедшее выцветает в карандаш.</p><p class="aside">Четыре дела в одно время? Видно два, остальные ждут под «+2», пока не нажмёшь.</p></div>
+<div class="show"><div class="paper dayplan"><h4>Понедельник, 19 октября</h4><div class="dp-row"><span class="t">07:30</span><div class="blk over" style="--c:#7cc9f2"><b>Прогулка верхом</b><i>07:30–08:30 · 1 ч</i></div></div><div class="dp-now"><span class="t">сейчас</span><span class="line"></span></div><div class="dp-free"><span class="t"></span><span class="dots"></span><span>ещё 49 мин свободно</span></div><div class="dp-row"><span class="t">10:30</span><div class="blk" style="--c:#f5a03c"><b>Совет в замке</b><i>10:30–11:30 · 1 ч</i></div></div><div class="dp-free"><span class="t">11:30</span><span class="dots"></span><span>свободно 2 ч 30 мин</span></div><div class="dp-row"><span class="t">14:00</span><div class="crowd"><div class="blk" style="--c:#b65ce0"><b>Тренировка лучников</b></div><div class="blk" style="--c:#7cc9f2"><b>Письма</b></div><div class="blk more">+2</div></div></div><div class="dp-free"><span class="t">15:00</span><span class="dots"></span><span>свободно 3 ч 30 мин</span></div><div class="dp-row"><span class="t">18:30</span><div class="blk task"><span class="o"></span><b>Позвонить кузнецу насчёт щита</b></div></div><div class="dp-row"><span class="t">19:00</span><div class="blk" style="--c:#3aa0e8"><b>Ужин с Машей</b><i>19:00–21:00 · 2 ч</i></div></div></div></div>
+</article>
+
+<article class="feature flip" id="notes">
+<div class="say"><h2>Заметки, в которых не теряешься</h2><p>У заметок своя карточка, с разделами на полосках скотча. Вдоль её края — штрих пером на каждый раздел: проведи по ним пальцем, и карточка перелистнётся от раздела к разделу, или задержи палец и выбери раздел по имени. На Маке они раскрываются под мышью, как в Notion.</p>
+<h3>Заметка в одно движение</h3><p>Удержи значок заметок на нижней панели, выбери «Новая заметка» на иконке приложения или в Пункте управления, или нажми ⇧⌘N на Маке. Пустая заметка — сразу.</p>
+<h3>Дневник, который пишется сам</h3><p>Включи «Дневник дня», и каждый прошедший день оставит заметку о том, что ты успел, под своим разделом внизу карточки.</p></div>
+<div class="show"><div class="paper notesdemo"><div class="head"><svg class="icon" aria-hidden="true"><use href="../img/icons.svg#notebook"/></svg>Заметки</div>
+<p class="n"><span class="dash"></span>Что сказал кузнец</p><p class="n"><span class="dash"></span>Имена для коня</p><p class="tapehead">Песни</p><p class="n"><span class="dash"></span>Стихи к пиру</p><p class="n"><span class="dash"></span>Баллада о море</p><p class="tapehead">Идеи</p><p class="n"><span class="dash"></span>Солнечные часы во двор</p><p class="tapehead">Дневник</p><div class="n diary"><span class="dash"></span><div><b>Воскресенье, 18 октября</b><span>☑ Смазать петли</span><span>☑ Ответить Маше</span><span>☑ Собрать седло</span></div></div>
+<div class="outline" aria-hidden="true"><span class=""></span><span class="lit"></span><span class=""></span><span class="slip">Идеи</span></div>
 </div></div>
 </article>
 
