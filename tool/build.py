@@ -12,71 +12,7 @@ URL = 'https://alobanov.github.io/taskward/'
 MAIL = 'katleta5000@gmail.com'
 import hashlib
 
-
-# The app's palettes (tool/palettes.json, taken by tool/palettes.py), each in the light and
-# the dark, as the page's colours: palettes.css, the page's own variables set over by the one
-# picked, and in the dark by its dark half. Analog is the page as it is, its desks and inks;
-# its dark, the app's dark cards on the desk picked gone dark.
-PALETTES = json.loads((SITE / 'tool' / 'palettes.json').read_text())
-
-
-def _css(argb, alpha=None):
-    a = int(argb[:2], 16) / 255 if alpha is None else alpha
-    r, g, b = (int(argb[i:i + 2], 16) for i in (2, 4, 6))
-    return f'#{argb[2:].lower()}' if a >= 0.999 else f'rgba({r}, {g}, {b}, {a:.2f})'
-
-
-def _lum(argb):
-    def ch(i):
-        c = int(argb[i:i + 2], 16) / 255
-        return c / 12.92 if c <= 0.03928 else ((c + 0.055) / 1.055) ** 2.4
-    return 0.2126 * ch(2) + 0.7152 * ch(4) + 0.0722 * ch(6)
-
-
-def _contrast(a, b):
-    la, lb = sorted((_lum(a), _lum(b)), reverse=True)
-    return (la + 0.05) / (lb + 0.05)
-
-
-def _vars(sc, dark):
-    ink = sc['ink']
-    # The words on the desk: the ink where it reads there, else a light or a dark one.
-    on = ink if _contrast(ink, sc['desk']) >= 4.5 else max(
-        ['FFF1F0EC', 'FF2C3436'], key=lambda c: _contrast(c, sc['desk']))
-    out = {
-        'desk': _css(sc['desk']), 'white': _css(sc['white']), 'cream': _css(sc['cream']),
-        'kraft': _css(sc['kraft']), 'grey': _css(sc['grey']), 'ink': _css(ink),
-        'pencil': _css(sc['pencil']) if 'pencil' in sc else _css(ink, 0.6 if dark else 0.55),
-        'rule': _css(ink, sc.get('rule', 0.16 if dark else 0.14)),
-        'seal': _css(sc['seal']), 'dusk': _css(sc['dusk']),
-        'on-desk': _css(on), 'on-desk-soft': _css(on, 0.74), 'note': _css(on),
-        'desk-rule': _css(on, 0.16),
-    }
-    if 'highlight' in sc:
-        out['marker'] = _css(sc['highlight'])
-    return '; '.join(f'--{k}: {v}' for k, v in out.items()) + (
-        '; color-scheme: dark' if dark else '; color-scheme: light')
-
-
-def palettes_css():
-    rules = ['/* Written by tool/build.py from tool/palettes.json: the app\'s palettes, one to one. */']
-    light, dark = PALETTES['palettes']['analog']
-    rules.append(f':root[data-theme="dark"]:not([data-palette]) {{ {_vars(dark, True)} }}')
-    # Analog's dark on each desk as the app darkens it (polk_theme.dart: _deskDark).
-    for desk, colour in [('olive', 'FF23271E'), ('walnut', 'FF251D17'), ('charcoal', 'FF000000'),
-                         ('paper', 'FF16171C'), ('mono', 'FF16171C')]:
-        rules.append(f':root[data-theme="dark"][data-desk="{desk}"]:not([data-palette]) '
-                     f'{{ {_vars({**dark, "desk": colour}, True)} }}')
-    for name, (lt, dk) in PALETTES['palettes'].items():
-        if name == 'analog':
-            continue
-        rules.append(f':root[data-palette="{name}"] {{ {_vars(lt, False)} }}')
-        rules.append(f':root[data-palette="{name}"][data-theme="dark"] {{ {_vars(dk, True)} }}')
-    return '\n'.join(rules) + '\n'
-
-
-(SITE / 'palettes.css').write_text(palettes_css())
-VERSION = hashlib.md5((SITE / 'style.css').read_bytes() + (SITE / 'palettes.css').read_bytes() + (SITE / 'app.js').read_bytes() + (SITE / 'when.js').read_bytes()).hexdigest()[:8]
+VERSION = hashlib.md5((SITE / 'style.css').read_bytes() + (SITE / 'app.js').read_bytes() + (SITE / 'when.js').read_bytes()).hexdigest()[:8]
 UPDATED = {'en': 'November 4, 2026', 'ru': '4 ноября 2026'}
 
 T = {
@@ -84,7 +20,7 @@ T = {
         'title': 'Taskward: a calm to-do list on paper cards',
         'desc': 'A calm to-do list for iPhone and Mac. Every list is a paper card on your desk: '
                 'Today in front, the rest in a wooden holder behind it.',
-        'nav': ['Smart dates', 'Lists', 'iPhone and Mac', 'Privacy', 'Support'],
+        'nav': ['Features', 'Pro', 'iPhone and Mac', 'Privacy', 'Support'],
         'other': ('Русский', 'ru/'),
         'h1': 'Your day,<br>on <u>one card</u>.',
         'lede': ('A calm to-do list for iPhone and Mac.',
@@ -92,32 +28,8 @@ T = {
                  'work your day from one card.'),
         'small': 'No account · no ads · kept in your own iCloud',
         'cta': 'Coming soon to the App Store',
-        # The card under the lede: what Taskward comes to, as tasks on a list, each its small
-        # print as the app writes it — {today}, {bell}, {cloud}, {knight} and the signals' marks
-        # {s1}, {s2}, {s5} laid in as icons.
-        'points_h': 'Why Taskward',
-        'why_h': 'Four reasons to try it',
-        'why_say': 'A to-do list that keeps out of your way. Each reason is a line on a card, as '
-                   'tasks are in the app: tick them off as you read.',
-        'points': [
-            ('Write it as you’d say it', '“Gym <mark>tomorrow at 9</mark>” → {today}Tomorrow {bell}09:00'),
-            ('More than done or not', '{s1}in progress {s2}delegated {s5}waiting'),
-            ('The same lists on iPhone and Mac', '{cloud}kept in step through your iCloud'),
-            ('A knight to show you the way', '{knight}on first launch, Getting Things Done step by step'),
-        ],
-        'then': 'Draw a card out of the holder and it lies on your desk. Work right on it.',
-        'today': 'Today', 'upcoming': 'Upcoming', 'anytime': 'Anytime', 'someday': 'Someday',
-        'date': '27.10.26',
-        'tasks': [
-            ('Sharpen the sword', '', True),
-            ('Call the smith about the shield', 'Friday|21:30|1/3', False),
-            ('Pay the rent', 'due:Today', False),
-            ('Plan the ride to the coast', '2/5', False),
-        ],
-        'evening': 'This Evening',
-        'evening_tasks': ['Read twenty pages'],
+        'upcoming': 'Upcoming',
         'check': 'Check off',
-        'lists_h': 'Every list is a card of its own',
         # Each list's card with the hint the app shows under its head (list_hint in the app's
         # translations), its words cut short for the page: (icon, name, paper, marker, pen, title, text);
         # the pen is the marker taken toward the ink, as ListHint writes in it.
@@ -129,33 +41,13 @@ T = {
             ('project', 'Projects', 'white', '#8B6CF0', '#6c5aa8', 'Projects and areas', 'A project is a goal of several steps; an area, a part of life: work, home, health.'),
             ('notebook', 'Notes', 'white', '#F6C945', '#a68e4a', 'Not a to-do, just written down', 'Thoughts worth keeping, out of your to-dos. A note becomes a task once it is one.'),
         ],
-        'lists_say': 'Things come in, get a day or wait for one, and end up done. Each list has its own paper, so you always know where you are.',
-        'lists': [
-            ('export', 'Inbox', 'white', 'Whatever comes to mind, before you decide what it is.'),
-            ('favoriteFilled', 'Today', 'white', 'What you take on today, and this evening under it.'),
-            ('today', 'Upcoming', 'cream', 'The days ahead, with your calendar beside them.'),
-            ('list', 'Anytime', 'cream', 'Your stock of things to do, there when you are ready.'),
-            ('archive', 'Someday', 'kraft', 'Put off, not forgotten. Looked through now and then.'),
-            ('check', 'Logbook', 'grey', 'Everything done, kept in the order you did it.'),
-        ],
-        'ticket_h': 'A task opens as a ticket',
-        'ticket_say': 'Notes, a checklist, tags, a deadline and a reminder, on a card torn off '
-                      'along a dashed line. Only what you have added shows; the rest waits as a '
-                      'pencil mark at its foot.',
         'ticket': {
             'title': 'Call the smith about the shield',
             'notes': 'The old one is **cracked** along the rim. Ask if he can match the ::boss::.',
             'steps': [('Measure the old one', True), ('Find the sketch', False), ('Ask the price', False)],
             'tags': ['Armoury', 'Errand'], 'when': 'Today',
         },
-        'signals_h': 'More than done or not done',
-        'signals_say': 'Hold a task’s circle and mark how it stands. Delegated and waiting fade '
-                       'into pencil, out of your way.',
         'signals_note': ('Mark it', 'Complete', 'Signals…'),
-        'md_h': 'Notes in Markdown',
-        'md_say': 'Headings, bold, highlights, lists, boxes to tick, links, even tables. The marks '
-                  'stay where you wrote them, in pencil; what they mark takes its look at once.',
-        'md': ['Heading', 'bold', 'highlight', 'to do', 'link', 'table'],
         'signals': ['In progress', 'Delegated', 'Appointment', 'Important'],
         # Written in pen round the phone, each pointing at its place on the screen.
         'float': {'smart': ('Gym ', 'tomorrow at 9'), 'when': 'Tomorrow', 'progress': 'In progress',
@@ -163,23 +55,6 @@ T = {
         'notes': ['the other lists, standing behind', 'Today in front: work right on it',
                   'a deadline today, in red', 'a tap, and a new task',
                   'Inbox, projects and notes, on the oak'],
-        'gtd_h': 'Built on Getting Things Done',
-        'gtd_say': 'David Allen’s method for a clear head: get everything out of it and into a trusted place, then decide, one thing at a time. Taskward’s lists are its steps.',
-        'gtd': [('Capture', 'Everything goes into the Inbox, as it comes.'),
-                ('Clarify', 'What is it? Do it now, give it a day, put it off, or keep it as a note.'),
-                ('Organise', 'Today, Upcoming, Anytime, Someday, projects and areas.'),
-                ('Reflect', 'Look Someday through now and then; the Logbook keeps what’s done.'),
-                ('Engage', 'Work from one card: Today.')],
-        'gtd_knight': 'On first launch a little knight walks you through it with a pile of errands.',
-        'cap': {
-            'shots': 'The real app',
-            'try': 'Type a task with a day in it and press Return.',
-            'ticket': ('A task opens as a ticket', 'Notes, a checklist, tags, a deadline, a reminder.'),
-            'signals': ('More than done', 'Hold a task’s circle to mark how it stands.'),
-            'lists': ('Every list, its own card', 'Each on its own paper, behind Today.'),
-            'mac': ('On a Mac too', 'A sidebar, Quick Find on ⌘F, kept in step through iCloud.'),
-            'yours': ('Your desk, your ink', 'Try a desk on this page:'),
-        },
         'smart_h': 'Write it as you’d say it',
         'try_say': 'Type a task with a day in it, the way you would say it, and press Return. '
                    'The day and the reminder set themselves, and the task lands on its card.',
@@ -190,40 +65,8 @@ T = {
         'inbox': 'Inbox', 'evening_word': 'This Evening', 'when_word': 'When',
         'today_word': 'Today', 'tomorrow_word': 'Tomorrow',
         'try_seed': {'inbox': ['Buy a new pen'], 'today': ['Sharpen the sword'], 'upcoming': ['Tournament at the castle']},
-        'smart_say': 'Type “Gym tomorrow at 9am” and the day and the reminder set themselves; the '
-                     'words leave the title. Tap the highlight if you meant the words.',
-        'smart_hint': 'Notes',
-        'smart_blank': 'When',
-        'phrases': [
-            ('Gym ', 'tomorrow at 9am', 'today', 'Tomorrow', '09:00'),
-            ('Movie night ', 'on friday evening', 'darkThemeFilled', 'Friday', ''),
-            ('Dentist ', 'Nov 12 at 14:30', 'today', 'Nov 12', '14:30'),
-        ],
-        'more_h': 'And a little more',
-        'more': [
-            ('paperLines', 'Zen', 'A card edge to edge when a day needs all of you.'),
-            ('search', 'Quick Find', 'Draw Today down, or ⌘F on a Mac.'),
-        ],
-        'more_say': 'Small things that make a calm day calmer.',
-        # What each card shows: Zen's tasks, the word typed into Quick Find and what it finds,
-        'more_demo': {
-            'zen': ['Sharpen the sword', 'Call the smith', 'Pay the rent'],
-            'find': ('sadd', ['Oil the <mark>sadd</mark>le', 'Mend the <mark>sadd</mark>le bags']),
-        },
-        'cal_h': 'A month on a card',
-        'cal_say': 'Tap Today’s date and the calendar opens on a card — a month, a week or a day. '
-                   'Under each day a dot for '
-                   'each calendar with an event, and one for its to-dos. Pick a day, and under '
-                   'the tear line are its events, then its tasks. The plus writes a calendar '
-                   'event as well as a task, and a task goes into your Calendar from its page.',
-        'cal_note': 'Your calendars are read on the device, never copied.',
-        'day_h': 'Your day, by the clock',
-        'day_say': 'Switch the calendar to Day and the day lies out by the clock: your events and '
-                   'the tasks with a time, as long as they last, side by side where they overlap. '
-                   'The time between them takes a line of its own and says how long it truly is, '
-                   'so the whole day fits on one screen. Now runs across today; what is over turns '
-                   'to pencil.',
-        'day_note': 'Four things at once? Two show, the rest wait under a +2 until you tap it.',
+        # Quick Find's little scene: the word typed and what it finds.
+        'find_demo': ('sadd', ['Oil the <mark>sadd</mark>le', 'Mend the <mark>sadd</mark>le bags']),
         # The Day demo: its title, then its rows — an event (time, title, end, length, colour,
         # over), now, free time (from, words), a task (time, title), a crowd (two events, +N).
         'day_demo': {
@@ -240,17 +83,6 @@ T = {
                 ('event', '19:00', 'Supper with Masha', '21:00', '2 h', '#3aa0e8', False),
             ],
         },
-        'notes_h': 'Notes that keep themselves in order',
-        'notes_say': 'Notes live on a card of their own, under headings taped across it. Down its '
-                     'edge, a pen dash for every heading: draw your finger along them and the card '
-                     'goes from one to the next, or hold them and pick one by name. On a Mac they '
-                     'open under the mouse, as in Notion.',
-        'notes_quick_h': 'A note in one move',
-        'notes_quick': 'Hold the Notes mark on home’s bar, pick New Note on the app’s icon or in '
-                       'Control Center, or press ⇧⌘N on a Mac. A blank note, at once.',
-        'notes_diary_h': 'A diary that writes itself',
-        'notes_diary': 'Turn on Diary of the day, and every day gone leaves a note of what you got '
-                       'done, tucked under its own heading at the foot of the card.',
         'notes_demo': {
             'title': 'Notes',
             'parts': [
@@ -275,39 +107,118 @@ T = {
             (6, [('18:00', 'Tourney feast', '#f5a03c'), ('20:00', 'Night watch', '#3aa0e8')], []),
             (9, [], [('Visit the far north', False)]),
         ],
-        'zen_h': 'One card, the whole screen',
-        'zen_say': 'When a day needs all of you, open its card edge to edge: no bar, no desk, '
-                   'nothing else. Draw it down and it is back on the desk.',
-        'real_h': 'The real app, on iPhone and Mac',
-        'real_say': 'The same lists on both, kept in step through your iCloud. On a Mac the '
-                    'holder stands in a window of its own, by day or by night, and Quick Find is '
-                    'one key away: ⌘F.',
         'shots_alt': 'Taskward on iPhone',
         'mac_alt': 'Taskward on a Mac',
-        'yours_h': 'Your desk, your ink',
-        'yours_say': 'Light or dark, and a palette made whole for each — or the desk the cards lie '
-                     'on and the ink you write in; then how a done task is struck through, and '
-                     'smooth or toothy paper. Try them on this page:',
-        'desk_h': 'Desk', 'ink_h': 'Ink',
-        'desks': [('default', 'Sage', '#b4c2c3'), ('olive', 'Olive', '#4a5040'),
-                  ('walnut', 'Walnut', '#5b4636'), ('charcoal', 'Charcoal', '#2f2f2d'),
-                  ('paper', 'Paper', '#e9e5da'), ('mono', 'Monochrome', '#f2f3f5')],
-        'inks': [('default', 'Graphite', '#45454f'), ('blue', 'Blue', '#2b3ac9'),
-                 ('black', 'Black', '#141417'), ('espresso', 'Espresso', '#3a201c')],
         'kept_h': 'Nothing of yours leaves your hands',
         'kept': ['No account to make.', 'No ads, no tracking. Anonymous usage statistics you can turn off.',
                  'Your tasks live on your devices and in your own iCloud, which we can’t read.'],
         'kept_link': 'Read the privacy policy',
-        'knight_h': 'New to getting things done?',
-        'knight_say': 'A little knight shows you how to sort an inbox on first launch.',
+        # Everything it does, at a glance: a tile for each, linking to where it is shown —
+        # (anchor, icon, name, one line, a Pro mark or none). Only what the app does
+        # (the app's docs/*.md); Pro's as docs/pro.md has it.
+        'all_h': 'Everything it does',
+        'all_say': 'A calm to-do list with more in it than it shows. Tap one to see it at work.',
+        'tiles': [
+            ('speak', 'voice', 'Write as you speak', 'Type “gym tomorrow at 9”, or say your whole day aloud.', ''),
+            ('claude', 'magic', 'Plans from Claude', 'Ask for a plan; it lands in your lists as projects and tasks.', 'Pro · Mac'),
+            ('day', 'time', 'Your day by the hour', 'Events and tasks on one clock, and the month on a card.', 'Pro'),
+            ('paper', 'cardFile', 'Lists on paper cards', 'Today in front, the rest in an oak holder. Many themes.', ''),
+            ('ticket', 'note', 'All in one task', 'Notes in Markdown, a checklist, a deadline, a reminder.', ''),
+            ('signals', '', 'More than done', 'In progress, delegated, waiting: mark how a task stands.', ''),
+            ('repeat', 'repeat', 'Repeating tasks', 'Every week, or the 2nd Tuesday: the next comes when one is done.', ''),
+            ('find', 'search', 'Quick Find', 'Pull Today down, or ⌘F: lists, projects, tags, tasks.', ''),
+            ('notes', 'notebook', 'Notes and a diary', 'Notes apart from tasks, and a diary that writes itself.', 'Pro'),
+            ('focus', 'tomato', 'Focus timer', 'One tomato at a time for the task at hand, on the Lock Screen too.', ''),
+            ('mac', 'backup', 'iPhone and Mac in step', 'Your own iCloud, no account. On a Mac, the day in the menu bar.', ''),
+            ('widgets', 'paperDots', 'Widgets', 'Today, what’s next and the month on your Home and Lock Screen.', ''),
+        ],
+        # The four told large, each beside a short film of the app in a phone.
+        'voice_h': 'Or say your whole day',
+        'voice_say': 'Tap the microphone beside Today’s plus and talk: “call the bank at ten, gym in '
+                     'the evening, a present for Anna on Friday.” It comes back as separate tasks with '
+                     'their days and times, and the ones you gave no time are fitted into the gaps '
+                     'between your events. Look them over, then add.',
+        'voice_note': 'Dictating is part of Pro, on iPhone and Mac.',
+        'claude_h': 'Plans from Claude, right in your lists',
+        'claude_say': 'Tell Claude what you’re up to. It looks at your areas and projects and writes a '
+                      'plan in: a project with headings, tasks with their days, deadlines and checklists. '
+                      'Or ask it to sort your Inbox. Whatever it does, one Undo takes back.',
+        'claude_note': 'On a Mac with Pro, and on your iPhone a moment later through iCloud.',
+        'claude_link': 'How to connect Claude',
+        'day_h': 'Your day by the hour',
+        'day_say': 'Switch the calendar to Day: your events and the tasks with a time lie out by the '
+                   'clock, side by side where they overlap. The free time between them takes one line '
+                   'and says how long it really is, so the whole day fits one screen. The month puts a '
+                   'dot under each day for its events and tasks: tap a day to see it.',
+        'day_note': 'Your calendars are read on the device, never copied. The calendar is part of Pro.',
+        'paper_h': 'Every list, a paper card on your desk',
+        'paper_say': 'Today lies in front and you work right on it; Upcoming, Anytime and Someday '
+                     'stand behind it in an oak holder. Draw one out and it lies on the desk. Each list '
+                     'has its own paper and a word on what it’s for, so you always know where you are.',
+        'yours_h': 'Make it yours',
+        'yours_say': 'Light or dark, a palette for each, the desk under the cards, the ink you write in, '
+                     'how a done task is struck through, smooth or toothy paper. Or open a list edge '
+                     'to edge, nothing round it.',
+        # The rest, smaller: four with a little scene each, then four in a line or two.
+        'rest_h': 'And everything else',
+        'rest_say': 'Small things that make a calm day calmer.',
+        'ticket_h': 'Notes, checklist and reminder in one task',
+        'ticket_say': 'A task opens as a ticket: notes in Markdown, a checklist, tags, a deadline and a '
+                      'reminder. Only what you’ve added shows; the rest waits as a pencil mark at its foot.',
+        'signals_h': 'Mark how a task stands, not just done',
+        'signals_say': 'Hold a task’s circle: in progress, delegated, an appointment, waiting, a '
+                       'question… Delegated and waiting fade to pencil, out of your way.',
+        'find_h': 'Find anything in a keystroke',
+        'find_say': 'Pull Today down on your phone, or press ⌘F on a Mac: lists, projects, tags and '
+                    'tasks by their names. One more tap looks in notes and checklists too.',
+        'notes_h': 'Notes apart from your tasks',
+        'notes_say': 'Thoughts worth keeping get a card of their own, under headings; move one to your '
+                     'tasks once it is one. Turn on the diary, and every day leaves a note of what you '
+                     'got done.',
+        'small_cards': [
+            ('repeat', 'repeat', 'Tasks that come back', 'Every day, week or month, after it’s done or '
+             'on a schedule. The next one comes as you check this one off.'),
+            ('focus', 'tomato', 'A focus timer', 'Wind the knob and work one tomato at a time, a break '
+             'between. It runs on the Lock Screen and rings at the end.'),
+            ('widgets', 'paperDots', 'Your day at a glance', 'Today, what’s next, the week and the month '
+             'on your Home Screen; on the Lock Screen too, with New Task a tap away.'),
+            ('gtd', 'knight', 'Getting Things Done, built in', 'Inbox, Today, Upcoming, Anytime and '
+             'Someday are the method’s steps. On first launch a little knight shows you how.'),
+        ],
+        'mac_h': 'On a Mac too, in step through iCloud',
+        'mac_say': 'The same lists on iPhone and Mac, kept in step through your own iCloud: no account '
+                   'to make. On a Mac the holder stands in a window of its own with a sidebar, every '
+                   'list a key away — ⌘1 to ⌘6, ⌘N for a task, ⌘F to find — and with Pro today’s date '
+                   'sits in the menu bar, your day a click under it.',
+        # Free and Pro, as docs/pro.md has them ("What is Pro's", "Free, and to stay so"), and
+        # the prices in the USA.
+        'pro_h': 'Free to use. Pro for more.',
+        'pro_say': 'No trial clock, no paywall at launch: the free app is a whole to-do list, for good. '
+                   'Pro adds the rest, and keeps one person making Taskward.',
+        'free_h': 'Free, for good',
+        'free': ['Every list, and projects and areas without limit', 'Days and reminders written as you’d say them — “tomorrow at 9”',
+                 'Checklists, and notes in Markdown on any task', 'Processing the Inbox, the Logbook, the Trash',
+                 'Quick Find', 'Plain repeats', 'Four signals', 'The focus timer',
+                 'iCloud sync between iPhone and Mac', 'Lock Screen widgets and New Task',
+                 'Light or dark, the inks, the font, the text size'],
+        'procol_h': 'Pro',
+        'pro': ['Deadlines, and reminders set by hand', 'Tags, and lists filtered by them',
+                'Fuller repeats: the 2nd Tuesday, an end, a deadline on each copy',
+                'The calendar with your events; a task put in your Calendar', 'Dictating your day',
+                'Plans from Claude, on a Mac', 'Notes, and the diary of the day', 'Every signal',
+                'Home Screen widgets', 'Your day in a Mac’s menu bar',
+                'Every palette, desk and paper; app icons; lists in full screen'],
+        'prices': [('Month', '$2.99', 'a month'), ('Year', '$29.99', 'a year'), ('Lifetime', '$69.99', 'once')],
+        'price_note': 'Month and Year start with 7 days free. Prices in the US App Store; other '
+                      'countries have their own. If Pro ends, what you set stays: deadlines, reminders '
+                      'and tags go on working.',
         'support': 'Support', 'privacy': 'Privacy policy', 'by': 'Made by Aleksei Lobanov',
-        'back': 'Taskward',
     },
     'ru': {
         'title': 'Taskward: спокойный список дел на бумажных карточках',
         'desc': 'Спокойный список дел для iPhone и Mac. Каждый список — бумажная карточка на '
                 'столе: «Сегодня» впереди, остальные в деревянной подставке за ней.',
-        'nav': ['Умная дата', 'Списки', 'iPhone и Mac', 'Приватность', 'Поддержка'],
+        'nav': ['Возможности', 'Pro', 'iPhone и Mac', 'Приватность', 'Поддержка'],
         'other': ('English', '../'),
         'h1': 'Весь день —<br>на <u>одной карточке</u>.',
         'lede': ('Спокойный список дел для iPhone и Mac.',
@@ -315,29 +226,8 @@ T = {
                  'и веди весь день с одной карточки.'),
         'small': 'Без аккаунта · без рекламы · в твоём iCloud',
         'cta': 'Скоро в App Store',
-        'points_h': 'Почему Taskward',
-        'why_h': 'Четыре причины попробовать',
-        'why_say': 'Список дел, который не мешает. Каждая причина — строка на карточке, как '
-                   'задачи в приложении: отмечай их по ходу чтения.',
-        'points': [
-            ('Пиши, как говоришь', '«Тренировка <mark>завтра в 9</mark>» → {today}Завтра {bell}09:00'),
-            ('Не только «сделано»', '{s1}в работе {s2}поручено {s5}жду ответа'),
-            ('Одни списки на iPhone и Mac', '{cloud}синхронно через твой iCloud'),
-            ('Рыцарь проведёт по методу', '{knight}при первом запуске, GTD шаг за шагом'),
-        ],
-        'then': 'Вытяни карточку из подставки — она ляжет на стол. Работай прямо на ней.',
-        'today': 'Сегодня', 'upcoming': 'Планы', 'anytime': 'В любое время', 'someday': 'Когда-нибудь',
-        'date': '27.10.26',
-        'tasks': [
-            ('Наточить меч', '', True),
-            ('Позвонить кузнецу насчёт щита', 'Пятница|21:30|1/3', False),
-            ('Заплатить за жильё', 'due:Сегодня', False),
-            ('Спланировать поездку к морю', '2/5', False),
-        ],
-        'evening': 'Этим вечером',
-        'evening_tasks': ['Прочитать двадцать страниц'],
+        'upcoming': 'Планы',
         'check': 'Отметить',
-        'lists_h': 'У каждого списка своя карточка',
         'hints': [
             ('export', 'Входящие', 'white', '#4AA8F0', '#487ba8', 'Всё сюда — разберёшь потом', 'Всё, что пришло в голову. Раз в день разбирай.'),
             ('today', 'Планы', 'cream', '#FF6B5E', '#ab5a57', 'То, у чего есть свой день', 'Задачи с датой ждут здесь и сами придут в «Сегодня» в свой день.'),
@@ -346,56 +236,19 @@ T = {
             ('project', 'Проекты', 'white', '#8B6CF0', '#6c5aa8', 'Проекты и области', 'Проект — цель из нескольких шагов, область — часть жизни: работа, дом, здоровье.'),
             ('notebook', 'Заметки', 'white', '#F6C945', '#a68e4a', 'Не задача, просто запись', 'Мысли, которые стоит сохранить, — не среди задач. Станет делом — перенеси.'),
         ],
-        'lists_say': 'Дела приходят во входящие, получают свой день или ждут его — и уходят в журнал. У каждого списка своя бумага, так что сразу видно, где ты.',
-        'lists': [
-            ('export', 'Входящие', 'white', 'Всё, что пришло в голову, пока не решил, что это.'),
-            ('favoriteFilled', 'Сегодня', 'white', 'То, что берёшь на сегодня, и вечер под ним.'),
-            ('today', 'Планы', 'cream', 'Ближайшие дни, и календарь рядом с ними.'),
-            ('list', 'В любое время', 'cream', 'Запас дел, который ждёт, когда будешь готов.'),
-            ('archive', 'Когда-нибудь', 'kraft', 'Отложено, а не забыто. Иногда стоит пересмотреть.'),
-            ('check', 'Журнал', 'grey', 'Всё сделанное, в том порядке, как делал.'),
-        ],
-        'ticket_h': 'Задача открывается билетом',
-        'ticket_say': 'Заметки, чек-лист, теги, срок и напоминание — на карточке с отрывным '
-                      'корешком. Видно только то, что добавил; остальное ждёт карандашной меткой '
-                      'внизу.',
         'ticket': {
             'title': 'Позвонить кузнецу насчёт щита',
             'notes': 'Старый **треснул** по краю. Спросить, подберёт ли он ::умбон::.',
             'steps': [('Измерить старый', True), ('Найти эскиз', False), ('Узнать цену', False)],
             'tags': ['Оружейная', 'В городе'], 'when': 'Сегодня',
         },
-        'signals_h': 'Больше, чем сделано или нет',
-        'signals_say': 'Зажми кружок задачи и отметь, как она: в работе, поручено, жду ответа. '
-                       'Поручённое и ожидание уходят в карандаш, чтобы не мешать.',
         'signals_note': ('Отметить', 'Выполнить', 'Сигналы…'),
-        'md_h': 'Заметки в Markdown',
-        'md_say': 'Заголовки, жирный, выделение, списки, галочки, ссылки и даже таблицы. Значки '
-                  'остаются там, где ты их написал, карандашом, а размеченное сразу меняет вид.',
-        'md': ['Заголовок', 'жирный', 'выделение', 'сделать', 'ссылка', 'таблица'],
         'signals': ['В работе', 'Поручено', 'Встреча', 'Важно'],
         'float': {'smart': ('Тренировка ', 'завтра в 9'), 'when': 'Завтра', 'progress': 'В работе',
                   'tag': 'Оружейная'},
         'notes': ['остальные списки стоят позади', '«Сегодня» впереди — работай на нём',
                   'срок сегодня — красным', 'тап — и новая задача',
                   'входящие, проекты и заметки — на дубовой подставке'],
-        'gtd_h': 'По методу GTD',
-        'gtd_say': 'Метод Дэвида Аллена для ясной головы: выгрузить из неё всё в надёжное место и решать по одному делу за раз. Списки Taskward — это его шаги.',
-        'gtd': [('Собрать', 'Всё, что приходит в голову, — во входящие, сразу.'),
-                ('Разобрать', 'Что это? Сделать сейчас, назначить день, отложить или оставить заметкой.'),
-                ('Разложить', 'Сегодня, Планы, В любое время, Когда-нибудь, проекты и области.'),
-                ('Пересмотреть', 'Иногда пролистывать «Когда-нибудь»; сделанное хранит журнал.'),
-                ('Делать', 'Работать с одной карточки — «Сегодня».')],
-        'gtd_knight': 'При первом запуске маленький рыцарь проведёт по методу на ворохе поручений.',
-        'cap': {
-            'shots': 'Настоящее приложение',
-            'try': 'Напиши задачу с днём и нажми ввод.',
-            'ticket': ('Задача — это билет', 'Заметки, чек-лист, теги, срок, напоминание.'),
-            'signals': ('Не только «сделано»', 'Зажми кружок и отметь, как задача.'),
-            'lists': ('У списка своя карточка', 'Каждый на своей бумаге, позади «Сегодня».'),
-            'mac': ('И на Маке', 'Боковая панель, поиск по ⌘F, синхронно через iCloud.'),
-            'yours': ('Твой стол, твои чернила', 'Попробуй стол прямо здесь:'),
-        },
         'smart_h': 'Пиши, как говоришь',
         'try_say': 'Напиши задачу с днём, как сказал бы вслух, и нажми ввод. День и напоминание '
                    'поставятся сами, а задача ляжет на свою карточку.',
@@ -406,39 +259,7 @@ T = {
         'inbox': 'Входящие', 'evening_word': 'Этим вечером', 'when_word': 'Когда',
         'today_word': 'Сегодня', 'tomorrow_word': 'Завтра',
         'try_seed': {'inbox': ['Купить новое перо'], 'today': ['Наточить меч'], 'upcoming': ['Турнир в замке']},
-        'smart_say': 'Напиши «Тренировка завтра в 9 утра» — день и напоминание поставятся сами, '
-                     'а слова уйдут из названия. Тап по подсветке — если имел в виду просто слова.',
-        'smart_hint': 'Заметки',
-        'smart_blank': 'Когда',
-        'phrases': [
-            ('Тренировка ', 'завтра в 9 утра', 'today', 'Завтра', '09:00'),
-            ('Кино ', 'в пятницу вечером', 'darkThemeFilled', 'Пятница', ''),
-            ('Визит к врачу ', '12 ноября в 14:30', 'today', '12 нояб.', '14:30'),
-        ],
-        'more_h': 'И ещё немного',
-        'more': [
-            ('paperLines', 'Дзен', 'Карточка на весь экран, когда нужно сосредоточиться.'),
-            ('search', 'Быстрый поиск', 'Потяни «Сегодня» вниз или нажми ⌘F на Маке.'),
-        ],
-        'more_say': 'Мелочи, от которых спокойный день становится ещё спокойнее.',
-        'more_demo': {
-            'zen': ['Наточить меч', 'Позвонить кузнецу', 'Заплатить за жильё'],
-            'find': ('седл', ['Смазать <mark>седл</mark>о', 'Починить <mark>седл</mark>ьные сумки']),
-        },
-        'cal_h': 'Месяц на карточке',
-        'cal_say': 'Нажми на дату в «Сегодня», и календарь откроется на карточке — месяцем, '
-                   'неделей или днём. Под днём точка '
-                   'за каждый календарь с событием и одна за задачи. Выбери день, и под линией '
-                   'отрыва будут его события, а за ними задачи. Плюс создаёт не только задачу, '
-                   'но и событие календаря, а задачу можно отправить в Календарь с её страницы.',
-        'cal_note': 'Календари читаются на устройстве и никуда не копируются.',
-        'day_h': 'День по часам',
-        'day_say': 'Переключи календарь на «День», и он разложится по часам: события и задачи со '
-                   'временем, столько, сколько длятся, а пересекающиеся встают рядом. Время между '
-                   'ними занимает свою строку и говорит, сколько его на самом деле, так что весь '
-                   'день помещается на один экран. Через сегодня проходит линия «сейчас», прошедшее '
-                   'выцветает в карандаш.',
-        'day_note': 'Четыре дела в одно время? Видно два, остальные ждут под «+2», пока не нажмёшь.',
+        'find_demo': ('седл', ['Смазать <mark>седл</mark>о', 'Починить <mark>седл</mark>ьные сумки']),
         'day_demo': {
             'title': 'Понедельник, 19 октября',
             'rows': [
@@ -453,18 +274,6 @@ T = {
                 ('event', '19:00', 'Ужин с Машей', '21:00', '2 ч', '#3aa0e8', False),
             ],
         },
-        'notes_h': 'Заметки, в которых не теряешься',
-        'notes_say': 'У заметок своя карточка, с разделами на полосках скотча. Вдоль её края — '
-                     'штрих пером на каждый раздел: проведи по ним пальцем, и карточка перелистнётся '
-                     'от раздела к разделу, или задержи палец и выбери раздел по имени. На Маке они '
-                     'раскрываются под мышью, как в Notion.',
-        'notes_quick_h': 'Заметка в одно движение',
-        'notes_quick': 'Удержи значок заметок на нижней панели, выбери «Новая заметка» на иконке '
-                       'приложения или в Пункте управления, или нажми ⇧⌘N на Маке. Пустая заметка — '
-                       'сразу.',
-        'notes_diary_h': 'Дневник, который пишется сам',
-        'notes_diary': 'Включи «Дневник дня», и каждый прошедший день оставит заметку о том, что '
-                       'ты успел, под своим разделом внизу карточки.',
         'notes_demo': {
             'title': 'Заметки',
             'parts': [
@@ -487,32 +296,107 @@ T = {
             (6, [('18:00', 'Пир после турнира', '#f5a03c'), ('20:00', 'Ночной дозор', '#3aa0e8')], []),
             (9, [], [('Съездить на дальний север', False)]),
         ],
-        'zen_h': 'Одна карточка на весь экран',
-        'zen_say': 'Когда день требует всего внимания, разверни его карточку от края до края: '
-                   'без панели, без стола, без лишнего. Потяни вниз — и она снова на столе.',
-        'real_h': 'Настоящее приложение, на iPhone и Mac',
-        'real_say': 'Одни и те же списки на обоих, синхронно через твой iCloud. На Маке '
-                    'подставка стоит в своём окне, днём и ночью, а быстрый поиск — по ⌘F.',
         'shots_alt': 'Taskward на iPhone',
         'mac_alt': 'Taskward на Маке',
-        'yours_h': 'Твой стол, твои чернила',
-        'yours_say': 'Светлая или тёмная тема и целая палитра для каждой — или стол, на котором '
-                     'лежат карточки, и цвет чернил; а ещё как зачёркивается сделанное и гладкая или '
-                     'фактурная бумага. Попробуй прямо на этой странице:',
-        'desk_h': 'Стол', 'ink_h': 'Чернила',
-        'desks': [('default', 'Шалфей', '#b4c2c3'), ('olive', 'Олива', '#4a5040'),
-                  ('walnut', 'Орех', '#5b4636'), ('charcoal', 'Уголь', '#2f2f2d'),
-                  ('paper', 'Бумага', '#e9e5da'), ('mono', 'Монохром', '#f2f3f5')],
-        'inks': [('default', 'Графит', '#45454f'), ('blue', 'Синие', '#2b3ac9'),
-                 ('black', 'Чёрные', '#141417'), ('espresso', 'Эспрессо', '#3a201c')],
         'kept_h': 'Твоё остаётся у тебя',
         'kept': ['Не нужно заводить аккаунт.', 'Ни рекламы, ни слежки. Анонимная статистика, которую можно выключить.',
                  'Задачи живут на твоих устройствах и в твоём iCloud — мы их не видим.'],
         'kept_link': 'Политика конфиденциальности',
-        'knight_h': 'Впервые слышишь про GTD?',
-        'knight_say': 'При первом запуске маленький рыцарь покажет, как разобрать входящие.',
+        'all_h': 'Что умеет Taskward',
+        'all_say': 'Спокойный список дел, в котором больше, чем видно сразу. Нажми, чтобы посмотреть в деле.',
+        'tiles': [
+            ('speak', 'voice', 'Пиши, как говоришь', '«Тренировка завтра в 9» — или надиктуй весь день голосом.', ''),
+            ('claude', 'magic', 'Планы от Claude', 'Попроси план — он ляжет в списки проектами и задачами.', 'Pro · Mac'),
+            ('day', 'time', 'День по часам', 'События и задачи на одних часах и месяц на карточке.', 'Pro'),
+            ('paper', 'cardFile', 'Списки на бумаге', '«Сегодня» впереди, остальные в дубовой подставке. Много тем.', ''),
+            ('ticket', 'note', 'Всё в одной задаче', 'Заметки в Markdown, чек-лист, срок, напоминание.', ''),
+            ('signals', '', 'Не только «сделано»', 'В работе, поручено, жду ответа: отметь, как идёт дело.', ''),
+            ('repeat', 'repeat', 'Повторы', 'Каждую неделю или во второй вторник: следующая придёт сама.', ''),
+            ('find', 'search', 'Быстрый поиск', 'Потяни «Сегодня» вниз или ⌘F: списки, проекты, теги, задачи.', ''),
+            ('notes', 'notebook', 'Заметки и дневник', 'Заметки отдельно от задач и дневник, который пишется сам.', 'Pro'),
+            ('focus', 'tomato', 'Таймер фокуса', 'Помидор за помидором для одной задачи, и на экране блокировки.', ''),
+            ('mac', 'backup', 'iPhone и Mac заодно', 'Твой iCloud, без аккаунта. На Маке — день в строке меню.', ''),
+            ('widgets', 'paperDots', 'Виджеты', '«Сегодня», ближайшее дело и месяц на экране «Домой» и блокировки.', ''),
+        ],
+        'voice_h': 'Или надиктуй весь день',
+        'voice_say': 'Нажми микрофон рядом с плюсом в «Сегодня» и просто говори: «позвонить в банк в '
+                     'десять, вечером спортзал, в пятницу подарок Ане». Вернутся отдельные задачи со '
+                     'своими днями и временем, а те, где время не прозвучало, встанут в окна между '
+                     'событиями. Проверь список — и добавь.',
+        'voice_note': 'Диктовка входит в Pro, на iPhone и Mac.',
+        'claude_h': 'Планы от Claude — прямо в твоих списках',
+        'claude_say': 'Расскажи Claude, что задумал. Он посмотрит твои области и проекты и запишет '
+                      'план: проект с заголовками, задачи с днями, сроками и чек-листами. Или попроси '
+                      'разобрать входящие. Что бы он ни сделал, одно «Отменить» вернёт всё как было.',
+        'claude_note': 'На Маке с Pro, а через миг и на iPhone — через iCloud.',
+        'claude_link': 'Как подключить Claude',
+        'day_h': 'День по часам',
+        'day_say': 'Переключи календарь на «День»: события и задачи со временем разложатся по часам, '
+                   'пересекающиеся — рядом. Свободное время между ними занимает одну строку и говорит, '
+                   'сколько его на самом деле, так что весь день помещается на экран. В месяце под '
+                   'каждым днём точки за события и задачи — нажми на день, чтобы его увидеть.',
+        'day_note': 'Календари читаются на устройстве и никуда не копируются. Календарь входит в Pro.',
+        'paper_h': 'Каждый список — бумажная карточка на столе',
+        'paper_say': '«Сегодня» лежит впереди, и работаешь прямо на нём; «Планы», «В любое время» и '
+                     '«Когда-нибудь» стоят за ним в дубовой подставке. Вытяни любую — и она ляжет на '
+                     'стол. У каждого списка своя бумага и подсказка, зачем он, так что всегда видно, где ты.',
+        'yours_h': 'Сделай своим',
+        'yours_say': 'Светлая или тёмная тема и палитра для каждой, стол под карточками, цвет чернил, '
+                     'как зачёркивается сделанное, гладкая или фактурная бумага. Или открой список во '
+                     'весь экран, без ничего вокруг.',
+        'rest_h': 'И всё остальное',
+        'rest_say': 'Мелочи, от которых спокойный день становится ещё спокойнее.',
+        'ticket_h': 'Заметки, чек-лист и напоминание в одной задаче',
+        'ticket_say': 'Задача открывается билетом: заметки в Markdown, чек-лист, теги, срок и '
+                      'напоминание. Видно только то, что добавил; остальное ждёт карандашной меткой внизу.',
+        'signals_h': 'Отмечай, как идёт дело, а не только «сделано»',
+        'signals_say': 'Зажми кружок задачи: в работе, поручено, встреча, жду ответа, вопрос… '
+                       'Поручённое и ожидание уходят в карандаш, чтобы не мешать.',
+        'find_h': 'Найти что угодно за секунду',
+        'find_say': 'Потяни «Сегодня» вниз на телефоне или нажми ⌘F на Маке: списки, проекты, теги и '
+                    'задачи по названию. Ещё одно касание — и поиск заглянет в заметки и чек-листы.',
+        'notes_h': 'Заметки отдельно от задач',
+        'notes_say': 'Мысли, которые стоит сохранить, живут на своей карточке, по разделам; станет '
+                     'делом — перенеси в задачи. Включи дневник, и каждый день оставит заметку о том, '
+                     'что ты успел.',
+        'small_cards': [
+            ('repeat', 'repeat', 'Задачи, которые возвращаются', 'Каждый день, неделю или месяц — после '
+             'выполнения или по расписанию. Следующая появится, как только отметишь эту.'),
+            ('focus', 'tomato', 'Таймер фокуса', 'Поверни ручку и работай помидор за помидором, с '
+             'перерывами. Таймер идёт и на экране блокировки и звенит в конце.'),
+            ('widgets', 'paperDots', 'День одним взглядом', '«Сегодня», ближайшее дело, неделя и месяц на '
+             'экране «Домой»; и на экране блокировки — с новой задачей в одно касание.'),
+            ('gtd', 'knight', 'GTD внутри', 'Входящие, «Сегодня», «Планы», «В любое время» и '
+             '«Когда-нибудь» — шаги метода. При первом запуске маленький рыцарь покажет, как ими пользоваться.'),
+        ],
+        'mac_h': 'И на Маке — синхронно через iCloud',
+        'mac_say': 'Одни и те же списки на iPhone и Mac, синхронно через твой собственный iCloud: '
+                   'аккаунт заводить не нужно. На Маке подставка стоит в своём окне с боковой панелью, '
+                   'любой список — на клавише: ⌘1–⌘6, ⌘N для задачи, ⌘F для поиска. А с Pro '
+                   'сегодняшняя дата живёт в строке меню, и весь день — в клике под ней.',
+        'pro_h': 'Бесплатно — насовсем. Pro — для большего.',
+        'pro_say': 'Без счётчика пробных дней и без стены оплаты при запуске: бесплатное приложение — '
+                   'полноценный список дел, навсегда. Pro добавляет остальное и помогает одному '
+                   'человеку делать Taskward дальше.',
+        'free_h': 'Бесплатно, навсегда',
+        'free': ['Все списки, проекты и области без ограничений', 'Дни и напоминания словами — «завтра в 9»',
+                 'Чек-листы и заметки в Markdown в любой задаче', 'Разбор входящих, журнал и корзина',
+                 'Быстрый поиск', 'Простые повторы', 'Четыре сигнала', 'Таймер фокуса',
+                 'Синхронизация iPhone и Mac через iCloud', 'Виджеты экрана блокировки и «Новая задача»',
+                 'Светлая или тёмная тема, чернила, шрифт, размер текста'],
+        'procol_h': 'Pro',
+        'pro': ['Сроки и напоминания, поставленные вручную', 'Теги и списки, отфильтрованные по ним',
+                'Сложные повторы: второй вторник, конец, срок у каждой копии',
+                'Календарь с твоими событиями; задача — в Календарь', 'Диктовка дня',
+                'Планы от Claude, на Маке', 'Заметки и дневник дня', 'Все сигналы',
+                'Виджеты экрана «Домой»', 'День в строке меню Мака',
+                'Все палитры, столы и бумага; иконки приложения; списки во весь экран'],
+        'prices': [('Месяц', '$2.99', 'в месяц'), ('Год', '$29.99', 'в год'), ('Навсегда', '$69.99', 'один раз')],
+        'price_note': 'Месяц и год начинаются с 7 бесплатных дней. Цены американского App Store, в '
+                      'других странах свои. Если Pro закончится, всё, что ты поставил, останется: '
+                      'сроки, напоминания и теги продолжат работать.',
         'support': 'Поддержка', 'privacy': 'Политика конфиденциальности',
-        'by': 'Сделал Алексей Лобанов', 'back': 'Taskward',
+        'by': 'Сделал Алексей Лобанов',
     },
 }
 
@@ -551,10 +435,6 @@ UNDER = ('<svg viewBox="0 0 300 24" preserveAspectRatio="none" aria-hidden="true
 # A hand-drawn arrow, its head at the right middle; a note on the right turns it round.
 ARROW = ('<svg class="arrow" viewBox="0 0 64 40" aria-hidden="true">'
          '<path d="M3 31 C 17 36, 41 33, 61 20"/><path d="M51 17.5 L 61.5 19.8 L 55.5 28.5"/></svg>')
-SIGNAL_HALF = ('<svg class="icon" viewBox="0 0 30 30" aria-hidden="true"><circle cx="15" cy="15" r="11" '
-               'fill="none" stroke="currentColor" stroke-width="1.9"/><path fill="currentColor" '
-               'd="M15 4a11 11 0 0 0 0 22z"/></svg>')
-
 # The signals' marks as the app draws them (lib/widgets/pen_signal.dart): in its 24, the
 # ring of 8.6 the first stroke, the mark in it; the asterisk stands alone.
 RING = '<circle class="ring" cx="12" cy="12" r="8.6"/>'
@@ -600,11 +480,7 @@ def head(lang, title, desc, path, base):
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Pangolin&amp;subset=cyrillic&amp;display=swap" rel="stylesheet">
 <link rel="stylesheet" href="{base}style.css?v={VERSION}">
-<link rel="stylesheet" href="{base}palettes.css?v={VERSION}">
 <style>:root {{ --grain: url({base}img/grain.webp); }}</style>
-<script>try {{ const r = document.documentElement.dataset;
-for (const [k, a] of [['desk', 'desk'], ['ink', 'ink'], ['palette', 'palette'], ['theme', 'theme']]) {{
-const v = localStorage.getItem('taskward-' + k); if (v && v !== 'default') r[a] = v; }} }} catch (_) {{}}</script>
 <script src="{base}when.js?v={VERSION}" defer></script>
 <script src="{base}app.js?v={VERSION}" defer></script>
 </head>
@@ -613,7 +489,7 @@ const v = localStorage.getItem('taskward-' + k); if (v && v !== 'default') r[a] 
 
 def bar(t, base, lang, home):
     other, href = t['other']
-    anchors = ['#smart', '#lists', '#real']
+    anchors = ['#all', '#pro', '#mac']
     links = ''.join(
         f'<a class="hide-sm" href="{home}{a}">{name}</a>' for a, name in zip(anchors, t['nav'][:3])
     )
@@ -630,41 +506,31 @@ def foot(t, base, lang):
     pre = 'ru/' if lang == 'ru' else ''
     return f'''<footer><div class="wrap">
 <a href="{base}{pre}support/">{t['support']}</a>
+<a href="{base}{pre}assistants/">{'Ассистенты' if lang == 'ru' else 'Assistants'}</a>
 <a href="{base}{pre}privacy/">{t['privacy']}</a>
 <a href="{href}">{other}</a>
 <span class="by">{t['by']}</span>
 </div></footer>'''
 
 
-def small_print(spec):
-    if not spec:
-        return ''
-    parts = []
-    for bit in spec.split('|'):
-        if bit.startswith('due:'):
-            parts.append(f'<span class="due">{icon("flagFilled")}{bit[4:]}</span>')
-        elif ':' in bit:
-            parts.append(f'<span>{icon("reminderFilled")}{bit}</span>')
-        elif '/' in bit:
-            parts.append(f'<span>{bit}</span>')
-        else:
-            parts.append(f'<span>{icon("flagFilled")}{bit}</span>')
-    return f'<div class="print">{"".join(parts)}</div>'
+APPLE = ('<svg class="icon" viewBox="0 0 17 20" aria-hidden="true"><path fill="currentColor" d="M14.07 10.63c-.02-2.33 1.9-3.45 1.99-3.51-1.08-1.58-2.77-1.8-3.37-1.82-1.43-.15-2.8.84-3.53.84-.73 0-1.85-.82-3.05-.8-1.57.03-3.02.92-3.83 2.33-1.63 2.83-.42 7.02 1.17 9.32.78 1.12 1.71 2.38 2.93 2.34 1.18-.05 1.62-.76 3.05-.76 1.42 0 1.82.76 3.06.74 1.27-.03 2.07-1.14 2.84-2.27.9-1.31 1.27-2.58 1.29-2.64-.03-.01-2.47-.95-2.49-3.77zM11.77 3.79c.65-.79 1.09-1.88.97-2.97-.94.04-2.07.62-2.74 1.41-.6.7-1.13 1.81-.99 2.88 1.05.08 2.11-.53 2.76-1.32z"/></svg>')
 
 
-def row(t, title, spec, done):
-    pressed = 'true' if done else 'false'
-    return (f'<li class="row{" done" if done else ""}"><button class="signal" aria-pressed="{pressed}" '
-            f'aria-label="{t["check"]}: {title}">{SIGNAL}</button>'
-            f'<div><div class="title">{title}</div>{small_print(spec)}</div></li>')
+def vphone(lang, clip):
+    """A short film of the app, looping in a phone as the hero's is held: the store's frame, its
+    screen masked. Till the film and its poster are there, the screen shows the paper."""
+    return (f'<div class="vphone" aria-hidden="true"><div class="phone"><div class="screen">'
+            f'<video autoplay muted loop playsinline preload="metadata" poster="{{base}}img/{lang}-v-{clip}.webp">'
+            f'<source src="{{base}}img/{lang}-v-{clip}.mp4" type="video/mp4"></video></div>'
+            f'<div class="glass"></div></div></div>')
 
 
 def landing(lang):
     t = T[lang]
     base = '' if lang == 'en' else '../'
     home = './'
-    rows = ''.join(row(t, *task) for task in t['tasks'])
-    evening = ''.join(row(t, title, '', False) for title in t['evening_tasks'])
+    pre = 'ru/' if lang == 'ru' else ''
+    # Every list's card on its own paper, with the hint the app lays under its head.
     lists = ''.join(
         f'<div class="paper {paper} lcard" style="--r:{r}deg;--marker:{marker};--pen:{pen}">'
         f'<div class="head">{icon(mark)}{name}</div>'
@@ -674,12 +540,6 @@ def landing(lang):
     )
     tk = t['ticket']
     mk = lambda m: f'<span class="mk">{m}</span>'
-    h, bold, hl, todo, link, table = t['md']
-    md = ''.join(f'<li>{x}</li>' for x in [
-        f'{mk("#")} <b class="h">{h}</b>', f'{mk("**")}<b>{bold}</b>{mk("**")}',
-        f'{mk("::")}<mark>{hl}</mark>{mk("::")}', f'{mk("- [ ]")} {todo}',
-        f'{mk("[")}<u>{link}</u>{mk("](…)")}', f'{mk("|")} {table} {mk("|")}',
-    ])
     ticket_notes = re.sub(r'::(.+?)::', lambda m: mk('::') + f'<mark>{m[1]}</mark>' + mk('::'),
                           re.sub(r'\*\*(.+?)\*\*', lambda m: mk('**') + f'<b>{m[1]}</b>' + mk('**'), tk['notes']))
     steps = ''.join(
@@ -689,53 +549,17 @@ def landing(lang):
         f'<li>{sig(mark)}{name}</li>'
         for mark, name in zip(['progress', 'delegated', 'appointment', 'important'], t['signals'])
     )
-    phrases = json.dumps([
-        {'title': title, 'phrase': phrase,
-         'foot': (f'{icon(mark)}<span>{day}</span>'
-                  + (f'{icon("reminderFilled")}<span>{time}</span>' if time else ''))
-         .replace('{base}', base)}
-        for title, phrase, mark, day, time in t['phrases']
-    ], ensure_ascii=False).replace('"', '&quot;')
     iphones = ''.join(
         f'<img src="{base}img/{lang}-iphone-{i}.webp" alt="{t["shots_alt"]}" width="760" height="1651" loading="lazy">'
         for i in range(1, 9)
     )
-    desks = ''.join(
-        f'<button class="swatch" style="--c:{c}" data-desk="{k}" aria-label="{n}" aria-pressed="false"></button>'
-        for k, n, c in t['desks']
-    )
-    inks = ''.join(
-        f'<button class="blot" style="--c:{c}" data-inkpick="{k}" aria-label="{n}" aria-pressed="false"></button>'
-        for k, n, c in t['inks']
-    )
     kept = ''.join(f'<li>{line}</li>' for line in t['kept'])
-    pn = PALETTES['names'][lang]
-    palettes = ''.join(
-        f'<button class="palette" data-palettepick="{"default" if k == "analog" else k}" '
-        f'aria-label="{pn["palettes"][k]}" aria-pressed="false" '
-        f'style="--l:{_css(lt["white"])};--d:{_css(dk["desk"])};--i:{_css(lt["ink"])};--s:{_css(lt["seal"])}"></button>'
-        for k, (lt, dk) in PALETTES['palettes'].items()
-    )
-    themes = ''.join(
-        f'<button class="themepick" data-themepick="{k}" aria-pressed="false" aria-label="{w}">{icon(i)}<span>{w}</span></button>'
-        for k, w, i in [('default', pn['light'], 'lightTheme'), ('dark', pn['dark'], 'darkTheme')]
-    )
-    demo = t['more_demo']
     ring = '<span class="o"></span>'
-    demos = [
-        # Zen: the card edge to edge in a little screen, nothing round it.
-        '<div class="demo zen"><div class="screen-mini">'
-        + ''.join(f'<p>{ring}<span>{x}</span></p>' for x in demo['zen']) + '<p>' + ring + '</p></div></div>',
-        # Quick Find: its field with a word typed, a caret blinking after it, and what it finds.
-        f'<div class="demo find"><div class="field">{icon("search")}{demo["find"][0]}<span class="caret"></span></div>'
-        + ''.join(f'<p>{ring}<span>{x}</span></p>' for x in demo['find'][1]) + '</div>',
-    ]
+    find_word, found = t['find_demo']
+    find = (f'<div class="demo find"><div class="field">{icon("search")}{find_word}<span class="caret"></span></div>'
+            + ''.join(f'<p>{ring}<span>{x}</span></p>' for x in found) + '</div>')
     cal = json.dumps({'days': t['cal_days'], 'empty': t['cal_empty']},
                      ensure_ascii=False).replace('"', '&quot;')
-    more = ''.join(
-        f'<div class="paper {paper} small"><div class="head">{icon(mark)}{name}</div><p>{say}</p>{d}</div>'
-        for (mark, name, say), paper, d in zip(t['more'], ['white', 'cream'], demos)
-    )
     try_words = json.dumps({
         'base': t['try_base'], 'evening': t['evening_word'], 'when': t['when_word'],
         'today': t['today_word'], 'tomorrow': t['tomorrow_word'], 'seed': t['try_seed'],
@@ -743,22 +567,23 @@ def landing(lang):
                   {'today': 'today', 'moon': 'darkThemeFilled', 'bell': 'reminderFilled', 'star': 'favoriteFilled', 'inbox': 'export'}.items()},
     }, ensure_ascii=False).replace('"', '&quot;')
     examples = ''.join(f'<button type="button" class="example">{e}</button>' for e in t['try_examples'])
-    marks = {'s1': sig('progress'), 's2': sig('delegated'), 's5': sig('pending')}
-    glyphs = {'today': icon('today'), 'bell': icon('reminderFilled'), 'cloud': icon('backup'),
-              'knight': icon('knight'), **marks}
-    points = ''.join(
-        f'<li class="row"><button class="signal" aria-pressed="false" aria-label="{t["check"]}: {title}">'
-        f'{SIGNAL}</button><div><div class="title">{title}</div>'
-        f'<div class="print">{re.sub(r"(\{\w+\}[^{]*?)(?= ?\{|$)", r"<i>\1</i>", say).format(**glyphs)}</div></div></li>'
-        for title, say in t['points']
-    )
     notes = ''.join(
         f'<p class="pen-note {side}" style="--x:{x}%;--y:{y}%;--r:{r}deg">{ARROW}<span>{words}</span></p>'
         for words, (side, x, y, r) in zip(t['notes'], NOTES)
     )
-    gtd = ''.join(f'<li><b>{name}</b><span>{say}</span></li>' for name, say in t['gtd'])
-    sample_rows = ''.join(row(t, title, '', done) for title, _, done in t['tasks'][:3])
-    pre = 'ru/' if lang == 'ru' else ''
+    # Everything it does: a tile each, its mark, its name and a line, Pro's marked so.
+    tiles = ''.join(
+        f'<li><a class="tile" href="#{anchor}">{icon(mark) if mark else sig("progress")}'
+        f'<b>{name}{f" <i class=pro>{pro}</i>" if pro else ""}</b><span>{say}</span></a></li>'
+        for anchor, mark, name, say, pro in t['tiles']
+    )
+    smalls = ''.join(
+        f'<div class="small-card" id="{anchor}">{icon(mark)}<h3>{name}</h3><p>{say}</p></div>'
+        for anchor, mark, name, say in t['small_cards']
+    )
+    free = ''.join(f'<li>{icon("check")}<span>{x}</span></li>' for x in t['free'])
+    pro = ''.join(f'<li>{icon("check")}<span>{x}</span></li>' for x in t['pro'])
+    prices = ''.join(f'<li><span>{name}</span><b>{price}</b><i>{per}</i></li>' for name, price, per in t['prices'])
     dd = t['day_demo']
 
     def plan_row(r):
@@ -791,6 +616,16 @@ def landing(lang):
     # A dash for each heading on the card, the one on the slip in ink.
     heads = [h for h, _ in nd['parts'] if h] + [dh]
     outline = ''.join(f'<span class="{"lit" if h == nd["slip"] else ""}"></span>' for h in heads)
+    # Claude's plan, as the Assistants page shows it: asked for, and landed on a card.
+    a = A[lang]
+    c = a['card']
+    plan = (f'<div class="paper grey ask"><span class="chev">›</span>{a["prompt"]}</div>{ARROW}'
+            f'<div class="paper plan-card"><div class="plan-head">{icon("project")}<span>{c["project"]}</span>'
+            f'<span class="due">{icon("flagFilled")}{c["due"]}</span></div>'
+            f'<ul class="rows">{"".join(_plan_row(*r) for r in c["loose"])}</ul>'
+            + ''.join(f'<h4 class="plan-heading">{h}</h4><ul class="rows">{"".join(_plan_row(*r) for r in rows)}</ul>'
+                      for h, rows in c['headings'])
+            + f'<p class="from">{icon("knight")}{c["from"]}</p></div>')
     page = head(lang, t['title'], t['desc'], '', base) + f'''<body>
 {bar(t, base, lang, home)}
 <main>
@@ -799,7 +634,7 @@ def landing(lang):
 <img class="hero-icon" src="{base}img/icon.png" alt="Taskward" width="112" height="112">
 <h1 class="written">{''.join(f'<span class="pen" style="--i:{i}">{line}</span>' for i, line in enumerate(t['h1'].split('<br>'))).replace('<u>', '<span class="under">').replace('</u>', UNDER + '</span>')}</h1>
 <p class="lede"><b>{t['lede'][0]}</b> {t['lede'][1]}</p>
-<span class="button soon"><svg class="icon" viewBox="0 0 17 20" aria-hidden="true"><path fill="currentColor" d="M14.07 10.63c-.02-2.33 1.9-3.45 1.99-3.51-1.08-1.58-2.77-1.8-3.37-1.82-1.43-.15-2.8.84-3.53.84-.73 0-1.85-.82-3.05-.8-1.57.03-3.02.92-3.83 2.33-1.63 2.83-.42 7.02 1.17 9.32.78 1.12 1.71 2.38 2.93 2.34 1.18-.05 1.62-.76 3.05-.76 1.42 0 1.82.76 3.06.74 1.27-.03 2.07-1.14 2.84-2.27.9-1.31 1.27-2.58 1.29-2.64-.03-.01-2.47-.95-2.49-3.77zM11.77 3.79c.65-.79 1.09-1.88.97-2.97-.94.04-2.07.62-2.74 1.41-.6.7-1.13 1.81-.99 2.88 1.05.08 2.11-.53 2.76-1.32z"/></svg>{t['cta']}</span>
+<span class="button soon">{APPLE}{t['cta']}</span>
 <p class="small">{t['small']}</p>
 </div>
 <div class="scene" aria-hidden="true">
@@ -819,21 +654,18 @@ def landing(lang):
 </div>
 </div></section>
 
-<section class="part" id="real"><div class="wrap">
-<div class="shelf">{iphones}</div>
+<section class="part" id="all"><div class="wrap">
+<h2 class="part-h">{t['all_h']}</h2><p class="part-say">{t['all_say']}</p>
+<ul class="tiles">{tiles}</ul>
 </div></section>
 
 <section class="part features"><div class="wrap">
 
-<article class="feature flip" id="why">
-<div class="say"><h2>{t['why_h']}</h2><p>{t['why_say']}</p></div>
-<div class="show"><div class="paper why"><div class="why-head">{icon('favoriteFilled')}{t['points_h']}<span class="count">{len(t['points'])}</span></div><ul class="rows">{points}</ul></div>
-</div>
-</article>
-
-<article class="feature" id="smart">
-<div class="say"><h2>{t['smart_h']}</h2><p>{t['try_say']}</p></div>
-<div class="show">
+<article class="feature hl" id="speak">
+<div class="say"><h2>{t['smart_h']}</h2><p>{t['try_say']}</p>
+<h3>{t['voice_h']}</h3><p>{t['voice_say']}</p><p class="aside">{t['voice_note']}</p></div>
+{vphone(lang, 'speak')}
+<div class="hl-demo">
 <div class="try" data-lang="{lang}" data-words="{try_words}">
 <form class="paper newcard" autocomplete="off">
 <label class="field"><span class="ring" aria-hidden="true"></span>
@@ -848,12 +680,50 @@ def landing(lang):
 <div class="paper cream mini" data-list="upcoming"><div class="head">{icon('today')}{t['upcoming']}</div><ul class="rows"></ul></div>
 </div>
 </div>
+</div>
 </article>
 
-<article class="feature flip" id="ticket">
-<div class="say"><h2>{t['ticket_h']}</h2><p>{t['ticket_say']}</p>
-<h3>{t['md_h']}</h3><p>{t['md_say']}</p><ul class="md">{md}</ul></div>
-<div class="show">
+<article class="feature hl flip" id="claude">
+<div class="say"><h2>{t['claude_h']}</h2><p>{t['claude_say']}</p>
+<p class="aside">{t['claude_note']}</p>
+<p class="more-link"><a href="{base}{pre}assistants/">{t['claude_link']} →</a></p></div>
+{vphone(lang, 'claude')}
+<div class="hl-demo plan">{plan}</div>
+</article>
+
+<article class="feature hl" id="day">
+<div class="say"><h2>{t['day_h']}</h2><p>{t['day_say']}</p><p class="aside">{t['day_note']}</p></div>
+{vphone(lang, 'day')}
+<div class="hl-demo cal2">
+<div class="paper dayplan"><h4 data-today>{dd['title']}</h4>{dayplan}</div>
+<div class="paper month" data-lang="{lang}" data-cal="{cal}">
+<div class="month-head"><b></b><span></span></div>
+<div class="days" role="grid"></div>
+<div class="tear" aria-hidden="true"></div>
+<div class="day" aria-live="polite"><h4></h4><ul></ul></div>
+</div>
+</div>
+</article>
+
+<article class="feature hl flip" id="paper">
+<div class="say"><h2>{t['paper_h']}</h2><p>{t['paper_say']}</p>
+<h3>{t['yours_h']}</h3><p>{t['yours_say']}</p></div>
+{vphone(lang, 'paper')}
+<div class="hl-demo"><div class="deck">{lists}</div></div>
+</article>
+
+</div></section>
+
+<section class="part" id="real"><div class="wrap">
+<div class="shelf">{iphones}</div>
+</div></section>
+
+<section class="part rest"><div class="wrap">
+<h2 class="part-h">{t['rest_h']}</h2><p class="part-say">{t['rest_say']}</p>
+<div class="grid2">
+
+<article class="card2" id="ticket">
+<h3>{t['ticket_h']}</h3><p>{t['ticket_say']}</p>
 <div class="ticket-wrap"><div class="paper ticket">
 <h4 class="row"><button class="signal" type="button" aria-pressed="false" aria-label="{t['check']}: {tk['title']}">{SIGNAL}</button><span class="title">{tk['title']}</span></h4>
 <p class="notes">{ticket_notes}</p>
@@ -863,83 +733,58 @@ def landing(lang):
 <div class="when"><span class="star">{icon('favoriteFilled')}</span>{tk['when']}{icon('reminderFilled')}21:30<span class="marks">{icon('flagFilled')}</span></div>
 </div>
 </div></div>
-</div>
 </article>
 
-<article class="feature" id="signals">
-<div class="say"><h2>{t['signals_h']}</h2><p>{t['signals_say']}</p></div>
-<div class="show">
-<div class="taped"><span class="tape"></span><p class="note-title">{t['signals_note'][0]}</p>
-<p class="complete">{sig('done')}{t['signals_note'][1]}</p><ul class="sigs">{signals}</ul><p class="more">{t['signals_note'][2]}</p></div>
-</div>
-</article>
-
-<article class="feature wide" id="lists">
-<div class="say"><h2>{t['lists_h']}</h2><p>{t['lists_say']}</p></div>
-<div class="deck">{lists}</div>
-</article>
-
-<article class="feature flip" id="calendar">
-<div class="say"><h2>{t['cal_h']}</h2><p>{t['cal_say']}</p><p class="aside">{t['cal_note']}</p></div>
-<div class="show"><div class="paper month" data-lang="{lang}" data-cal="{cal}">
-<div class="month-head"><b></b><span></span></div>
-<div class="days" role="grid"></div>
-<div class="tear" aria-hidden="true"></div>
-<div class="day" aria-live="polite"><h4></h4><ul></ul></div>
-</div></div>
-</article>
-
-<article class="feature" id="day">
-<div class="say"><h2>{t['day_h']}</h2><p>{t['day_say']}</p><p class="aside">{t['day_note']}</p></div>
-<div class="show"><div class="paper dayplan"><h4>{dd['title']}</h4>{dayplan}</div></div>
-</article>
-
-<article class="feature flip" id="notes">
-<div class="say"><h2>{t['notes_h']}</h2><p>{t['notes_say']}</p>
-<h3>{t['notes_quick_h']}</h3><p>{t['notes_quick']}</p>
-<h3>{t['notes_diary_h']}</h3><p>{t['notes_diary']}</p></div>
-<div class="show"><div class="paper notesdemo"><div class="head">{icon('notebook')}{nd['title']}</div>
+<article class="card2" id="notes">
+<h3>{t['notes_h']}</h3><p>{t['notes_say']}</p>
+<div class="paper notesdemo"><div class="head">{icon('notebook')}{nd['title']}</div>
 {note_parts}{diary}
 <div class="outline" aria-hidden="true">{outline}<span class="slip">{nd['slip']}</span></div>
-</div></div>
+</div>
 </article>
 
-<article class="feature trio">
-<h2>{t['more_h']}</h2><p class="lead">{t['more_say']}</p>
-<div class="cards3">{more}</div>
+<article class="card2" id="find">
+<h3>{t['find_h']}</h3><p>{t['find_say']}</p>
+<div class="paper cream small">{find}</div>
 </article>
 
+<article class="card2" id="signals">
+<h3>{t['signals_h']}</h3><p>{t['signals_say']}</p>
+<div class="taped"><span class="tape"></span><p class="note-title">{t['signals_note'][0]}</p>
+<p class="complete">{sig('done')}{t['signals_note'][1]}</p><ul class="sigs">{signals}</ul><p class="more">{t['signals_note'][2]}</p></div>
+</article>
+
+</div>
+<div class="smalls">{smalls}</div>
+</div></section>
+
+<section class="part features"><div class="wrap">
 <article class="feature" id="mac">
-<div class="say"><h2>{t['cap']['mac'][0]}</h2><p>{t['real_say']}</p></div>
+<div class="say"><h2>{t['mac_h']}</h2><p>{t['mac_say']}</p></div>
 <div class="show"><div class="macs">
 <img src="{base}img/{lang}-mac-5.webp" alt="" width="2240" height="1400" loading="lazy">
 <img src="{base}img/{lang}-mac-2.webp" alt="" width="2240" height="1400" loading="lazy">
 <img src="{base}img/{lang}-mac-1.webp" alt="{t['mac_alt']}" width="2240" height="1400" loading="lazy">
 </div></div>
 </article>
+</div></section>
 
-<article class="feature pair">
-<div class="say" id="yours"><h2>{t['yours_h']}</h2><p>{t['yours_say']}</p>
-<div class="themes">{themes}</div>
-<div class="swatches palettes">{palettes}</div>
-<p class="named"><span data-for="palettepick" aria-live="polite"></span></p>
-<div class="swatches">{desks}</div>
-<div class="swatches inks">{inks}</div>
-<p class="named"><span data-for="desk" aria-live="polite"></span> · <span data-for="inkpick" aria-live="polite"></span></p>
+<section class="part" id="pro"><div class="wrap">
+<h2 class="part-h">{t['pro_h']}</h2><p class="part-say">{t['pro_say']}</p>
+<div class="plans">
+<div class="plan free"><h3>{t['free_h']}</h3><ul>{free}</ul></div>
+<div class="paper plan pro"><h3>{icon('pro')}{t['procol_h']}</h3><ul>{pro}</ul>
+<ul class="prices">{prices}</ul><p class="price-note">{t['price_note']}</p></div>
 </div>
-<div class="show" id="kept">
+</div></section>
+
+<section class="part"><div class="wrap">
+<div class="closing">
 <div class="paper kept">
 <h3>{icon('lock')}{t['kept_h']}</h3><ul>{kept}</ul><p><a href="{base}{pre}privacy/">{t['kept_link']}</a></p>
 </div>
+<div class="closing-cta">{icon('knight', 'icon big')}<span class="button soon">{APPLE}{t['cta']}</span><p class="small">{t['small']}</p></div>
 </div>
-</article>
-
-<article class="feature gtd-row" id="knight">
-<h2>{t['gtd_h']}</h2><p class="lead">{t['gtd_say']}</p>
-<ol class="gtd">{gtd}</ol>
-<div class="gtd-foot">{icon('knight', 'icon big')}<p>{t['gtd_knight']}</p><span class="button soon"><svg class="icon" viewBox="0 0 17 20" aria-hidden="true"><path fill="currentColor" d="M14.07 10.63c-.02-2.33 1.9-3.45 1.99-3.51-1.08-1.58-2.77-1.8-3.37-1.82-1.43-.15-2.8.84-3.53.84-.73 0-1.85-.82-3.05-.8-1.57.03-3.02.92-3.83 2.33-1.63 2.83-.42 7.02 1.17 9.32.78 1.12 1.71 2.38 2.93 2.34 1.18-.05 1.62-.76 3.05-.76 1.42 0 1.82.76 3.06.74 1.27-.03 2.07-1.14 2.84-2.27.9-1.31 1.27-2.58 1.29-2.64-.03-.01-2.47-.95-2.49-3.77zM11.77 3.79c.65-.79 1.09-1.88.97-2.97-.94.04-2.07.62-2.74 1.41-.6.7-1.13 1.81-.99 2.88 1.05.08 2.11-.53 2.76-1.32z"/></svg>{t['cta']}</span></div>
-</article>
-
 </div></section>
 
 </main>
@@ -1126,6 +971,9 @@ Taskward. If they fall out of step, open the three dots on home and choose Sync 
 Tap the highlighted words if you meant them as words.</p>
 <h2>How do I see my calendar next to my tasks?</h2>
 <p>In Settings, turn on calendar events and allow Taskward to read your calendars.</p>
+<h2>Can Claude plan into Taskward?</h2>
+<p>Yes, on a Mac with Pro: Claude and other AI assistants read your lists and write plans into them.
+See <a href="../assistants/">Assistants</a>.</p>
 <h2>How do I delete everything?</h2>
 <p>See <a href="../privacy/">the privacy policy</a>: what to delete in the app, and in iCloud.</p>
 '''),
@@ -1140,10 +988,450 @@ Tap the highlighted words if you meant them as words.</p>
 Нажмите на подсвеченные слова, если имели в виду просто слова.</p>
 <h2>Как увидеть календарь рядом с задачами?</h2>
 <p>В Настройках включите события календаря и разрешите Taskward читать календари.</p>
+<h2>Может ли Claude планировать в Taskward?</h2>
+<p>Да, на Маке с Pro: Claude и другие ИИ-ассистенты читают ваши списки и записывают в них планы.
+Смотрите <a href="../assistants/">Ассистенты</a>.</p>
 <h2>Как удалить всё?</h2>
 <p>Смотрите <a href="../privacy/">политику конфиденциальности</a>: что удалить в приложении и в iCloud.</p>
 '''),
 }
+
+
+# Assistants: Claude and other AI assistants reading the lists and writing plans into them, over
+# MCP from the Mac app (the app's docs/assistants.md). A page of its own, as a guide and a
+# reference both: what it is beside a plan landed on a card, three steps to connect, what to
+# say, then each tool with its parameters, the formats, and what is safe and private.
+from html import escape as _esc
+
+PLAN_JSON = {
+    'en': {
+        'projects': [{
+            'title': 'Run a half marathon', 'deadline': '2027-04-18', 'area_id': '…',
+            'notes': 'Spring race, 21.1 km.',
+            'tasks': [{'title': 'Pick a training plan', 'when': 'today'}],
+            'headings': [
+                {'title': 'Gear', 'tasks': [
+                    {'title': 'Buy running shoes', 'when': '2026-11-21', 'tags': ['Errand'],
+                     'checklist': ['Measure feet', 'Try three pairs']}]},
+                {'title': 'Weeks 1–4', 'tasks': [
+                    {'title': 'Three easy runs a week', 'when': 'anytime'},
+                    {'title': 'Book a physio check', 'reminder': '09:30'}]},
+            ],
+        }],
+        'tasks': [{'title': 'Tell Anna about the race', 'when': 'evening'}],
+    },
+    'ru': {
+        'projects': [{
+            'title': 'Пробежать полумарафон', 'deadline': '2027-04-18', 'area_id': '…',
+            'notes': 'Весенний забег, 21,1 км.',
+            'tasks': [{'title': 'Выбрать план тренировок', 'when': 'today'}],
+            'headings': [
+                {'title': 'Экипировка', 'tasks': [
+                    {'title': 'Купить кроссовки', 'when': '2026-11-21', 'tags': ['Дела'],
+                     'checklist': ['Измерить стопу', 'Примерить три пары']}]},
+                {'title': 'Недели 1–4', 'tasks': [
+                    {'title': 'Три лёгкие пробежки в неделю', 'when': 'anytime'},
+                    {'title': 'Записаться к физиотерапевту', 'reminder': '09:30'}]},
+            ],
+        }],
+        'tasks': [{'title': 'Рассказать Ане про забег', 'when': 'evening'}],
+    },
+}
+
+UPDATE_JSON = {
+    'en': {'updates': [
+        {'id': '7c1e…', 'project_id': '…', 'heading_id': '…', 'when': 'anytime'},
+        {'id': '2f9a…', 'when': 'today', 'tags_add': ['Calls'], 'reminder': '10:00'},
+        {'id': 'b04d…', 'trash': True},
+    ]},
+    'ru': {'updates': [
+        {'id': '7c1e…', 'project_id': '…', 'heading_id': '…', 'when': 'anytime'},
+        {'id': '2f9a…', 'when': 'today', 'tags_add': ['Звонки'], 'reminder': '10:00'},
+        {'id': 'b04d…', 'trash': True},
+    ]},
+}
+
+COMMAND = ('claude mcp add --transport http taskward http://127.0.0.1:47823/mcp \\\n'
+           '  --header "Authorization: Bearer <token>"')
+
+A = {
+    'en': {
+        'title': 'Assistants', 'desc': 'Let Claude and other AI assistants plan into Taskward on your Mac, over MCP.',
+        'kicker': 'Taskward for Mac · Pro',
+        'h1': 'Plan with Claude,<br>land it in Taskward',
+        'lede': 'Tell Claude what you are up to. It reads your areas and projects, makes a plan — '
+                'projects with headings, tasks with their days, deadlines and checklists — and writes '
+                'it into Taskward in one go. From the Mac it reaches your iPhone through iCloud.',
+        'prompt': 'Plan my half marathon in April: gear, the first month of runs, a physio check.',
+        'card': {
+            'project': 'Run a half marathon', 'due': 'Apr 18',
+            'loose': [('Pick a training plan', 'today:Today')],
+            'headings': [('Gear', [('Buy running shoes', 'day:Nov 21|tag:Errand|0/2')]),
+                         ('Weeks 1–4', [('Three easy runs a week', ''), ('Book a physio check', 'bell:09:30')])],
+            'from': 'written by Claude',
+        },
+        'toc': 'On this page',
+        'connect_h': 'Connect in three steps',
+        'steps': [
+            ('Let assistants in', 'On your Mac, open Taskward’s Settings → <b>Assistants</b> and turn on '
+             '<b>Let assistants in</b>. It is part of Pro.'),
+            ('Copy the command', 'The page shows a command with your own token in it. Tap <b>Copy the '
+             'command</b> and run it once in Terminal:'),
+            ('Ask Claude', 'Start Claude Code anywhere and ask for a plan. It calls Taskward by itself; '
+             'type <code>/mcp</code> to see it connected.'),
+        ],
+        'say_h': 'Things to say',
+        'says': [
+            'Sort my Inbox.',
+            'Look at my Inbox and sort it into the projects I already have.',
+            'Plan a move to a new flat by March 1: packing, papers, utilities.',
+            'What is on my plate today? Put the three most pressing things on this evening.',
+            'Make a project for the conference talk with headings for draft, slides and rehearsal.',
+        ],
+        'tools_h': 'Tools',
+        'tools_lede': 'Taskward gives an assistant four tools: two read, one adds a plan, one sorts what is '
+                      'there. None of them ever deletes anything for good.',
+        'param': ('Parameter', 'Type', 'What it is'),
+        'tools': [
+            ('get_overview', 'Reads what is there: today’s date, your areas, the open projects with their '
+             'headings, deadlines and counts of open tasks, your tags, and how many tasks wait in the '
+             'Inbox and Today. An assistant calls it first, so a plan goes where things already are.',
+             [], 'No parameters.'),
+            ('find_tasks', 'Open tasks of a list, a project or an area, or by words in their titles. '
+             'Give one of these:',
+             [('list', 'text', '<code>inbox</code>, <code>today</code> (with This Evening), '
+               '<code>upcoming</code>, <code>anytime</code> or <code>someday</code>'),
+              ('project_id', 'id', 'a project from get_overview'),
+              ('area_id', 'id', 'an area from get_overview'),
+              ('query', 'text', 'every word matched in the title, big letters or small'),
+              ('limit', 'number', 'at most this many; 100 if not given')], ''),
+            ('add_plan', 'Writes a plan in one go — all of it, or nothing if any part is wrong. Any of:',
+             [('areas', 'list', 'new areas, each with <code>title</code> and its <code>projects</code>; '
+               'one named as an area you have is that one'),
+              ('projects', 'list', 'new projects: <code>title</code>, <code>notes</code>, <code>when</code>, '
+               '<code>deadline</code>, <code>area_id</code>, <code>tasks</code>, and <code>headings</code> — '
+               'each a <code>title</code> and its <code>tasks</code>'),
+              ('tasks', 'list', 'loose tasks: into the Inbox, onto a day, or into a project, heading or area '
+               'you have, by <code>project_id</code>, <code>heading_id</code>, <code>area_id</code>')], ''),
+            ('update_tasks', 'Changes tasks already there, many at once — all of it, or nothing if any part is '
+             'wrong. For sorting the Inbox and tidying lists. Each update names a task by its '
+             '<code>id</code> (from find_tasks) and gives only what changes:',
+             [('id', 'id', 'required'),
+              ('title', 'text', 'a new title'),
+              ('notes', 'text', 'new notes'),
+              ('when', 'text', 'as in add_plan; <code>inbox</code> sends it back to the Inbox, out of any project'),
+              ('deadline', 'day or null', '<code>YYYY-MM-DD</code>; <code>null</code> takes it off'),
+              ('reminder', 'time or null', '<code>HH:MM</code>; <code>null</code> takes it off'),
+              ('tags_add', 'list', 'tags to put on, by name'),
+              ('tags_remove', 'list', 'tags to take off, by name'),
+              ('project_id', 'id or null', 'the project to file it in; <code>null</code> takes it out of its project'),
+              ('heading_id', 'id', 'a heading of that project'),
+              ('area_id', 'id or null', 'the area to file it in'),
+              ('complete', 'true / false', 'done, or open again'),
+              ('trash', 'true', 'puts it in the Trash; nothing is deleted for good')], ''),
+        ],
+        'task_h': 'A task',
+        'task_rows': [
+            ('title', 'text', 'required'),
+            ('notes', 'text', 'Markdown, as the app writes it'),
+            ('when', 'text', 'see below'),
+            ('deadline', 'day', '<code>YYYY-MM-DD</code>'),
+            ('reminder', 'time', '<code>HH:MM</code> on its day; a task with no day is put on today'),
+            ('tags', 'list', 'by name; a tag you do not have yet is made'),
+            ('checklist', 'list', 'its steps, in order'),
+        ],
+        'example_h': 'An example: a plan',
+        'update_h': 'An example: three Inbox tasks sorted',
+        'when_h': 'When',
+        'when_rows': [
+            ('inbox', 'not sorted yet — the default for a loose task'),
+            ('today', 'Today'), ('evening', 'This Evening'),
+            ('anytime', 'Anytime — the default inside a project or area'),
+            ('someday', 'Someday'),
+            ('2026-12-01', 'that day; in Upcoming till then'),
+        ],
+        'undo_h': 'Undo',
+        'undo': 'Whatever an assistant does shows a note at the foot of the window — “An assistant added 6 '
+                'tasks”, or that it changed some — with <b>Undo</b>. A plan’s Undo takes out what it made: '
+                'tasks, headings, projects, the areas and tags it made. A batch of changes is undone whole, '
+                'each task back where and as it was. Nothing is ever deleted for good: a task an assistant '
+                'throws out goes to the Trash. Missed the note? The last change waits in Settings → '
+                'Assistants as <b>Undo the assistant’s last change</b>.',
+        'safe_h': 'Security',
+        'safe': [
+            'Taskward listens only on the Mac’s own loopback, <code>127.0.0.1:47823</code>: nothing on '
+            'your network or the internet can reach it.',
+            'Nothing is answered without your token. <b>New token</b> on the same page shuts out every '
+            'assistant connected before, until you connect it again.',
+            'A request sent by a web page is refused, so no site you visit can reach your tasks.',
+            'The door is open only while Taskward is open, the switch is on and Pro is.',
+        ],
+        'private_h': 'Privacy',
+        'private': 'Taskward itself sends nothing anywhere: your tasks stay on your devices and in your '
+                   'iCloud. But what an assistant reads from Taskward goes to whoever runs it — Anthropic '
+                   'for Claude — as everything you tell it does.',
+        'pro_h': 'Pro',
+        'pro': 'Letting assistants in is part of Taskward Pro. Without it, the switch opens the offer; if Pro '
+               'ends, the door shuts and everything written stays.',
+        'faq_h': 'Questions',
+        'faq': [
+            ('Does it work on iPhone?', 'The door is on the Mac. What is written there reaches your iPhone '
+             'through iCloud within seconds.'),
+            ('Does Taskward have to be open?', 'Yes: the Mac app is the server. Closed, the assistant is told '
+             'it cannot connect.'),
+            ('Which assistants?', 'For now Claude Code and other MCP clients that speak HTTP: give them the '
+             'address <code>http://127.0.0.1:47823/mcp</code> and the token as a Bearer header. Claude '
+             'Desktop runs only local stdio servers; a bridge such as <code>mcp-remote</code> can stand '
+             'between.'),
+            ('It says it could not open the port.', 'Another app holds port 47823. Quit it, or write to '
+             'me.'),
+        ],
+        'tools_word': 'tool',
+    },
+    'ru': {
+        'title': 'Ассистенты', 'desc': 'Пусть Claude и другие ИИ-ассистенты планируют в Taskward на твоём Маке — через MCP.',
+        'kicker': 'Taskward для Mac · Pro',
+        'h1': 'Планируй с Claude,<br>а план — сразу в Taskward',
+        'lede': 'Расскажи Claude, что задумал. Он посмотрит твои области и проекты, составит план — '
+                'проекты с заголовками, задачи с днями, дедлайнами и чек-листами — и запишет его в Taskward '
+                'одним махом. С Мака всё приедет на iPhone через iCloud.',
+        'prompt': 'Распиши подготовку к полумарафону в апреле: экипировка, первый месяц пробежек, физиотерапевт.',
+        'card': {
+            'project': 'Пробежать полумарафон', 'due': '18 апр.',
+            'loose': [('Выбрать план тренировок', 'today:Сегодня')],
+            'headings': [('Экипировка', [('Купить кроссовки', 'day:21 нояб.|tag:Дела|0/2')]),
+                         ('Недели 1–4', [('Три лёгкие пробежки в неделю', ''),
+                                         ('Записаться к физиотерапевту', 'bell:09:30')])],
+            'from': 'записал Claude',
+        },
+        'toc': 'На странице',
+        'connect_h': 'Подключение в три шага',
+        'steps': [
+            ('Пусти ассистентов', 'На Маке открой Настройки Taskward → <b>Ассистенты</b> и включи '
+             '<b>Пускать ассистентов</b>. Это часть Pro.'),
+            ('Скопируй команду', 'На странице будет команда с твоим собственным токеном. Нажми '
+             '<b>Скопировать команду</b> и один раз выполни её в Терминале:'),
+            ('Попроси Claude', 'Запусти Claude Code где угодно и попроси план. Он сам обратится к Taskward; '
+             'набери <code>/mcp</code>, чтобы увидеть подключение.'),
+        ],
+        'say_h': 'Что можно сказать',
+        'says': [
+            'Разбери мой Inbox.',
+            'Посмотри мои Входящие и разложи их по проектам, которые у меня уже есть.',
+            'Спланируй переезд в новую квартиру к 1 марта: вещи, документы, коммуналка.',
+            'Что у меня на сегодня? Три самых срочных поставь на вечер.',
+            'Сделай проект доклада на конференции с заголовками: черновик, слайды, репетиция.',
+        ],
+        'tools_h': 'Инструменты',
+        'tools_lede': 'Taskward даёт ассистенту четыре инструмента: два читают, один добавляет план, один '
+                      'разбирает то, что есть. Насовсем ни один из них ничего не удаляет.',
+        'param': ('Параметр', 'Тип', 'Что это'),
+        'tools': [
+            ('get_overview', 'Читает, что есть: сегодняшнюю дату, области, открытые проекты с заголовками, '
+             'дедлайнами и числом открытых задач, теги и сколько задач ждёт во Входящих и в Сегодня. '
+             'Ассистент вызывает его первым, чтобы план лёг туда, где всё уже лежит.', [], 'Без параметров.'),
+            ('find_tasks', 'Открытые задачи списка, проекта или области — или по словам в названии. '
+             'Укажи что-то одно:',
+             [('list', 'текст', '<code>inbox</code>, <code>today</code> (вместе с Этим вечером), '
+               '<code>upcoming</code>, <code>anytime</code> или <code>someday</code>'),
+              ('project_id', 'id', 'проект из get_overview'),
+              ('area_id', 'id', 'область из get_overview'),
+              ('query', 'текст', 'каждое слово ищется в названии, без учёта регистра'),
+              ('limit', 'число', 'не больше стольких; по умолчанию 100')], ''),
+            ('add_plan', 'Записывает план одним махом — целиком или, если где-то ошибка, никак. Любое из:',
+             [('areas', 'список', 'новые области: <code>title</code> и их <code>projects</code>; '
+               'область с тем же именем, что у тебя есть, — это она'),
+              ('projects', 'список', 'новые проекты: <code>title</code>, <code>notes</code>, <code>when</code>, '
+               '<code>deadline</code>, <code>area_id</code>, <code>tasks</code> и <code>headings</code> — '
+               'у каждого <code>title</code> и свои <code>tasks</code>'),
+              ('tasks', 'список', 'отдельные задачи: во Входящие, на день или в твой проект, заголовок или '
+               'область — по <code>project_id</code>, <code>heading_id</code>, <code>area_id</code>')], ''),
+            ('update_tasks', 'Меняет задачи, которые уже есть, много сразу — целиком или, если где-то ошибка, '
+             'никак. Чтобы разобрать Входящие и навести порядок в списках. Каждое изменение называет задачу '
+             'по <code>id</code> (из find_tasks) и даёт только то, что меняется:',
+             [('id', 'id', 'обязательно'),
+              ('title', 'текст', 'новое название'),
+              ('notes', 'текст', 'новые заметки'),
+              ('when', 'текст', 'как в add_plan; <code>inbox</code> возвращает во Входящие, из любого проекта'),
+              ('deadline', 'день или null', '<code>YYYY-MM-DD</code>; <code>null</code> снимает'),
+              ('reminder', 'время или null', '<code>HH:MM</code>; <code>null</code> снимает'),
+              ('tags_add', 'список', 'теги, которые надеть, по именам'),
+              ('tags_remove', 'список', 'теги, которые снять, по именам'),
+              ('project_id', 'id или null', 'проект, куда положить; <code>null</code> вынимает из проекта'),
+              ('heading_id', 'id', 'заголовок этого проекта'),
+              ('area_id', 'id или null', 'область, куда положить'),
+              ('complete', 'true / false', 'выполнена или снова открыта'),
+              ('trash', 'true', 'в Корзину; насовсем ничего не удаляется')], ''),
+        ],
+        'task_h': 'Задача',
+        'task_rows': [
+            ('title', 'текст', 'обязательно'),
+            ('notes', 'текст', 'Markdown, как в приложении'),
+            ('when', 'текст', 'см. ниже'),
+            ('deadline', 'день', '<code>YYYY-MM-DD</code>'),
+            ('reminder', 'время', '<code>HH:MM</code> в её день; задача без дня ставится на сегодня'),
+            ('tags', 'список', 'по именам; тега, которого ещё нет, создастся'),
+            ('checklist', 'список', 'шаги по порядку'),
+        ],
+        'example_h': 'Пример: план',
+        'update_h': 'Пример: три задачи из Входящих разобраны',
+        'when_h': 'Когда',
+        'when_rows': [
+            ('inbox', 'ещё не разобрано — так по умолчанию для отдельной задачи'),
+            ('today', 'Сегодня'), ('evening', 'Этим вечером'),
+            ('anytime', 'В любое время — по умолчанию внутри проекта или области'),
+            ('someday', 'Когда-нибудь'),
+            ('2026-12-01', 'в этот день; до него — в Предстоящих'),
+        ],
+        'undo_h': 'Отменить',
+        'undo': 'Что бы ассистент ни сделал, внизу окна появится записка — «Ассистент добавил 6 задач» или '
+                'что он что-то поменял — с кнопкой <b>Отменить</b>. У плана она уберёт всё, что он сделал: '
+                'задачи, заголовки, проекты, созданные им области и теги. Пачка изменений отменяется целиком: '
+                'каждая задача вернётся туда и такой, какой была. Насовсем ничего не удаляется: выброшенная '
+                'ассистентом задача уходит в Корзину. Пропустил записку? Последнее изменение ждёт в '
+                'Настройках → Ассистенты: <b>Отменить последнее от ассистента</b>.',
+        'safe_h': 'Безопасность',
+        'safe': [
+            'Taskward слушает только внутренний адрес самого Мака, <code>127.0.0.1:47823</code>: из сети и '
+            'из интернета до него не достучаться.',
+            'Без твоего токена он ничего не ответит. <b>Новый токен</b> на той же странице отключает всех '
+            'подключённых раньше ассистентов, пока ты не подключишь их снова.',
+            'Запрос со страницы в браузере отклоняется, так что ни один сайт не доберётся до твоих задач.',
+            'Дверь открыта, только пока Taskward открыт, переключатель включён и есть Pro.',
+        ],
+        'private_h': 'Приватность',
+        'private': 'Сам Taskward ничего никуда не отправляет: задачи остаются на твоих устройствах и в твоём '
+                   'iCloud. Но то, что ассистент прочтёт в Taskward, уходит тому, кто его запускает, — у '
+                   'Claude это Anthropic, — как и всё, что ты ему говоришь.',
+        'pro_h': 'Pro',
+        'pro': 'Пускать ассистентов — часть Taskward Pro. Без него переключатель откроет предложение Pro; если '
+               'Pro закончится, дверь закроется, а всё записанное останется.',
+        'faq_h': 'Вопросы',
+        'faq': [
+            ('А на iPhone работает?', 'Дверь — на Маке. Что записано там, приедет на iPhone через iCloud за '
+             'секунды.'),
+            ('Taskward должен быть открыт?', 'Да: сервер — это само Мак-приложение. Если оно закрыто, '
+             'ассистент скажет, что не может подключиться.'),
+            ('Какие ассистенты подходят?', 'Пока Claude Code и другие MCP-клиенты, которые умеют HTTP: дай им '
+             'адрес <code>http://127.0.0.1:47823/mcp</code> и токен в заголовке Bearer. Claude Desktop '
+             'запускает только локальные stdio-серверы; между ними можно поставить мост вроде '
+             '<code>mcp-remote</code>.'),
+            ('Пишет, что не смог открыть порт.', 'Порт 47823 занят другим приложением. Закрой его или напиши '
+             'мне.'),
+        ],
+        'tools_word': 'инструмент',
+    },
+}
+
+
+def _plan_row(title, spec):
+    bits = []
+    for b in [x for x in spec.split('|') if x]:
+        kind, _, val = b.partition(':')
+        if kind == 'today':
+            bits.append(f'<span class="today">{icon("favoriteFilled")}{val}</span>')
+        elif kind == 'day':
+            bits.append(f'<span>{icon("today")}{val}</span>')
+        elif kind == 'bell':
+            bits.append(f'<span>{icon("reminderFilled")}{val}</span>')
+        elif kind == 'tag':
+            bits.append(f'<span class="tagword">{val}</span>')
+        else:
+            bits.append(f'<span>{icon("check")}{b}</span>')
+    pr = f'<div class="print">{"".join(bits)}</div>' if bits else ''
+    return f'<li class="row"><span class="signal static">{SIGNAL}</span><div><div class="title">{title}</div>{pr}</div></li>'
+
+
+def _table(head, rows):
+    th = ''.join(f'<th>{h}</th>' for h in head)
+    tr = ''.join('<tr>' + ''.join(
+        f'<td>{"<code>" + c + "</code>" if i == 0 else c}</td>' for i, c in enumerate(r)) + '</tr>' for r in rows)
+    return f'<div class="table"><table><thead><tr>{th}</tr></thead><tbody>{tr}</tbody></table></div>'
+
+
+def _code(text):
+    return f'<pre class="code"><code>{_esc(text)}</code></pre>'
+
+
+def assistants(lang):
+    t = T[lang]
+    a = A[lang]
+    depth = '../' if lang == 'en' else '../../'
+    home = depth if lang == 'en' else depth + 'ru/'
+    t2 = dict(t)
+    t2['other'] = (t['other'][0], ('../../assistants/' if lang == 'ru' else '../ru/assistants/'))
+    c = a['card']
+    card = (f'<div class="paper plan-card"><div class="plan-head">{icon("project")}<span>{c["project"]}</span>'
+            f'<span class="due">{icon("flagFilled")}{c["due"]}</span></div>'
+            f'<ul class="rows">{"".join(_plan_row(*r) for r in c["loose"])}</ul>'
+            + ''.join(f'<h4 class="plan-heading">{h}</h4><ul class="rows">{"".join(_plan_row(*r) for r in rows)}</ul>'
+                      for h, rows in c['headings'])
+            + f'<p class="from">{icon("knight")}{c["from"]}</p></div>')
+    prompt = f'<div class="paper grey ask"><span class="chev">›</span>{a["prompt"]}</div>'
+    sections = [('connect', a['connect_h']), ('say', a['say_h']), ('tools', a['tools_h']),
+                ('formats', a['when_h']), ('undo', a['undo_h']), ('security', a['safe_h']),
+                ('privacy', a['private_h']), ('pro', a['pro_h']), ('faq', a['faq_h'])]
+    toc = ''.join(f'<li><a href="#{k}">{n}</a></li>' for k, n in sections)
+    steps = ''.join(
+        f'<li><span class="n">{i}</span><div><h3>{h}</h3><p>{p}</p>{_code(COMMAND) if i == 2 else ""}</div></li>'
+        for i, (h, p) in enumerate(a['steps'], 1))
+    says = ''.join(f'<li><span class="chev">›</span>{s}</li>' for s in a['says'])
+    tools = ''.join(
+        f'<section class="tool" id="{name}"><h3><code>{name}</code></h3><p>{say}</p>'
+        + (_table(a['param'], params) if params else f'<p class="pencil">{none}</p>') + '</section>'
+        for name, say, params, none in a['tools'])
+    example = json.dumps(PLAN_JSON[lang], ensure_ascii=False, indent=2)
+    # Leaves on one line each — a task, a list of words — so the example reads as the plan does.
+    flat = lambda m: re.sub(r'\s*\n\s*', ' ', m[0]).replace('[ ', '[').replace(' ]', ']').replace('{ ', '{').replace(' }', '}')
+    example = re.sub(r'\[[^\[\]{}]*\]', flat, example)
+    example = re.sub(r'\{[^\[\]{}]*(?:\[[^\[\]{}]*\][^\[\]{}]*)*\}', flat, example)
+    update = json.dumps(UPDATE_JSON[lang], ensure_ascii=False, indent=2)
+    update = re.sub(r'\{[^\[\]{}]*(?:\[[^\[\]{}]*\][^\[\]{}]*)*\}', flat,
+                    re.sub(r'\[[^\[\]{}]*\]', flat, update))
+    safe = ''.join(f'<li>{icon("lock")}<span>{s}</span></li>' for s in a['safe'])
+    faq = ''.join(f'<details><summary>{q}</summary><p>{ans}</p></details>' for q, ans in a['faq'])
+    page = head(lang, f'{a["title"]} · Taskward', a['desc'], 'assistants/', depth) + f'''<body>
+{bar(t2, depth, lang, home)}
+<main class="wrap assist">
+<section class="assist-hero">
+<div class="say"><p class="kicker">{a['kicker']}</p><h1>{a['h1']}</h1><p class="lede">{a['lede']}</p></div>
+<div class="show">{prompt}{ARROW}{card}</div>
+</section>
+<article class="paper doc assist-doc">
+<nav class="toc" aria-label="{a['toc']}"><b>{a['toc']}</b><ol>{toc}</ol></nav>
+<h2 id="connect">{a['connect_h']}</h2>
+<ol class="steps">{steps}</ol>
+<h2 id="say">{a['say_h']}</h2>
+<ul class="says">{says}</ul>
+<h2 id="tools">{a['tools_h']}</h2>
+<p>{a['tools_lede']}</p>
+{tools}
+<h3>{a['task_h']}</h3>
+{_table(a['param'], a['task_rows'])}
+<h3>{a['example_h']}</h3>
+{_code(example)}
+<h3>{a['update_h']}</h3>
+{_code(update)}
+<h2 id="formats">{a['when_h']}</h2>
+{_table((a['param'][0].replace('Parameter', 'Value').replace('Параметр', 'Значение'), a['param'][2]), a['when_rows'])}
+<h2 id="undo">{a['undo_h']}</h2>
+<p>{a['undo']}</p>
+<h2 id="security">{a['safe_h']}</h2>
+<ul class="safe">{safe}</ul>
+<h2 id="privacy">{a['private_h']}</h2>
+<p>{a['private']}</p>
+<h2 id="pro">{a['pro_h']}</h2>
+<p>{a['pro']}</p>
+<h2 id="faq">{a['faq_h']}</h2>
+<div class="faq">{faq.replace('{mail}', MAIL)}</div>
+</article>
+</main>
+{foot(t2, depth, lang)}
+</body>
+</html>
+'''
+    return page.replace('{base}', depth)
+
 
 
 def doc(lang, kind, pages):
@@ -1176,9 +1464,10 @@ for lang in ['en', 'ru']:
     write(pre / 'index.html', landing(lang))
     write(pre / 'privacy/index.html', doc(lang, 'privacy', PRIVACY))
     write(pre / 'support/index.html', doc(lang, 'support', SUPPORT))
+    write(pre / 'assistants/index.html', assistants(lang))
 write(SITE / '.nojekyll', '')
 write(SITE / '404.html', '<!doctype html><meta charset="utf-8"><meta http-equiv="refresh" content="0; url=/taskward/"><title>Taskward</title>')
 write(SITE / 'sitemap.xml', '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'
-      + ''.join(f'<url><loc>{URL}{p}</loc></url>' for p in ['', 'privacy/', 'support/', 'ru/', 'ru/privacy/', 'ru/support/'])
+      + ''.join(f'<url><loc>{URL}{p}</loc></url>' for p in ['', 'privacy/', 'support/', 'assistants/', 'ru/', 'ru/privacy/', 'ru/support/', 'ru/assistants/'])
       + '</urlset>\n')
 print('written')

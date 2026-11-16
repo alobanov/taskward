@@ -29,7 +29,8 @@ for lang in ['en', 'ru']:
 # The icons, inked in the page's own colour.
 names = ['export', 'favoriteFilled', 'today', 'list', 'archive', 'check', 'flagFilled',
          'reminderFilled', 'tag', 'paperLines', 'darkThemeFilled', 'project', 'notebook',
-         'search', 'knight', 'more', 'lock', 'backup', 'success', 'add']
+         'search', 'knight', 'more', 'lock', 'backup', 'success', 'add', 'voice', 'magic', 'time',
+         'cardFile', 'note', 'repeat', 'tomato', 'paperDots', 'pro']
 symbols = []
 for n in names:
     svg = (APP / f'assets/icons/{n}.svg').read_text()

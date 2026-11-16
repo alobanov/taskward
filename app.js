@@ -1,6 +1,5 @@
-// Taskward's site: tasks checked off at a tap, a day written into a new card's title, and the desk and ink picked.
+// Taskward's site: tasks checked off at a tap, a day written into a new card's title, the calendar, and the films of the app.
 (() => {
-  const root = document.documentElement;
   const still = matchMedia('(prefers-reduced-motion: reduce)');
 
   // A ticket's steps, checked off and back on.
@@ -119,36 +118,25 @@
     draw();
   }
 
-  // The desk and the ink picked: the page itself takes them, and keeps them.
-  const keep = (key, value) => { try { localStorage.setItem(key, value); } catch (_) { /* none kept */ } };
-  const kept = (key) => { try { return localStorage.getItem(key); } catch (_) { return null; } };
-  const pick = (group, attr, key) => {
-    const buttons = document.querySelectorAll(`[data-${group}]`);
-    const named = document.querySelector(`[data-for="${group}"]`);
-    const choose = (value) => {
-      if (value === 'default') delete root.dataset[attr]; else root.dataset[attr] = value;
-      buttons.forEach((b) => {
-        const on = b.dataset[group] === value;
-        b.setAttribute('aria-pressed', String(on));
-        if (on && named) named.textContent = b.getAttribute('aria-label');
-      });
-    };
-    buttons.forEach((b) => b.addEventListener('click', () => {
-      choose(b.dataset[group]);
-      keep(key, b.dataset[group]);
-      picked(group);
-    }));
-    choose(kept(key) || 'default');
-    return (value) => { choose(value); keep(key, value); };
-  };
-  // A desk or an ink is Analog's: picked, the palette is Analog again, as in the app.
-  const picked = (group) => {
-    if (group === 'desk' || group === 'inkpick') palette('default');
-  };
-  pick('desk', 'desk', 'taskward-desk');
-  pick('inkpick', 'ink', 'taskward-ink');
-  const palette = pick('palettepick', 'palette', 'taskward-palette');
-  pick('themepick', 'theme', 'taskward-theme');
+  // The films of the app: each plays while it is in view and rests out of it; under Reduce
+  // Motion none plays, its poster standing for it, and a tap plays or stops one.
+  const films = document.querySelectorAll('.vphone video');
+  const seen = new Set();
+  const run = (v) => { if (!still.matches && seen.has(v)) v.play().catch(() => {}); else v.pause(); };
+  if ('IntersectionObserver' in window) {
+    const look = new IntersectionObserver((entries) => entries.forEach((e) => {
+      if (e.isIntersecting) seen.add(e.target); else seen.delete(e.target);
+      run(e.target);
+    }), { threshold: 0.25 });
+    films.forEach((v) => look.observe(v));
+  } else {
+    films.forEach((v) => seen.add(v));
+  }
+  films.forEach((v) => {
+    if (still.matches) { v.removeAttribute('autoplay'); v.pause(); }
+    v.closest('.vphone').addEventListener('click', () => (v.paused ? v.play().catch(() => {}) : v.pause()));
+  });
+  still.addEventListener?.('change', () => films.forEach(run));
 
   // The calendar: this month on a card, its days marked by the demo's events and tasks, put
   // by how far each is from today; a day tapped is ringed, and what it holds is shown under
@@ -184,6 +172,8 @@
     }
     const dayView = month.querySelector('.day');
     const named = new Intl.DateTimeFormat(lang, { weekday: 'long', month: 'long', day: 'numeric' });
+    // The Day beside it is today's too, as the month's day under the tear line is.
+    document.querySelectorAll('.dayplan [data-today]').forEach((h) => { h.textContent = cap(named.format(today)); });
     let picked = null;
     const show = (d) => {
       const it = held.get(key(d)) || { ev: [], tasks: [] };
