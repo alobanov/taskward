@@ -115,22 +115,23 @@ T = {
         'kept_link': 'Read the privacy policy',
         # Everything it does, at a glance: a tile for each, linking to where it is shown —
         # (anchor, icon, name, one line, a Pro mark or none). Only what the app does
-        # (the app's docs/*.md); Pro's as docs/pro.md has it.
+        # (the app's docs/*.md); Pro's as docs/pro.md has it: a tile all Pro's marked by its
+        # name, one only in part by {pro} in its line, right after what is Pro's.
         'all_h': 'Everything it does',
         'all_say': 'A calm to-do list with more in it than it shows. Tap one to see it at work.',
         'tiles': [
-            ('speak', 'voice', 'Write as you speak', 'Type “gym tomorrow at 9”, or say your whole day aloud.', ''),
+            ('speak', 'voice', 'Write as you speak', 'Type “gym tomorrow at 9”, or say your whole day aloud {pro}', ''),
             ('claude', 'magic', 'Plans from Claude', 'Ask for a plan; it lands in your lists as projects and tasks.', 'Pro · Mac'),
             ('day', 'time', 'Your day by the hour', 'Events and tasks on one clock, and the month on a card.', 'Pro'),
-            ('paper', 'cardFile', 'Lists on paper cards', 'Today in front, the rest in an oak holder. Many themes.', ''),
-            ('ticket', 'note', 'All in one task', 'Notes in Markdown, a checklist, a deadline, a reminder.', ''),
-            ('signals', '', 'More than done', 'In progress, delegated, waiting: mark how a task stands.', ''),
-            ('repeat', 'repeat', 'Repeating tasks', 'Every week, or the 2nd Tuesday: the next comes when one is done.', ''),
+            ('paper', 'cardFile', 'Lists on paper cards', 'Today in front, the rest in an oak holder. Many themes {pro}', ''),
+            ('ticket', 'note', 'All in one task', 'Notes in Markdown, a checklist; a deadline and a reminder {pro}', ''),
+            ('signals', '', 'More than done', 'In progress, delegated, waiting: mark how a task stands. Every signal {pro}', ''),
+            ('repeat', 'repeat', 'Repeating tasks', 'Every week, or the 2nd Tuesday {pro}: the next comes when one is done.', ''),
             ('find', 'search', 'Quick Find', 'Pull Today down, or ⌘F: lists, projects, tags, tasks.', ''),
             ('notes', 'notebook', 'Notes and a diary', 'Notes apart from tasks, and a diary that writes itself.', 'Pro'),
             ('focus', 'tomato', 'Focus timer', 'One tomato at a time for the task at hand, on the Lock Screen too.', ''),
-            ('mac', 'backup', 'iPhone and Mac in step', 'Your own iCloud, no account. On a Mac, the day in the menu bar.', ''),
-            ('widgets', 'paperDots', 'Widgets', 'Today, what’s next and the month on your Home and Lock Screen.', ''),
+            ('mac', 'backup', 'iPhone and Mac in step', 'Your own iCloud, no account. On a Mac, the day in the menu bar {pro}', ''),
+            ('widgets', 'paperDots', 'Widgets', 'Today, what’s next and the month on your Lock Screen, and Home Screen {pro}', ''),
         ],
         # The four told large, each beside a short film of the app in a phone.
         'voice_h': 'Or say your whole day',
@@ -305,18 +306,18 @@ T = {
         'all_h': 'Что умеет Taskward',
         'all_say': 'Спокойный список дел, в котором больше, чем видно сразу. Нажми, чтобы посмотреть в деле.',
         'tiles': [
-            ('speak', 'voice', 'Пиши, как говоришь', '«Тренировка завтра в 9» — или надиктуй весь день голосом.', ''),
+            ('speak', 'voice', 'Пиши, как говоришь', '«Тренировка завтра в 9» — или надиктуй весь день голосом {pro}', ''),
             ('claude', 'magic', 'Планы от Claude', 'Попроси план — он ляжет в списки проектами и задачами.', 'Pro · Mac'),
             ('day', 'time', 'День по часам', 'События и задачи на одних часах и месяц на карточке.', 'Pro'),
-            ('paper', 'cardFile', 'Списки на бумаге', '«Сегодня» впереди, остальные в дубовой подставке. Много тем.', ''),
-            ('ticket', 'note', 'Всё в одной задаче', 'Заметки в Markdown, чек-лист, срок, напоминание.', ''),
-            ('signals', '', 'Не только «сделано»', 'В работе, поручено, жду ответа: отметь, как идёт дело.', ''),
-            ('repeat', 'repeat', 'Повторы', 'Каждую неделю или во второй вторник: следующая придёт сама.', ''),
+            ('paper', 'cardFile', 'Списки на бумаге', '«Сегодня» впереди, остальные в дубовой подставке. Много тем {pro}', ''),
+            ('ticket', 'note', 'Всё в одной задаче', 'Заметки в Markdown, чек-лист; срок и напоминание {pro}', ''),
+            ('signals', '', 'Не только «сделано»', 'В работе, поручено, жду ответа: отметь, как идёт дело. Все сигналы {pro}', ''),
+            ('repeat', 'repeat', 'Повторы', 'Каждую неделю или во второй вторник {pro}: следующая придёт сама.', ''),
             ('find', 'search', 'Быстрый поиск', 'Потяни «Сегодня» вниз или ⌘F: списки, проекты, теги, задачи.', ''),
             ('notes', 'notebook', 'Заметки и дневник', 'Заметки отдельно от задач и дневник, который пишется сам.', 'Pro'),
             ('focus', 'tomato', 'Таймер фокуса', 'Помидор за помидором для одной задачи, и на экране блокировки.', ''),
-            ('mac', 'backup', 'iPhone и Mac заодно', 'Твой iCloud, без аккаунта. На Маке — день в строке меню.', ''),
-            ('widgets', 'paperDots', 'Виджеты', '«Сегодня», ближайшее дело и месяц на экране «Домой» и блокировки.', ''),
+            ('mac', 'backup', 'iPhone и Mac заодно', 'Твой iCloud, без аккаунта. На Маке — день в строке меню {pro}', ''),
+            ('widgets', 'paperDots', 'Виджеты', '«Сегодня», ближайшее дело и месяц на экране блокировки и на «Домой» {pro}', ''),
         ],
         'voice_h': 'Или надиктуй весь день',
         'voice_say': 'Нажми микрофон рядом с плюсом в «Сегодня» и просто говори: «позвонить в банк в '
@@ -572,9 +573,14 @@ def landing(lang):
         for words, (side, x, y, r) in zip(t['notes'], NOTES)
     )
     # Everything it does: a tile each, its mark, its name and a line, Pro's marked so.
+    # {pro} in a line: a mark after the word before it, never put on a line of its own.
+    def pro_in(say):
+        return re.sub(r'(\S+) \{pro\}', r'<em class=keep>\1 <i class=pro>Pro</i></em>', say)
+
     tiles = ''.join(
         f'<li><a class="tile" href="#{anchor}">{icon(mark) if mark else sig("progress")}'
-        f'<b>{name}{f" <i class=pro>{pro}</i>" if pro else ""}</b><span>{say}</span></a></li>'
+        f'<b>{name}{f" <i class=pro>{pro}</i>" if pro else ""}</b>'
+        f'<span>{pro_in(say)}</span></a></li>'
         for anchor, mark, name, say, pro in t['tiles']
     )
     smalls = ''.join(

@@ -519,6 +519,8 @@ section#all { padding-top: 48px; }
 .tile b { font-weight: 400; font-size: 19px; line-height: 1.2; }
 .tile span { font-size: 14.5px; line-height: 1.38; color: var(--on-desk-soft); margin-top: 3px; }
 .tile .pro { display: inline-block; vertical-align: 3px; margin-left: 4px; font-style: normal; font-size: 12px; line-height: 1; padding: 3px 7px; border-radius: 999px; color: var(--on-desk-soft); box-shadow: inset 0 0 0 1px var(--rule); white-space: nowrap; }
+.tile span .pro { vertical-align: 1px; margin-left: 0; }
+.tile .keep { font-style: normal; white-space: nowrap; }
 
 /* The four told large: the words, a scene of it to try under them, and beside both a short
    film of the app in a phone. */
