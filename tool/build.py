@@ -1056,12 +1056,13 @@ COMMAND = ('claude mcp add --transport http taskward http://127.0.0.1:47823/mcp 
 
 A = {
     'en': {
-        'title': 'Assistants', 'desc': 'Let Claude and other AI assistants plan into Taskward on your Mac, over MCP.',
+        'title': 'Assistants', 'desc': 'Let Claude, Codex, Gemini, Grok — any AI agent that speaks MCP — plan into Taskward on your Mac.',
         'kicker': 'Taskward for Mac · Pro',
         'h1': 'Plan with Claude,<br>land it in Taskward',
         'lede': 'Tell Claude what you are up to. It reads your areas and projects, makes a plan — '
                 'projects with headings, tasks with their days, deadlines and checklists — and writes '
-                'it into Taskward in one go. From the Mac it reaches your iPhone through iCloud.',
+                'it into Taskward in one go. From the Mac it reaches your iPhone through iCloud. Not only Claude: '
+                'Codex, Gemini, Grok — any agent that speaks MCP works the same.',
         'prompt': 'Plan my half marathon in April: gear, the first month of runs, a physio check.',
         'card': {
             'project': 'Run a half marathon', 'due': 'Apr 18',
@@ -1179,7 +1180,8 @@ A = {
              'through iCloud within seconds.'),
             ('Does Taskward have to be open?', 'Yes: the Mac app is the server. Closed, the assistant is told '
              'it cannot connect.'),
-            ('Which assistants?', 'For now Claude Code and other MCP clients that speak HTTP: give them the '
+            ('Which assistants?', 'Any agent that speaks MCP over HTTP: Claude Code, Codex, Gemini CLI, '
+             'Grok, Cursor and the rest. Claude Code connects with the command above; any other, give it the '
              'address <code>http://127.0.0.1:47823/mcp</code> and the token as a Bearer header. Claude '
              'Desktop runs only local stdio servers; a bridge such as <code>mcp-remote</code> can stand '
              'between.'),
@@ -1189,12 +1191,13 @@ A = {
         'tools_word': 'tool',
     },
     'ru': {
-        'title': 'Ассистенты', 'desc': 'Пусть Claude и другие ИИ-ассистенты планируют в Taskward на твоём Маке — через MCP.',
+        'title': 'Ассистенты', 'desc': 'Пусть Claude, Codex, Gemini, Grok — любой ИИ-агент с поддержкой MCP — планирует в Taskward на твоём Маке.',
         'kicker': 'Taskward для Mac · Pro',
         'h1': 'Планируй с Claude,<br>а план — сразу в Taskward',
         'lede': 'Расскажи Claude, что задумал. Он посмотрит твои области и проекты, составит план — '
                 'проекты с заголовками, задачи с днями, дедлайнами и чек-листами — и запишет его в Taskward '
-                'одним махом. С Мака всё приедет на iPhone через iCloud.',
+                'одним махом. С Мака всё приедет на iPhone через iCloud. И не только Claude: Codex, Gemini, Grok — '
+                'любой агент с поддержкой MCP работает так же.',
         'prompt': 'Распиши подготовку к полумарафону в апреле: экипировка, первый месяц пробежек, физиотерапевт.',
         'card': {
             'project': 'Пробежать полумарафон', 'due': '18 апр.',
@@ -1312,7 +1315,8 @@ A = {
              'секунды.'),
             ('Taskward должен быть открыт?', 'Да: сервер — это само Мак-приложение. Если оно закрыто, '
              'ассистент скажет, что не может подключиться.'),
-            ('Какие ассистенты подходят?', 'Пока Claude Code и другие MCP-клиенты, которые умеют HTTP: дай им '
+            ('Какие ассистенты подходят?', 'Любой агент, который умеет MCP по HTTP: Claude Code, Codex, '
+             'Gemini CLI, Grok, Cursor и другие. Claude Code подключается командой выше; любому другому дай '
              'адрес <code>http://127.0.0.1:47823/mcp</code> и токен в заголовке Bearer. Claude Desktop '
              'запускает только локальные stdio-серверы; между ними можно поставить мост вроде '
              '<code>mcp-remote</code>.'),

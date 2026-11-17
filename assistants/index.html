@@ -4,13 +4,13 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Assistants · Taskward</title>
-<meta name="description" content="Let Claude and other AI assistants plan into Taskward on your Mac, over MCP.">
+<meta name="description" content="Let Claude, Codex, Gemini, Grok — any AI agent that speaks MCP — plan into Taskward on your Mac.">
 <link rel="canonical" href="https://alobanov.github.io/taskward/assistants/">
 <link rel="alternate" hreflang="en" href="https://alobanov.github.io/taskward/assistants/">
 <link rel="alternate" hreflang="ru" href="https://alobanov.github.io/taskward/ru/assistants/">
 <link rel="alternate" hreflang="x-default" href="https://alobanov.github.io/taskward/assistants/">
 <meta property="og:title" content="Assistants · Taskward">
-<meta property="og:description" content="Let Claude and other AI assistants plan into Taskward on your Mac, over MCP.">
+<meta property="og:description" content="Let Claude, Codex, Gemini, Grok — any AI agent that speaks MCP — plan into Taskward on your Mac.">
 <meta property="og:image" content="https://alobanov.github.io/taskward/img/og-en.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -33,7 +33,7 @@
 </header>
 <main class="wrap assist">
 <section class="assist-hero">
-<div class="say"><p class="kicker">Taskward for Mac · Pro</p><h1>Plan with Claude,<br>land it in Taskward</h1><p class="lede">Tell Claude what you are up to. It reads your areas and projects, makes a plan — projects with headings, tasks with their days, deadlines and checklists — and writes it into Taskward in one go. From the Mac it reaches your iPhone through iCloud.</p></div>
+<div class="say"><p class="kicker">Taskward for Mac · Pro</p><h1>Plan with Claude,<br>land it in Taskward</h1><p class="lede">Tell Claude what you are up to. It reads your areas and projects, makes a plan — projects with headings, tasks with their days, deadlines and checklists — and writes it into Taskward in one go. From the Mac it reaches your iPhone through iCloud. Not only Claude: Codex, Gemini, Grok — any agent that speaks MCP works the same.</p></div>
 <div class="show"><div class="paper grey ask"><span class="chev">›</span>Plan my half marathon in April: gear, the first month of runs, a physio check.</div><svg class="arrow" viewBox="0 0 64 40" aria-hidden="true"><path d="M3 31 C 17 36, 41 33, 61 20"/><path d="M51 17.5 L 61.5 19.8 L 55.5 28.5"/></svg><div class="paper plan-card"><div class="plan-head"><svg class="icon" aria-hidden="true"><use href="../img/icons.svg#project"/></svg><span>Run a half marathon</span><span class="due"><svg class="icon" aria-hidden="true"><use href="../img/icons.svg#flagFilled"/></svg>Apr 18</span></div><ul class="rows"><li class="row"><span class="signal static"><svg viewBox="0 0 24 24"><circle class="ring" cx="12" cy="12" r="9.2"/><circle class="fill" cx="12" cy="12" r="9.2"/></svg></span><div><div class="title">Pick a training plan</div><div class="print"><span class="today"><svg class="icon" aria-hidden="true"><use href="../img/icons.svg#favoriteFilled"/></svg>Today</span></div></div></li></ul><h4 class="plan-heading">Gear</h4><ul class="rows"><li class="row"><span class="signal static"><svg viewBox="0 0 24 24"><circle class="ring" cx="12" cy="12" r="9.2"/><circle class="fill" cx="12" cy="12" r="9.2"/></svg></span><div><div class="title">Buy running shoes</div><div class="print"><span><svg class="icon" aria-hidden="true"><use href="../img/icons.svg#today"/></svg>Nov 21</span><span class="tagword">Errand</span><span><svg class="icon" aria-hidden="true"><use href="../img/icons.svg#check"/></svg>0/2</span></div></div></li></ul><h4 class="plan-heading">Weeks 1–4</h4><ul class="rows"><li class="row"><span class="signal static"><svg viewBox="0 0 24 24"><circle class="ring" cx="12" cy="12" r="9.2"/><circle class="fill" cx="12" cy="12" r="9.2"/></svg></span><div><div class="title">Three easy runs a week</div></div></li><li class="row"><span class="signal static"><svg viewBox="0 0 24 24"><circle class="ring" cx="12" cy="12" r="9.2"/><circle class="fill" cx="12" cy="12" r="9.2"/></svg></span><div><div class="title">Book a physio check</div><div class="print"><span><svg class="icon" aria-hidden="true"><use href="../img/icons.svg#reminderFilled"/></svg>09:30</span></div></div></li></ul><p class="from"><svg class="icon" aria-hidden="true"><use href="../img/icons.svg#knight"/></svg>written by Claude</p></div></div>
 </section>
 <article class="paper doc assist-doc">
@@ -99,7 +99,7 @@
 <h2 id="pro">Pro</h2>
 <p>Letting assistants in is part of Taskward Pro. Without it, the switch opens the offer; if Pro ends, the door shuts and everything written stays.</p>
 <h2 id="faq">Questions</h2>
-<div class="faq"><details><summary>Does it work on iPhone?</summary><p>The door is on the Mac. What is written there reaches your iPhone through iCloud within seconds.</p></details><details><summary>Does Taskward have to be open?</summary><p>Yes: the Mac app is the server. Closed, the assistant is told it cannot connect.</p></details><details><summary>Which assistants?</summary><p>For now Claude Code and other MCP clients that speak HTTP: give them the address <code>http://127.0.0.1:47823/mcp</code> and the token as a Bearer header. Claude Desktop runs only local stdio servers; a bridge such as <code>mcp-remote</code> can stand between.</p></details><details><summary>It says it could not open the port.</summary><p>Another app holds port 47823. Quit it, or write to me.</p></details></div>
+<div class="faq"><details><summary>Does it work on iPhone?</summary><p>The door is on the Mac. What is written there reaches your iPhone through iCloud within seconds.</p></details><details><summary>Does Taskward have to be open?</summary><p>Yes: the Mac app is the server. Closed, the assistant is told it cannot connect.</p></details><details><summary>Which assistants?</summary><p>Any agent that speaks MCP over HTTP: Claude Code, Codex, Gemini CLI, Grok, Cursor and the rest. Claude Code connects with the command above; any other, give it the address <code>http://127.0.0.1:47823/mcp</code> and the token as a Bearer header. Claude Desktop runs only local stdio servers; a bridge such as <code>mcp-remote</code> can stand between.</p></details><details><summary>It says it could not open the port.</summary><p>Another app holds port 47823. Quit it, or write to me.</p></details></div>
 </article>
 </main>
 <footer><div class="wrap">
